@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../frontend/stylesheets/tops/tops.scss"> 
+  </head>
+  <body>
+    <div class="main">
+      <h1>ログイン</h1>
+      <%= form_tag("/login") do %>
+        <div>
+          <p>ユーザー</p>
+          <input name="userid" value="">
+        </div>
+        <div>
+          <p>パスワード</p>
+          <input name="password" value="">
+        </div>
+        <div>
+          <input type="submit" value="ログイン">
+        </div>
+      <% end %>
+      <%= form_tag("/tops/new") do %>
+        <div>
+          <input type="submit" value="新規登録">
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>
