@@ -9,8 +9,11 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag params[:controller] %>
   </head>
-
   <body>
-    <%= yield %>
+    <div class="col-xs-3 row-xs-12 sidebar">
+      <p>サイドバーを作るところ</p>
+      <%# TODO サイドバーの作成 %>
+    </div>
+      <%= yield %>
   </body>
 </html>

@@ -4,11 +4,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 h1 {
-    color: red;
+    color: black;
+    font-size: 30px;
+    margin: 20px auto 0;
 }
 
 .main {
-    margin: 0;
-    position: absolute;
+  // height: 100%;
+  max-width: 500px;
+  display: block;
+  border-radius: 10%;
+  background-color: aquamarine;  
+    margin: 50px auto 0;
+    padding: 10px;
     text-align: center;
+    .item {
+      margin:5px auto;
+      max-width: 400px;
+      border-radius: 0%;
+      font-size: 20px;
+    }
 }

@@ -1,27 +1,31 @@
 <html>
-  <head>
-  </head>
   <body>
-    <div class="main">
-      <h1>ログイン</h1>
-      <%= form_tag("/login") do %>
-        <div>
-          <p>ユーザー</p>
-          <input name="userid" value="">
+    <div class="container">
+      <div class="main">
+        <div class="login-form">
+          <h1>ログイン</h1>
+          <%= form_tag("/login") do %>
+            <div class="main item" style="text-align:end;">
+              <p>ユーザーid
+              <input type="email" name="userid" >
+              </p>
+            </div>
+            <div class="main item" style="text-align:end;">
+              <p>パスワード
+              <input type="password" name="password">
+              </p>
+            </div>
+              <input class="btn btn-default" type="submit" value="ログイン">
+          <% end %>
         </div>
-        <div>
-          <p>パスワード</p>
-          <input name="password" value="">
+        <div class="main">
+          <p>新規登録はこちら</p>
+          <%= form_tag("/tops/new") do %>
+          <%# TODO 新規作成ボタンの配置　あと実装するかどうか %>
+            <input class="btn btn-default" type="submit" value="新規登録">
+          <% end %>
         </div>
-        <div>
-          <input type="submit" value="ログイン">
-        </div>
-      <% end %>
-      <%= form_tag("/tops/new") do %>
-        <div>
-          <input type="submit" value="新規登録">
-        </div>
-      <% end %>
+      </div>
     </div>
   </body>
 </html>
