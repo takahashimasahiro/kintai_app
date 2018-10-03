@@ -8,12 +8,56 @@
     <%= stylesheet_link_tag params[:controller] %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag params[:controller] %>
-  </head>
-  <body>
-    <div class="col-xs-3 row-xs-12 sidebar">
-      <p>サイドバーを作るところ</p>
-      <%# TODO サイドバーの作成 %>
+</head>
+<body>
+<% if @current_user %>
+  <div class="row">
+    <div class="col-sm-3 sidebar open">
+      <div class="row sidebar-header header-cover" >
+        <div class="col-sm-5 sidebar-image">
+          <%# TODO アイコン関係入れるかどうか %>
+          <img src="">          
+        </div>
+        <div class="col-md-7 user-profile">
+          <ul class="profile-profile">プロフィール</ul>
+          <ul class="profile-username">ユーザー名</ul>
+          <ul class="profile-userid">ユーザーID</ul>
+          <ul class="profile-email">email</ul>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <div class="sidebar-nav">
+          <a class="row" href="/users/home">
+            <i class="col-sm-3 sidebar-icon md-inbox"></i>
+            <p class="col-sm-6">出勤状況一覧</p>
+            <span class="col-sm-3 sidebar-badge"></span>
+          </a>
+          <a class="row" rel="nofollow" href="../logout">
+            <i class="col-sm-3 sidebar-icon md-inbox"></i>
+            <p class="col-sm-6">ログアウト</p>
+            <span class="col-sm-3 sidebar-badge"></span>
+          </a>
+        </div>
+      </div>
     </div>
-      <%= yield %>
-  </body>
+    <div class="col-sm-9 wrapper">
+      <% if flash[:notice] %>
+        <div class="flash">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+        <%= yield %>
+    </div>
+    <% else %>
+      <div class="wrapper">
+        <% if flash[:notice] %>
+          <div class="flash">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>  
+        <%= yield %>
+      </div>
+    <% end %>
+  </div>
+</body>  
 </html>
