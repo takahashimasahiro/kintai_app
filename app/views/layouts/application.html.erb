@@ -20,21 +20,31 @@
         </div>
         <div class="col-md-7 user-profile">
           <ul class="profile-profile">プロフィール</ul>
-          <ul class="profile-username">ユーザー名</ul>
-          <ul class="profile-userid">ユーザーID</ul>
-          <ul class="profile-email">email</ul>
+          <ul class="profile-username"><%= @current_user.name %></ul>
+          <ul class="profile-userid"><%= @current_user.user_id %></ul>
+          <ul class="profile-email"><%= @current_user.email %></ul>
         </div>
       </div>
       <div class="sidebar-menu">
         <div class="sidebar-nav">
           <a class="row" href="/users/home">
-            <i class="col-sm-3 sidebar-icon md-inbox"></i>
-            <p class="col-sm-6">出勤状況一覧</p>
+            <p class="col-sm-9">出勤状況一覧</p>
+            <span class="col-sm-3 sidebar-badge"></span>
+          </a>
+          <a class="row" href="/users/home">
+            <p class="col-sm-9">出勤者リスト</p>
+            <span class="col-sm-3 sidebar-badge"></span>
+          </a>
+          <a class="row" href="/users/home">
+            <p class="col-sm-9">有給休暇申請</p>
+            <span class="col-sm-3 sidebar-badge">12</span>
+          </a>
+          <a class="row" href="/users/home">
+            <p class="col-sm-9">ユーザー設定</p>
             <span class="col-sm-3 sidebar-badge"></span>
           </a>
           <a class="row" rel="nofollow" href="../logout">
-            <i class="col-sm-3 sidebar-icon md-inbox"></i>
-            <p class="col-sm-6">ログアウト</p>
+            <p class="col-sm-9">ログアウト</p>
             <span class="col-sm-3 sidebar-badge"></span>
           </a>
         </div>

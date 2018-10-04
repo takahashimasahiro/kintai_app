@@ -1,7 +1,0 @@
-current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundler/ruby/2.5.0/gems/ruby-debug-ide-0.6.1/ext
-/Users/takahashi/.rbenv/versions/2.5.1/bin/ruby mkrf_conf.rb
-Installing base gem
-Building native extensions. This could take a while...
-
-current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundler/ruby/2.5.0/gems/ruby-debug-ide-0.6.1/ext
-/Users/takahashi/.rbenv/versions/2.5.1/bin/ruby -rrubygems /Users/takahashi/Ruby/kintai_app/vendor/bundler/ruby/2.5.0/gems/rake-12.3.1/exe/rake RUBYARCHDIR=/Users/takahashi/Ruby/kintai_app/vendor/bundler/ruby/2.5.0/extensions/x86_64-darwin-17/2.5.0-static/ruby-debug-ide-0.6.1 RUBYLIBDIR=/Users/takahashi/Ruby/kintai_app/vendor/bundler/ruby/2.5.0/extensions/x86_64-darwin-17/2.5.0-static/ruby-debug-ide-0.6.1

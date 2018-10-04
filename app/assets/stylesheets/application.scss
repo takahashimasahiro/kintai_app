@@ -40,7 +40,7 @@ body {
   position: relative;
   display: block;
   min-height: 100%;
-  background-color: antiquewhite;
+  background-color: blue;
   min-width: 280px;
   max-width: 280px;
   .sidebar-header {
@@ -55,9 +55,6 @@ body {
     background-size: cover;
     padding: 30px 30px;
   }
-  .sidebar-header:hover .sidebar-toggle {
-    opacity: 1;
-  }
  .sidebar-image img {
   width: 54px;
   height: 54px;
@@ -66,23 +63,18 @@ body {
   }
 }
 .sidebar-menu{
-  background-color: antiquewhite;
+  background-color:black;
   height: 550px;
 }
 
- .sidebar-icon ,.sidebar-badge {
-  display: inline-block;
-  margin-right: 16px;
-  min-width: 40px;
-  width: 40px;
-  height: 40px;
-  text-align: left;
-  font-size: 20px;
-}
 .sidebar-nav {
-  background-color: #F7F7F7;
   font-size: 15px;
   vertical-align: middle;
+}
+
+.sidebar-nav-item{
+  background-color: #F7F7F7;
+  border-radius: 10%;
 }
 .user-profile{
   font-size: 10px;
@@ -94,6 +86,11 @@ body {
     padding: 0px 0px;
   }
 } 
+
+a:hover{
+  color: black;
+  background-color: gray;
+}
 
 // フラッシュ 
 .flash {
