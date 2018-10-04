@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // TODO:必要無いものは可読性向上のためerb上で書く
 import "application";
 
@@ -24,3 +25,6 @@ export default $(function(){
   });
 });
 console.log("foo");
+=======
+
+>>>>>>> [WIP]勤怠一覧画面の作成-サイドバーとプルダウンの表示
