@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
     "git.ignoreLimitWarning": true,
     "editor.renderWhitespace": "all"
   }
+=======
+    "git.ignoreLimitWarning": true
+}
+>>>>>>> 必要ファイルの追加
