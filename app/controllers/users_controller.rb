@@ -3,10 +3,14 @@ class UsersController < ApplicationController
 
   def home
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
 
 >>>>>>> 10月5日分
+=======
+    
+>>>>>>> 10/6
   end
 
   def attendance
