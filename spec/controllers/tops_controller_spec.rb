@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe TopsController, type: :controller do
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 10月5日分
   describe 'GET #top' do
     describe '200 OKとなる' do
       describe 'users/homeを表示する' do
@@ -18,6 +21,7 @@ RSpec.describe TopsController, type: :controller do
       end
       #   expect(response).to have_http_status(:success)
     end
+<<<<<<< HEAD
 
     describe 'エラーメッセージを表示する' do
       it 'emailまたはpasswordが間違っている' do
@@ -27,13 +31,19 @@ RSpec.describe TopsController, type: :controller do
     end
   end
 =======
+=======
+>>>>>>> 10月5日分
 
-  describe "GET #new" do
-    it "returns http success" do
-      get :new
-      expect(response).to have_http_status(:success)
+    describe 'エラーメッセージを表示する' do
+      it 'emailまたはpasswordが間違っている' do
+        #   expect(response).to have_http_status(:success)
+      end
+      #   expect(response).to have_http_status(:success)
     end
   end
+<<<<<<< HEAD
 
 >>>>>>> 必要ファイルの追加
+=======
+>>>>>>> 10月5日分
 end

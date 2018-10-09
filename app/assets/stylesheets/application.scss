@@ -2,14 +2,6 @@
 =======
 @import "bootstrap";
 
-*,
-*:after,
-*:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 html,
 body {
   position: relative;
@@ -32,19 +24,27 @@ body {
 //   vertical-align: middle;
 // }
 
-.wrapper {
+.wrapper-login {
   top: 0px;
+  position: relative;
+  left: 280px;
   display: table-cell;
+  vertical-align: top;
+}
+.wrapper-logout {
+  top: 0px;
+  position: relative;
   vertical-align: top;
 }
 
 .sidebar {
-  position: relative;
+  position: fixed;
   display: block;
   min-height: 100%;
+  // height: calc(100% - 250px);
   background-color: black;
-  min-width: 280px;
-  max-width: 280px;
+  min-width: 250px;
+  max-width: 250px;
   .sidebar-header {
     position: relative;
     height: 157.5px;
@@ -66,7 +66,8 @@ body {
 }
 .sidebar-menu{
   // background-color:black;
-  height: 550px;
+  height: 100%;
+  // height: calc(100% - 250px);
 }
 
 .sidebar-nav {
@@ -80,22 +81,28 @@ body {
   border-radius: 10%;
 }
 .user-profile{
+  top: 40px;
+  left: 100px;
   font-size: 10px;
   text-align: left;
   vertical-align: middle;
-  padding: 20px 0px;
+  position: absolute;
+  padding: 0px 0px;
  .profile-profile ,.profile-username,.profile-userid,.profile-email{
     text-align: left;
-    padding: 0px 0px;
+    // position: absolute;
+
+    // padding: 0px 0px 0px 80px;
   }
 } 
+
 .sidebar-nav a{
   background-color: #F7F7F7;
   box-sizing: border-box;
   position: relative;
   margin: 5px 15px;
   height: 50px;
-  width: 220px;
+  width: 200px;
   float: left;
 }
 .sidebar-nav a p{
@@ -104,10 +111,10 @@ body {
   margin: 15px 0px;
 }
 .sidebar-nav a span{
-  left: 0px;
-  position: relative;
+  left: 150px;
+  position: absolute;
   margin: 15px 0px;
-  
+  top: 0px;
 }
 a:hover{
   color: black;
@@ -135,5 +142,10 @@ a:hover{
 =======
 .wrapper{
   padding: 0px;
+<<<<<<< HEAD
 }
 >>>>>>> [WIP]勤怠一覧画面の作成-サイドバーとプルダウンの表示
+=======
+  display: block;
+}
+>>>>>>> 10月5日分

@@ -2,7 +2,11 @@ class UsersController < ApplicationController
   before_action :authenticate_current_user
 
   def home
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 10月5日分
   end
 
   def attendance
