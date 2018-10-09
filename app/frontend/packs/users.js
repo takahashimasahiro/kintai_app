@@ -1,7 +1,7 @@
 // TODO:必要無いものは可読性向上のためerb上で書く
+// TODO: erb.htmlから読み込めていない。
 import "application";
-
-
+import { ECONNABORTED } from "constants";
 const SELECTED_FIRST_YEAR = 2010;
 const SELECTED_LAST_YEAR = 2030;
 
