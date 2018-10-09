@@ -50,21 +50,21 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-9 wrapper">
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <div class="col-sm-9 wrapper-login">
+        <%= yield %>
+    </div>
+    <% else %>
       <% if flash[:notice] %>
         <div class="flash">
           <%= flash[:notice] %>
         </div>
-      <% end %>
-        <%= yield %>
-    </div>
-    <% else %>
-      <div class="wrapper">
-        <% if flash[:notice] %>
-          <div class="flash">
-            <%= flash[:notice] %>
-          </div>
-        <% end %>  
+      <% end %>  
+      <div class="wrapper-logout">
         <%= yield %>
       </div>
     <% end %>
