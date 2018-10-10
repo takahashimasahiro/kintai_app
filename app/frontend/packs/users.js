@@ -3,9 +3,8 @@
 // import "application";
 // const SELECTED_FIRST_YEAR = 2010;
 // const SELECTED_LAST_YEAR = 2030;
-
-// export default
-// $(function(){
+import 'jquery';
+// export default $(function(){
 //   $('select[name=year]').change(function(){
 //     document.getElementById('test').innerHTML = "<p>TODO:年を変えた時の処理を書く</p>"
 //   });
