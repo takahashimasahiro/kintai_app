@@ -23,3 +23,4 @@ export default $(function(){
     document.getElementById('test').innerHTML = "<p>TODO:保存押した</p>"
   });
 });
+console.log("foo");
