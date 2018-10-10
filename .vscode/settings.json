@@ -1,15 +1,4 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "git.ignoreLimitWarning": true,
-    "editor.renderWhitespace": "all"
-  }
-=======
-    "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "editor.renderWhitespace": "all"
 }
->>>>>>> 必要ファイルの追加
-=======
-    "git.ignoreLimitWarning": true,
-    "editor.renderWhitespace": "all"
-  }
->>>>>>> 10月5日分
