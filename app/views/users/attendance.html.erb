@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 10/6
 <html>
   <body>
     <h1>勤怠状況一覧</h1>
@@ -36,7 +32,6 @@
             <input type="button" name="attend_save" value="保存"/>
           </div>
         </div>
-<<<<<<< HEAD
       </div>
       <div id="test">通ってるか確かめる用のタグ</div>
     </div>
@@ -75,66 +70,4 @@
     </div>
   </body>
 </html>
-=======
-<h1>勤怠状況一覧</h1>
-<div class="search">
-  <div class="search-year">
-    <div id="pulldown"></div>
-    <div class="search-rightend">
-      <div class="inputtime">
-        <input type="button" name="syukkin" value="出勤"/>
-        <input type="button" name="taikin" value="退勤"/>
-      </div>
-      <div class="attend-save">
-        <input type="button" name="attend_save" value="保存"/>
-=======
->>>>>>> 10/6
-      </div>
-      <div id="test">通ってるか確かめる用のタグ</div>
-    </div>
-    <div id="attendance-table" class="table">
-      <table class='table table-bordered' >
-        <tr>
-          <th>日付</th>
-          <th>曜日</th>
-          <th>出勤時間</th>
-          <th>退勤時間</th>
-          <th>状況</th>
-        </tr>
-        <% (1..@lastday).each do |row| %>
-        <tr>
-          <th><%= row %></th>
-          <th><%= @dateofweek[@today .change(day: row ).wday] %></th>
-          <th>
-            <input type="time" name="work_start" value="00:00" >
-          </th>
-          <th>
-            <input type="time" name="work_end" min="00:00" max="29:00" value="23:59">
-          </th>
-          <th>
-            <select name="status">
-              <Option name="work"> 出勤</Option>
-              <Option name="vacation"> 有休休暇</Option>
-              <Option name="am_vacation"> 午前休暇</Option>
-              <Option name="pm_vacation"> 午後休暇</Option>
-              <Option name="holiday_work"> 休日出勤</Option>
-              <Option name="absence"> 欠勤</Option>
-            </select>
-          </th>
-        </tr>
-        <% end %>
-      </table>
-    </div>
-<<<<<<< HEAD
-  </div>
-  <div id="test">通ってるか確かめる用のタグ</div>
-ここに検索条件とかかく
-</div>
-<div id="attendance-table" class="table">
-
-<div>
->>>>>>> [WIP]勤怠一覧画面の作成-サイドバーとプルダウンの表示
-=======
-  </body>
-</html>
->>>>>>> 10/6
+ 

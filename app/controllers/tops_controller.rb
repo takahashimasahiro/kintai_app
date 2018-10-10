@@ -1,21 +1,9 @@
 class TopsController < ApplicationController
-<<<<<<< HEAD
-<<<<<<< HEAD
   before_action :authenticate_current_user, {only: [:logout]}
   before_action :fobid_current_user, {only: [:top, :new, :login]}
 
   def top
     session[:user_id] = nil
-=======
-  def top
->>>>>>> 必要ファイルの追加
-=======
-  before_action :authenticate_current_user, {only: [:logout]}
-  before_action :fobid_current_user, {only: [:top, :new, :login]}
-
-  def top
-    session[:user_id] = nil
->>>>>>> 10月5日分
   end
 
   def new
