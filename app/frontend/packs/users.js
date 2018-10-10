@@ -1,8 +1,8 @@
 // TODO:必要無いものは可読性向上のためerb上で書く
 // TODO: erb.htmlから読み込めていない。
-import "application";
-const SELECTED_FIRST_YEAR = 2010;
-const SELECTED_LAST_YEAR = 2030;
+// import "application";
+// const SELECTED_FIRST_YEAR = 2010;
+// const SELECTED_LAST_YEAR = 2030;
 
 // export default
 // $(function(){
@@ -10,7 +10,7 @@ const SELECTED_LAST_YEAR = 2030;
 //     document.getElementById('test').innerHTML = "<p>TODO:年を変えた時の処理を書く</p>"
 //   });
 //   $('select[name=month]').change(function(){
-//     document.getElementById('test').innerHTML = "<p>TODO:月を変えた時の処理を書く</p>"    
+//     document.getElementById('test').innerHTML = "<p>TODO:月を変えた時の処理を書く</p>"
 //   });
 //   $('input[name=syukkin]').click(function(){
 //     document.getElementById('test').innerHTML = "<p>TODO:出勤押した</p>"
@@ -22,5 +22,7 @@ const SELECTED_LAST_YEAR = 2030;
 //     document.getElementById('test').innerHTML = "<p>TODO:保存押した</p>"
 //   });
 // });
+
+import '../src/stylesheets/users.scss';
 
 console.log("foo");
