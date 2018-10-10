@@ -1,6 +1,6 @@
 
 @import '~bootstrap/dist/css/bootstrap';
- 
+
 html,
 body {
   position: relative;
@@ -92,7 +92,7 @@ body {
 
     // padding: 0px 0px 0px 80px;
   }
-} 
+}
 
 .sidebar-nav a{
   background-color: #F7F7F7;
@@ -119,7 +119,7 @@ a:hover{
   background-color: gray;
 }
 
-// フラッシュ 
+// フラッシュ
 .flash {
   top: 0px;
   margin-left: 250px;
