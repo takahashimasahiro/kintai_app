@@ -4,10 +4,10 @@
     <title>Kintai</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= stylesheet_link_tag params[:controller] %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag params[:controller] %>
+    <%= stylesheet_pack_tag 'application' %>
+    <%= stylesheet_pack_tag params[:controller] %>
+    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag params[:controller] %>
 </head>
 <body>
 <% if @current_user %>
@@ -50,21 +50,21 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-9 wrapper">
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <div class="col-sm-9 wrapper-login">
+        <%= yield %>
+    </div>
+    <% else %>
       <% if flash[:notice] %>
         <div class="flash">
           <%= flash[:notice] %>
         </div>
-      <% end %>
-        <%= yield %>
-    </div>
-    <% else %>
-      <div class="wrapper">
-        <% if flash[:notice] %>
-          <div class="flash">
-            <%= flash[:notice] %>
-          </div>
-        <% end %>  
+      <% end %>  
+      <div class="wrapper-logout">
         <%= yield %>
       </div>
     <% end %>
