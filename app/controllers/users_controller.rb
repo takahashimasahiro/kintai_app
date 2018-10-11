@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     @lastday = @today.end_of_month.day
   end
 
+  def attendande_table
+    @today = params[:year_selected]
+  end
+
   def save
 
   end

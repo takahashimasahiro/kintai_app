@@ -8,14 +8,15 @@ $(function(){
     document.getElementById('test').innerHTML = "<p>TODO:月を変えた時の処理を書く</p>"
   });
   $('input[name=syukkin]').click(function(){
-    document.getElementById('test').innerHTML = "<p>TODO:出勤押した</p>"
+    var today = new Date();
+    document.getElementsByName('work_start_'+ today.getDate())[0].value= today.getHours()  + ":" + today.getMinutes()
   });
   $('input[name=taikin]').click(function(){
-    document.getElementById('test').innerHTML = "<p>TODO:退勤押した</p>"
+    var today = new Date();
+    document.getElementsByName('work_end_'+ today.getDate())[0].value= today.getHours() + ":" + today.getMinutes()
   })
   $('input[name=attend_save]').click(function(){
     document.getElementById('test').innerHTML = "<p>TODO:保存押した</p>"
   });
 });
-
 import '../src/stylesheets/users.scss';

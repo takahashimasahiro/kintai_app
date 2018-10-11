@@ -4,15 +4,18 @@
     <div class="search">
       <div class="search-year">
         <div id="pulldown">
-          <select  name="year" class="pulldown-year">
-            <%= (0..20).each do |year| %>
-              <Option value="<%= @first_year.to_i + year %>"
-                <% if @today.year == @first_year.to_i + year %>
-                  selected
-                <% end %>>
-              <%= @first_year.to_i + year %></Option>
-            <% end %>
-          </select>年
+            <%= form_tag('users/show')%>
+              <%= select_tag(:aselected_year, options_for_select([function(){}], class: 'year_selected' )) %>
+            <%# <select  name="year" class="pulldown-year"> %>
+            <%# <%= (0..20).each do |year| %>
+              <%# <Option value="<%= @first_year.to_i + year %>
+                <%# <% if @today.year == @first_year.to_i + year %> 
+                  <%# selected %>
+                <%# <% end %>
+              <%# <%= @first_year.to_i + year %></Option> 
+            <%# <% end %> 
+          <%# </select> %>
+          年 
           <select name="month" class="pulldown-month">
             <%= (1..12).each do |month| %>
               <Option value="<%= month %>"
@@ -45,17 +48,18 @@
           <th>状況</th>
         </tr>
         <% (1..@lastday).each do |row| %>
-        <tr>
-          <th><%= row %></th>
-          <th><%= @dateofweek[@today .change(day: row ).wday] %></th>
+        <tr name='row_<%= row %>'>
+          <th name='date_<%= row %>'><%= row %></th>
+          <th name='rowofweek_<%= @today.change(day: row ).wday %>'>
+            <%= @dateofweek[@today.change(day: row ).wday] %></th>
           <th>
-            <input type="time" name="work_start" value="00:00" >
+            <input type="time" name="work_start_<%= row %>">
           </th>
           <th>
-            <input type="time" name="work_end" min="00:00" max="29:00" value="23:59">
+            <input type="time" name="work_end_<%= row %>">
           </th>
           <th>
-            <select name="status">
+            <select name="status_<%= row %>">
               <Option name="work"> 出勤</Option>
               <Option name="vacation"> 有休休暇</Option>
               <Option name="am_vacation"> 午前休暇</Option>
