@@ -7,12 +7,12 @@
           <%= form_tag("/login") do %>
             <div class="main item" style="text-align:end;">
               <p>email
-              <input type="email" name="email" value="<% @email %>" >
+              <%= email_field :user,value: @email,:address  %>
               </p>
             </div>
             <div class="main item" style="text-align:end;">
               <p>パスワード
-              <input type="password" name="password" value="<% @password %>">
+                <%= password_field_tag(:password) %>
               </p>
             </div>
               <% if @error_message %>

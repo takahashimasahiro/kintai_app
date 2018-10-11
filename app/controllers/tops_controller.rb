@@ -1,5 +1,6 @@
+# LoginFormsController
 class TopsController < ApplicationController
-  before_action :authenticate_current_user, {only: [:logout]}
+  # before_action :authenticate_current_user, {only: [:logout]}
   before_action :fobid_current_user, {only: [:top, :new, :login, :create]}
 
   def top
@@ -7,22 +8,20 @@ class TopsController < ApplicationController
   end
 
   def new
-    
+
   end
 
   def create
-    @user = User.new(user_id: params[:user_id],
-                     email: params[:email],
-                     name: params[:user_id],
+    @user = User.new(email: params[:email],
+                     name: params[:email],
                      paid_holiday_count: 10,
                      password: params[:password])
     if @user.save
-      session[:user_id] = @user.user_id
+      session[:id] = @user.id
       flash[:notice] = 'ログインしました'
       redirect_to('/users/home')
     else
-      @error_message = "エラーメッセージ"
-      @user_id = params[:user_id]
+      @error_message = 'エラーメッセージ'
       @email = params[:email]
       @password = params[:password]
       render('tops/new')
@@ -32,7 +31,7 @@ class TopsController < ApplicationController
   def login
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.user_id
+      session[:id] = @user.id
       flash[:notice] = 'ログインしました'
       redirect_to('/users/home')
     else
@@ -44,7 +43,7 @@ class TopsController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    session[:id] = nil
     redirect_to('/')
   end
 end
