@@ -1,2 +1,34 @@
-<h1>Tops#new</h1>
-<p>Find me in app/views/tops/new.html.erb</p>
+<html>
+  <body>
+    <div class="container">
+      <div class="main">
+        <div class="login-form">
+          <h1>ログイン</h1>
+          <%= form_tag("/tops/create") do %>
+            <div class="main item" style="text-align:end;">
+              <p>ユーザーID
+              <input type="text" name="user_id" value="<% @user_id %>" >
+              </p>
+            </div>
+            <div class="main item" style="text-align:end;">
+              <p>email
+              <input type="email" name="email" value="<% @email %>" >
+              </p>
+            </div>
+            <div class="main item" style="text-align:end;">
+              <p>パスワード
+              <input type="password" name="password" value="<% @password %>">
+              </p>
+            </div>
+              <% if @error_message %>
+                <div class="error_message">
+                  <%= @error_message %>
+                </div>
+              <% end %>
+            <input class="btn btn-default" type="submit" value="新規登録">
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -51,7 +51,7 @@
       </div>
     </div>
     <% if flash[:notice] %>
-      <div class="flash">
+      <div class="flash-login">
         <%= flash[:notice] %>
       </div>
     <% end %>
@@ -60,7 +60,7 @@
     </div>
     <% else %>
       <% if flash[:notice] %>
-        <div class="flash">
+        <div class="flash-logout">
           <%= flash[:notice] %>
         </div>
       <% end %>

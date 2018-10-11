@@ -10,6 +10,25 @@ class TopsController < ApplicationController
     
   end
 
+  def create
+    @user = User.new(user_id: params[:user_id],
+                     email: params[:email],
+                     name: params[:user_id],
+                     role: "owner",
+                     paid_holiday_count: 10)
+    @user.password = params[:password]
+    if @user.save
+      session[:user_id] = @user.user_id
+      redirect_to('/users/home')
+    else
+      @error_message = "エラーメッセージ"
+      @user_id = params[:user_id]
+      @email = params[:email]
+      @password = params[:password]
+      render('tops/new')
+    end
+  end
+  
   def login
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])

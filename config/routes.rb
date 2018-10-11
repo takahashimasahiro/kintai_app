@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'users/home' => 'users#attendance'
   post 'users/show' => 'users#attendande_table'
   post 'tops/new' => 'tops#new'
+  post 'tops/create' => 'tops#create'
   # get 'tops/login'
   get '/' => 'tops#top'
 end
