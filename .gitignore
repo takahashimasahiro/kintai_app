@@ -35,6 +35,6 @@ yarn-debug.log*
 /node_modules
 yarn-debug.log*
 .yarn-integrity
-vendor/bundler
+/vendor/bundler
 /Gemfile.lock
 /package-lock.json
