@@ -1,6 +1,6 @@
 class TopsController < ApplicationController
   before_action :authenticate_current_user, {only: [:logout]}
-  before_action :fobid_current_user, {only: [:top, :new, :login]}
+  before_action :fobid_current_user, {only: [:top, :new, :login, :create]}
 
   def top
     session[:user_id] = nil
@@ -14,11 +14,11 @@ class TopsController < ApplicationController
     @user = User.new(user_id: params[:user_id],
                      email: params[:email],
                      name: params[:user_id],
-                     role: "owner",
-                     paid_holiday_count: 10)
-    @user.password = params[:password]
+                     paid_holiday_count: 10,
+                     password: params[:password])
     if @user.save
       session[:user_id] = @user.user_id
+      flash[:notice] = 'ログインしました'
       redirect_to('/users/home')
     else
       @error_message = "エラーメッセージ"

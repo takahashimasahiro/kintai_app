@@ -25,7 +25,7 @@ default: &default
 development:
   <<: *default
   adapter: postgresql
-  encoding: unicode
+  encoding: utf-8
   database: user
   username: rails_user
   # password: password
