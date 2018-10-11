@@ -4,27 +4,15 @@
     <div class="search">
       <div class="search-year">
         <div id="pulldown">
-            <%= form_tag('users/show')%>
-              <%= select_tag(:aselected_year, options_for_select([function(){}], class: 'year_selected' )) %>
-            <%# <select  name="year" class="pulldown-year"> %>
-            <%# <%= (0..20).each do |year| %>
-              <%# <Option value="<%= @first_year.to_i + year %>
-                <%# <% if @today.year == @first_year.to_i + year %> 
-                  <%# selected %>
-                <%# <% end %>
-              <%# <%= @first_year.to_i + year %></Option> 
-            <%# <% end %> 
-          <%# </select> %>
-          年 
-          <select name="month" class="pulldown-month">
-            <%= (1..12).each do |month| %>
-              <Option value="<%= month %>"
-                <% if @today.month == month %>
-                  selected
-                <% end %>>
-              <%= month.to_i %></Option>
+            <%= form_tag('users/show') do %>
+              <%= select_tag('select_year',
+                              options_for_select(@first_year,
+                                                class: 'opt_year',
+                                                selected: @today.year.to_i, 
+                                                ),
+                              :onchange => 'users/show' ) %>年
+              <%= select_tag('select_month',options_for_select((1..12),class:'opt_month',selected: @today.month.to_i)) %>月
             <% end %>
-          <select>月
         </div>
         <div class="search-rightend">
           <div class="inputtime">
@@ -36,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div id="test">通ってるか確かめる用のタグ</div>
+      <%# <div id="test">通ってるか確かめる用のタグ</div> %>
     </div>
     <div id="attendance-table" class="table">
       <table class='table table-bordered' >
