@@ -15,9 +15,5 @@
 // export { default as users } from 'src/javascripts/users';
 import 'jquery';
 import '../src/stylesheets/application.scss';
-import '../src/javascripts/users.js';
 import Rails from 'rails-ujs';
 Rails.start();
-console.log('Hello World from Webpacker');
-
-// alert('debug alert');
