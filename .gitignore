@@ -33,4 +33,9 @@
 /node_modules
 yarn-debug.log*
 .yarn-integrity
-/vendor/bundler
+/vendor/bundler/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
+vendor/bundler
