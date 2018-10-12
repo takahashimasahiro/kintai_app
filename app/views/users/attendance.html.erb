@@ -4,60 +4,18 @@
     <div class="search">
       <div class="search-year">
         <div id="pulldown">
-            <%= form_with url: 'users/show' do %>
-              <%= select_tag('select_year',
-                              options_for_select(@first_year,
-                                                class: 'opt_year',
-                                                selected: @today.year.to_i, 
-                                                ),
-                              :onchange => 'users/show' ) %>年
-              <%= select_tag('select_month',options_for_select((1..12),class:'opt_month',selected: @today.month.to_i)) %>月
-            <% end %>
+          <%= form_with url: 'users/show' do %>
+            <%= pulldown_year %>
+            <%= pulldown_month %>
+          <% end %>
         </div>
-        <div class="search-rightend">
-          <div class="inputtime">
-            <input type="button" name="syukkin" value="出勤"/>
-            <input type="button" name="taikin" value="退勤"/>
-          </div>
-          <div class="attend-save">
-            <input type="button" name="attend_save" value="保存"/>
-          </div>
-        </div>
+        <%= attendance_button %>
       </div>
-      <%# <div id="test">通ってるか確かめる用のタグ</div> %>
     </div>
     <div id="attendance-table" class="table">
       <table class='table table-bordered' >
-        <tr>
-          <th>日付</th>
-          <th>曜日</th>
-          <th>出勤時間</th>
-          <th>退勤時間</th>
-          <th>状況</th>
-        </tr>
-        <% (1..@lastday).each do |row| %>
-        <tr name='row_<%= row %>'>
-          <th name='date_<%= row %>'><%= row %></th>
-          <th name='rowofweek_<%= @today.change(day: row ).wday %>'>
-            <%= @dateofweek[@today.change(day: row ).wday] %></th>
-          <th>
-            <input type="time" name="work_start_<%= row %>">
-          </th>
-          <th>
-            <input type="time" name="work_end_<%= row %>">
-          </th>
-          <th>
-            <select name="status_<%= row %>">
-              <Option name="work"> 出勤</Option>
-              <Option name="vacation"> 有休休暇</Option>
-              <Option name="am_vacation"> 午前休暇</Option>
-              <Option name="pm_vacation"> 午後休暇</Option>
-              <Option name="holiday_work"> 休日出勤</Option>
-              <Option name="absence"> 欠勤</Option>
-            </select>
-          </th>
-        </tr>
-        <% end %>
+        <%= table_header %>
+        <%= table_rows %>
       </table>
     </div>
   </body>
