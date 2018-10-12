@@ -20,21 +20,28 @@
 /node_modules
 /yarn-error.log
 
-/public/assets
 .byebug_history
 
 /app/assets/images/*
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/datavase.yml
+
+/public/assets
 /public/*
-/node_modules
-yarn-debug.log*
-.yarn-integrity
-/vendor/bundler/public/packs
 /public/packs-test
 /node_modules
+
 yarn-debug.log*
 .yarn-integrity
+
+/vendor/bundler/public/packs
 /vendor/bundler
-/Gemfile.lock
-/package-lock.json
+
+/node_modules
+
+yarn-debug.log*
+.yarn-integrity
+
+
+.rspec
