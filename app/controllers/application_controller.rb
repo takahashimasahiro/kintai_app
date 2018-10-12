@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     if session[:user_id]
-      @current_user = User.find_by(id: session[:id])
+      @current_user = User.find(session[:id])
     end
   end
 
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def fobid_current_user
+  def forbid_current_user
     if @current_user
       flash[:notice] = 'すでにログインしています'
       redirect_to('/users/home')

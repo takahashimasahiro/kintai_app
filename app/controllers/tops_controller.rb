@@ -1,14 +1,12 @@
 # LoginFormsController
 class TopsController < ApplicationController
-  # before_action :authenticate_current_user, {only: [:logout]}
-  before_action :fobid_current_user, {only: [:top, :new, :login, :create]}
+  before_action :forbid_current_user, {only: [:top, :new, :login, :create]}
 
   def top
     session[:user_id] = nil
   end
 
   def new
-
   end
 
   def create
