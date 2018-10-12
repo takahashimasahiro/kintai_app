@@ -9,7 +9,9 @@
       "type": "Ruby",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "${workspaceRoot}/main.rb"
+      "program": "${workspaceRoot}/app/controllers/tops_controller.rb",
+      // "program": "${workspaceRoot}/main.rb",
+      "useBundler": true
     },
     {
       "name": "Listen for rdebug-ide",
@@ -28,7 +30,8 @@
       "program": "${workspaceRoot}/bin/rails",
       "args": [
         "server"
-      ]
+      ],
+      "useBundler": true
     },
     {
       "name": "RSpec - all",
@@ -51,7 +54,8 @@
         "-I",
         "${workspaceRoot}",
         "${file}"
-      ]
+      ],
+      "useBundler": true
     },
     {
       "name": "Cucumber",

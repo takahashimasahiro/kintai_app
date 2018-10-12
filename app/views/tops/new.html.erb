@@ -4,7 +4,7 @@
       <div class="main">
         <div class="login-form">
           <h1>ログイン</h1>
-          <%= form_tag("/tops/create") do %>
+          <%= form_with(url: "/tops/create") do %>
             <div class="main item" style="text-align:end;">
               <p>email
               <input type="email" name="email" value="<% @email %>" >

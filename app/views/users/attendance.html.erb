@@ -4,7 +4,7 @@
     <div class="search">
       <div class="search-year">
         <div id="pulldown">
-            <%= form_with('users/show') do %>
+            <%= form_with url: 'users/show' do %>
               <%= select_tag('select_year',
                               options_for_select(@first_year,
                                                 class: 'opt_year',

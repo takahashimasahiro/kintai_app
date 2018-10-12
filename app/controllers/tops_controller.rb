@@ -1,7 +1,6 @@
 # LoginFormsController
 class TopsController < ApplicationController
   before_action :forbid_current_user, {only: [:top, :new, :login, :create]}
-
   def top
     session[:user_id] = nil
   end
@@ -25,10 +24,11 @@ class TopsController < ApplicationController
       render('tops/new')
     end
   end
-  
+
   def login
-    @user = User.find_by(email: params[:email])
-    if @user && @user.authenticate(params[:password])
+    # flash[:notice] = 'login'
+    @user = User.find_by(email: params[:user][:email])
+    if @user && @user.authenticate(params[:user][:password])
       session[:id] = @user.id
       flash[:notice] = 'ログインしました'
       redirect_to('/users/home')

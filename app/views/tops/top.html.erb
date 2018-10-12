@@ -4,15 +4,15 @@
       <div class="main">
         <div class="login-form">
           <h1>ログイン</h1>
-          <%= form_tag("/login") do %>
+          <%= form_with(url: "/login", local: true) do |form| %>
             <div class="main item" style="text-align:end;">
               <p>email
-              <%= email_field :user,:address  %>
+              <%= email_field :user,:email  %>
               </p>
             </div>
             <div class="main item" style="text-align:end;">
               <p>パスワード
-                <%= password_field_tag(:password) %>
+                <%= password_field :user,:password %>
               </p>
             </div>
               <% if @error_message %>
@@ -20,14 +20,16 @@
                   <%= @error_message %>
                 </div>
               <% end %>
-              <input class="btn btn-default" type="submit" value="ログイン">
+              <%= form.submit "ログイン" , class: "btn btn-default" %>
+              <%# <input class="btn btn-default" type="submit" value="ログイン"> %>
           <% end %>
         </div>
         <div class="main">
           <p>新規登録はこちら</p>
-          <%= form_tag("/tops/new") do %>
+          <%= form_with(url:"/tops/new", local: true) do |form| %>
           <%# TODO 新規作成ボタンの配置　あと実装するかどうか %>
-            <input class="btn btn-default" type="submit" value="新規登録">
+              <%= form.submit "新規登録" , class: "btn btn-default" %>
+            <%# <input class="btn btn-default" type="submit" value="新規登録"> %>
           <% end %>
         </div>
       </div>

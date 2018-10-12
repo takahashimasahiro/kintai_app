@@ -25,7 +25,6 @@
 /app/assets/images/*
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-# /config/datavase.yml
 
 /public/assets
 /public/*
@@ -35,9 +34,6 @@
 yarn-debug.log*
 .yarn-integrity
 
-# /vendor/bundler/public/packs
 /vendor/bundler
 
 .rspec
-
-# /package-lock.json
