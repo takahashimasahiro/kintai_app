@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  get 'logout' => 'session#logout'
-  post 'login' => 'session#login'
-  get 'users/home' => 'users#attendance'
-  post 'users/show' => 'users#attendande_table'
-  post 'tops/new' => 'session#new'
-  post 'tops/create' => 'session#create'
-  # get 'tops/login'
-  get '/' => 'tops#top'
+  get 'users/home' => 'users#home'
+  post 'users/show' => 'users#show'
+  post 'sessions/new' => 'sessions#new'
+  post 'sessions/create' => 'sessions#create'
+  get 'logout' => 'sessions#logout'
+  post 'login' => 'sessions#login'
+  get '/' => 'sessions#top'
 end
