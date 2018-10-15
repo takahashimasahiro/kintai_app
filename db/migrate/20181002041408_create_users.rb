@@ -5,9 +5,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :email
       t.string :name
       t.string :password
-      t.string :role
-      t.numeric :paid_holiday_count
-
+      t.string :role, default: 'employee'
+      t.numeric :paid_holiday_count, default: 10
       t.timestamps
     end
   end

@@ -1,7 +1,6 @@
 # LoginFormsController
 class SessionsController < ApplicationController
   before_action :forbid_current_user, {only: [:top, :new, :login, :create]}
-
   def top
     session[:user_id] = nil
     render('sessions/top')
@@ -11,14 +10,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.new(email: params[:email],
-                     name: params[:email],
-                     paid_holiday_count: 10,
-                     password: params[:password])
+    @user = User.new(email: params[:email],name: params[:email],password: params[:password])
     if @user.save
       session[:id] = @user.id
-      flash[:notice] = 'ログインしました'
-      redirect_to('/users/home')
+      redirect_to '/users/home', flash: {notise: 'ログインしました'}
     else
       @error_message = 'エラーメッセージ'
       @email = params[:email]
@@ -31,8 +26,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:user][:email])
     if @user && @user.authenticate(params[:user][:password])
       session[:id] = @user.id
-      flash[:notice] = 'ログインしました'
-      redirect_to('/users/home')
+      redirect_to '/users/home', flash: {notice: 'ログインしました'}
     else
       @error_message = 'アドレスまたはパスワードが間違っています'
       @email = params[:email]

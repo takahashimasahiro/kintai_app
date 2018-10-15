@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_094055) do
+ActiveRecord::Schema.define(version: 2018_10_15_093535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attendance_times", force: :cascade do |t|
-    t.string "user_id"
+    t.integer "user_id"
     t.date "work_date"
     t.time "work_start"
     t.time "work_end"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 2018_10_11_094055) do
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "name"
-    t.string "role"
-    t.decimal "paid_holiday_count"
+    t.string "role", default: "employee"
+    t.decimal "paid_holiday_count", default: "10.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
