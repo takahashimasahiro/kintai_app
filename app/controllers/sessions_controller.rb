@@ -7,14 +7,12 @@ class SessionsController < ApplicationController
   end
 
   def new
+    @user = User.new
   end
 
   def create
     @user = User.new(user_params)
-    @user.email = params[:email]
-    # @user.name = params[:name]
-    @user.password = params[:password]
-
+    @user.name = "テストユーザー"
     if @user.save
       session[:id] = @user.id
       redirect_to '/users/home', flash: {notise: 'ログインしました'}
@@ -27,10 +25,10 @@ class SessionsController < ApplicationController
   end
 
   def login
-    # @user = User.find_by(params[:email])
-    # if @user && @user.authenticate(params[:password])
-    @user = User.find_by(email: 'admin@example.com')
-    if @user && @user.authenticate('password')
+    @user = User.find_by(params[:email])
+    if @user && @user.authenticate(params[:password])
+    # @user = User.find_by(email: 'admin@example.com')
+    # if @user && @user.authenticate('password')
         session[:id] = @user.id
       redirect_to '/users/home', flash: {notice: 'ログインしました'}
     else
@@ -42,7 +40,7 @@ class SessionsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).parmit(:email, :password)
+    params.require(:user).permit(:email, :password, :name)
   end
 
   def logout
