@@ -4,7 +4,7 @@
       <div class="main">
         <div class="login-form">
           <h1>ログイン</h1>
-          <%= form_with(url: "/sessions/create") do |form| %>
+          <%= form_with :model => :user, url: "/sessions/create",method: :post, local: true do |form| %>
             <%= render :partial => "input", :locals => {f: form}%>
             <%= form.submit "新規登録" , class: "btn btn-default" %>
           <% end %>

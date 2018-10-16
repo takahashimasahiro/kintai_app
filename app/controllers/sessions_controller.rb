@@ -10,7 +10,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.new(email: params[:email],name: params[:email],password: params[:password])
+    @user = User.new(user_params)
+    @user.email = params[:email]
+    # @user.name = params[:name]
+    @user.password = params[:password]
+
     if @user.save
       session[:id] = @user.id
       redirect_to '/users/home', flash: {notise: 'ログインしました'}
@@ -23,8 +27,8 @@ class SessionsController < ApplicationController
   end
 
   def login
-    # @user = User.find_by(email: params.require(:user).parmit(:email))
-    # if @user && @user.authenticate(params.require(:user).parmit(:password))
+    # @user = User.find_by(params[:email])
+    # if @user && @user.authenticate(params[:password])
     @user = User.find_by(email: 'admin@example.com')
     if @user && @user.authenticate('password')
         session[:id] = @user.id
@@ -35,6 +39,10 @@ class SessionsController < ApplicationController
       @password = params[:password]
       render('sessions/top')
     end
+  end
+
+  def user_params
+    params.require(:user).parmit(:email, :password)
   end
 
   def logout

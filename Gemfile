@@ -28,6 +28,7 @@ gem 'webpacker', '~> 3.5'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
+gem 'rails-i18n'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
