@@ -1,6 +1,7 @@
 module UsersHelper
 
   def pulldown_year
+    (@today.year.to_i - 10..@today.year.to_i + 10).map{|i| @show_years << i}
     select_tag('select_year',
       options_for_select(@show_years,
                         class: 'opt_year',
@@ -52,6 +53,7 @@ module UsersHelper
   end
 
   def table_row(row)
+    @dateofweek = ["日","月","火","水","木","金","土"]
     content_tag(:tr, row, name: "row_#{row}") do
       # 日付
       content_tag(:th, row, name: "date_#{row}")+
@@ -60,11 +62,13 @@ module UsersHelper
        name:"rowofweek_#{@today.change(day: row ).wday}") +
       # 出勤時間
       content_tag(:th,name:"start_work_#{row}" ) do
-        time_select("work_#{row}", 'start' )
+        time_select("work_#{row}", 'start',
+        :default => {:hour => '10', :minute => '00'})
       end +
       # 退勤時間
       content_tag(:th, name:"end_work_#{row}") do
-        time_select("work_#{row}",'end')
+        time_select("work_#{row}",'end',
+        :default => {:hour => '19', :minute => '00'})
       end+
       # 状況
       content_tag(:th) do
