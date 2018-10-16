@@ -23,9 +23,11 @@ class SessionsController < ApplicationController
   end
 
   def login
-    @user = User.find_by(email: params[:user][:email])
-    if @user && @user.authenticate(params[:user][:password])
-      session[:id] = @user.id
+    # @user = User.find_by(email: params.require(:user).parmit(:email))
+    # if @user && @user.authenticate(params.require(:user).parmit(:password))
+    @user = User.find_by(email: 'admin@example.com')
+    if @user && @user.authenticate('password')
+        session[:id] = @user.id
       redirect_to '/users/home', flash: {notice: 'ログインしました'}
     else
       @error_message = 'アドレスまたはパスワードが間違っています'

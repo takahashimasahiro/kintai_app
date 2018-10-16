@@ -9,65 +9,47 @@
     <%= javascript_pack_tag 'application' %>
     <%= javascript_pack_tag params[:controller] %>
 </head>
-<body>
-<% if @current_user %>
-  <div class="row">
-    <div class="col-sm-3 sidebar open">
-      <div class="row sidebar-header header-cover" >
-        <div class="col-sm-5 sidebar-image">
-          <%# TODO アイコン関係入れるかどうか %>
-          <%# <img src=""> %>
+  <body>
+    <% if @current_user %>
+      <div class="row">
+        <div class="col-sm-3 sidebar open">
+          <div class="row sidebar-header header-cover" >
+            <div class="col-md-7 user-profile">
+              <ul class="profile-profile">プロフィール</ul>
+              <ul class="profile-username"><%= @current_user.name %></ul>
+              <ul class="profile-email"><%= @current_user.email %></ul>
+            </div>
+          </div>
+          <div class="sidebar-menu">
+            <div class="sidebar-nav">
+              <%= render partial: "layouts/sidebar_tab",
+              locals: {controller_name: "users", action_name: "home",
+              tabname: "出勤状況一覧", showcount: ""}%>
+              <%= render partial: "layouts/sidebar_tab",
+              locals: {controller_name: "users", action_name: "home",
+              tabname: "出勤者リスト", showcount: ""}%>
+              <%= render partial: "layouts/sidebar_tab",
+              locals: {controller_name: "users", action_name: "home",
+              tabname: "有休休暇申請", showcount: 12}%>
+              <%= render partial: "layouts/sidebar_tab",
+              locals: {controller_name: "users" , action_name: "home",
+              tabname: "ユーザー設定", showcount: ""}%>
+              <%= render partial: "layouts/sidebar_tab",
+              locals: {controller_name: "sessions" , action_name: "logout",
+              tabname: "ログアウト", showcount: ""}%>
+            </div>
+          </div>
         </div>
-        <div class="col-md-7 user-profile">
-          <ul class="profile-profile">プロフィール</ul>
-          <ul class="profile-username"><%= @current_user.name %></ul>
-          <%# <ul class="profile-userid"><%= @current_user.id %></ul> 
-          <ul class="profile-email"><%= @current_user.email %></ul>
-        </div>
-      </div>
-      <div class="sidebar-menu">
-        <div class="sidebar-nav">
-          <a class="row" href="/users/home">
-            <p class="col-sm-9">出勤状況一覧</p>
-            <span class="col-sm-3 sidebar-badge"></span>
-          </a>
-          <a class="row" href="/users/home">
-            <p class="col-sm-9">出勤者リスト</p>
-            <span class="col-sm-3 sidebar-badge"></span>
-          </a>
-          <a class="row" href="/users/home">
-            <p class="col-sm-9">有給休暇申請</p>
-            <span class="col-sm-3 sidebar-badge">12</span>
-          </a>
-          <a class="row" href="/users/home">
-            <p class="col-sm-9">ユーザー設定</p>
-            <span class="col-sm-3 sidebar-badge"></span>
-          </a>
-          <a class="row" rel="nofollow" href="../logout">
-            <p class="col-sm-9">ログアウト</p>
-            <span class="col-sm-3 sidebar-badge"></span>
-          </a>
+        <%= render partial: "layouts/flash",locals: {class_name: "flash-login"} %>
+        <div class="col-sm-9 wrapper-login">
+          <%= yield %>
         </div>
       </div>
-    </div>
-    <% if flash[:notice] %>
-      <div class="flash-login">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <div class="col-sm-9 wrapper-login">
-        <%= yield %>
-    </div>
     <% else %>
-      <% if flash[:notice] %>
-        <div class="flash-logout">
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
+      <%= render partial: "layouts/flash",locals: {class_name: "flash-logout"} %>
       <div class="wrapper-logout">
         <%= yield %>
       </div>
     <% end %>
-  </div>
-</body>
+  </body>
 </html>
