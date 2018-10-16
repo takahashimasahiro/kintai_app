@@ -1,6 +1,8 @@
 import '../src/stylesheets/users.scss';
 var $ = require('jquery');
+var moment = require('moment');
 const today = new Date();
+
 var thisHour = () =>{
   return (`00${today.getHours()}`).slice(-2)
 }
