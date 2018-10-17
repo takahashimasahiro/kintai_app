@@ -13,11 +13,11 @@ var getMinutes = () =>{
 
 $(function(){
   $('button[name=syukkin]').on('click',function(){
-    document.getElementsByName(`work_${today.getDate()}[start(4i)]`)[0].value = thisHour()
-    document.getElementsByName(`work_${today.getDate()}[start(5i)]`)[0].value = getMinutes()
+    $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
+    $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
   });
   $('button[name=taikin]').on('click',function(){
-    document.getElementsByName(`work_${today.getDate()}[end(4i)]`)[0].value = thisHour()
-    document.getElementsByName(`work_${today.getDate()}[end(5i)]`)[0].value = getMinutes()
+    $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
+    $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
   });
 });
