@@ -1,15 +1,10 @@
 import '../src/stylesheets/users.scss';
-
-var $ = require('jquery');
-var moment = require('moment');
+// import moment from require('moment');
+const $ = require('jquery');
 const today = new Date();
 
-var thisHour = () =>{
-  return (`00${today.getHours()}`).slice(-2)
-}
-var getMinutes = () =>{
-  return (`00${today.getMinutes()}`).slice(-2)
-}
+let thisHour = () =>{return (`00${today.getHours()}`).slice(-2)}
+let getMinutes = () =>{return (`00${today.getMinutes()}`).slice(-2)}
 
 $(function(){
   $('button[name=syukkin]').on('click',function(){
