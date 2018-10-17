@@ -4,7 +4,7 @@
       <div class="main">
         <div class="login-form">
           <h1>ログイン</h1>
-          <%= form_with(model: @user, url: "/login", local: true) do |form| %>
+          <%= form_with model: @user, url: "/login", local: true do |form| %>
             <%= render :partial => "input", :locals => {f: form}%>
             <%= form.submit "ログイン" , class: "btn btn-default" %>
           <% end %>

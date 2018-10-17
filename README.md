@@ -1,7 +1,7 @@
 # README
 
 install 
-$ bundle install
+$ bundle install --path=vendor/bundle
 $ yarn install
 $ bin/webpack
 $ bundle exec rails s

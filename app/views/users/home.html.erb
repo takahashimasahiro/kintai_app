@@ -6,7 +6,7 @@
         <div id="pulldown">
           <%= form_with url: 'users/show' do %>
             <%= select_tag('select_year',
-                options_for_select(@show_years,
+                options_for_select(show_years_map ,
                         class: 'opt_year',
                         selected: @today.year.to_i),
                 :onchange => 'users/show')%>年
