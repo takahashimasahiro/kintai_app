@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# TODOルートに合わせる
 RSpec.describe TopsController, type: :controller do
   describe 'GET #top' do
     describe '200 OKとなる' do

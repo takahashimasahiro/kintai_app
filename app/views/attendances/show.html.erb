@@ -5,12 +5,12 @@
       <div class="search-year">
         <div id="pulldown">
           <%= form_with url: 'users/show' do |form| %>
-            <%= form.select_tag('select_year',
+            <%= select_tag('select_year',
                 options_for_select(show_years_map ,
                         class: 'opt_year',
                         selected: @today.year.to_i),
                 :onchange => 'users/show')%>年
-            <%= form.select_tag('select_month',
+            <%= select_tag('select_month',
                 options_for_select((1..12),
                         class:'opt_month',
                         selected: @today.month.to_i),

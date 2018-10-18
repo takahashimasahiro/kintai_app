@@ -1,5 +1,27 @@
 class UsersController < ApplicationController
-  before_action :authenticate_current_user
+  # before_action :authenticate_current_user
+
+  def new
+    @user = User.new
+  end
+  
+  def create
+    @user = User.new(user_params)
+    @user.name = "テストユーザー"
+    if @user.save
+      session[:id] = @user.id
+      redirect_to attendance_path(@user.id), flash: {notise: 'ログインしました'}
+    else
+      @error_message = 'エラーメッセージ'
+      @email = params[:email]
+      @password = params[:password]
+      redirect_to new_user_path
+    end
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :name)
+  end
 
   def home
     @DATE_OF_WEEK = ["日","月","火","水","木","金","土"].freeze
@@ -10,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @today = params[:select_year]
+    # @today = params[:select_year]
     render('users/home')
   end
 

@@ -23,19 +23,19 @@
           <div class="sidebar-menu">
             <div class="sidebar-nav">
               <%= render partial: "layouts/sidebar_tab",
-              locals: {controller_name: "users", action_name: "home",
+              locals: {controller_name: "attendances", action_name: "show",
               tabname: "出勤状況一覧", showcount: ""}%>
               <%= render partial: "layouts/sidebar_tab",
-              locals: {controller_name: "users", action_name: "home",
+              locals: {controller_name: "attendances", action_name: "show",
               tabname: "出勤者リスト", showcount: ""}%>
               <%= render partial: "layouts/sidebar_tab",
-              locals: {controller_name: "users", action_name: "home",
+              locals: {controller_name: "attendances", action_name: "show",
               tabname: "有休休暇申請", showcount: 12}%>
               <%= render partial: "layouts/sidebar_tab",
-              locals: {controller_name: "users" , action_name: "home",
+              locals: {controller_name: "attendances" , action_name: "show",
               tabname: "ユーザー設定", showcount: ""}%>
               <%= render partial: "layouts/sidebar_tab",
-              locals: {controller_name: "sessions" , action_name: "logout",
+              locals: {controller_name: "sessions" , action_name: "new",
               tabname: "ログアウト", showcount: ""}%>
             </div>
           </div>

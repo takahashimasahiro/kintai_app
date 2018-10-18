@@ -4,11 +4,15 @@
       <div class="main">
         <div class="login-form">
           <h1>ログイン</h1>
-          <%= form_with model: @user, url: "/sessions/create",method: :post, local: true do |form| %>
+          <%= form_with model: @user, url: "/login", local: true do |form| %>
             <%= render :partial => "input", :locals => {f: form}%>
-            <%= form.submit "新規登録" , class: "btn btn-default" %>
+            <%= form.submit "ログイン" , class: "btn btn-default" %>
           <% end %>
         </div>
+          新規登録はこちら
+          <%= form_with model: @user, url: new_user_path,method: :get, local: true do |form| %>
+            <%= form.submit "新規登録" , class: "btn btn-default" %>
+          <% end %>
       </div>
     </div>
   </body>

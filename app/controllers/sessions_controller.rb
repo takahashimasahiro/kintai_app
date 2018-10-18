@@ -1,48 +1,23 @@
 # LoginFormsController
 class SessionsController < ApplicationController
-  before_action :forbid_current_user, {only: [:top, :new, :login, :create]}
-  def top
-    session[:user_id] = nil
-    render('sessions/top')
-  end
+  before_action :forbid_current_user, {only: [:login]}
 
   def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(user_params)
-    @user.name = "テストユーザー"
-    if @user.save
-      session[:id] = @user.id
-      redirect_to '/users/home', flash: {notise: 'ログインしました'}
-    else
-      @error_message = 'エラーメッセージ'
-      @email = params[:email]
-      @password = params[:password]
-      render('sessions/new')
-    end
+    session[:user_id] = nil
+    @current_user = nil
   end
 
   def login
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
         session[:id] = @user.id
-      redirect_to '/users/home', flash: {notice: 'ログインしました'}
+      redirect_to attendance_path(@user.id), flash: {notice: 'ログインしました'}
     else
       @error_message = 'アドレスまたはパスワードが間違っています'
       @email = params[:email]
       @password = params[:password]
-      render('sessions/top')
+      redirect_to new_session_path
     end
   end
 
-  def user_params
-    params.require(:user).permit(:email, :password, :name)
-  end
-
-  def logout
-    session[:id] = nil
-    redirect_to('/')
-  end
 end

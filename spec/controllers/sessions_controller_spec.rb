@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# TODOルートに合わせる
 RSpec.describe SessionsController, type: :controller do
 
   describe "GET #new" do
