@@ -1,9 +1,12 @@
 # BaseController
 class ApplicationController < ActionController::Base
-  before_action :set_current_user
-  def set_current_user
+  before_action :current_user
+  def current_user
     if logged_in?
-      @current_user ||= User.find(session[:id])
+       @current_user ||= User.find(session[:id])
+      # @current_user = User.find(session[:id])
+    # else
+    #   @current_user = nil
     end
   end
 
