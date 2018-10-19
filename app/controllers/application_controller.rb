@@ -4,14 +4,11 @@ class ApplicationController < ActionController::Base
   def current_user
     if logged_in?
        @current_user ||= User.find(session[:id])
-      # @current_user = User.find(session[:id])
-    # else
-    #   @current_user = nil
     end
   end
 
   def authenticate_current_user
-    if !logged_in? 
+    unless logged_in? 
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
