@@ -1,11 +1,11 @@
     <div id="attendance-table" class="table">
       <table class='table table-bordered' >
         <tr>
-          <th>日付</th>
-          <th>曜日</th>
-          <th>出勤時間</th>
-          <th>退勤時間</th>
-          <th>状態</th>
+          <th><%= label :page, '日付'%></th>
+          <th><%= label :page, '曜日'%></th>
+          <th><%= label :page, '出勤時間'%></th>
+          <th><%= label :page, '退勤時間'%></th>
+          <th><%= label :page, '状態'%></th>
         </tr>
         <% (1..@lastday).each do |row| %>
           <tr name='row_<%=row%>'>

@@ -4,6 +4,7 @@ class AttendancesController < ApplicationController
 
   def show
     # AttendanceConstant.freeze
+    
     @today = Date.today
     @lastday = @today.end_of_month.day
     @attendance_table = AttendanceTime.where(:work_date => @today.all_month,user_id: @current_user.id)
