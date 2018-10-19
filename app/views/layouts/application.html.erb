@@ -14,11 +14,11 @@
       <div class="row">
         <div class="col-sm-3 sidebar open">
           <div class="row sidebar-header header-cover" >
-            <div class="col-md-7 user-profile">
-              <ul class="profile-profile"><%= label :page ,'プロフィール' %></ul>
-              <ul class="profile-username"><%= label :page ,@current_user.name %></ul>
-              <ul class="profile-email"><%= label :page ,@current_user.email %></ul>
-            </div>
+            <ul class="col-md-7 user-profile">
+              <li class="profile-profile"><%= label :page ,'プロフィール' %></li>
+              <li class="profile-username"><%= label :page ,@current_user.name %></li>
+              <li class="profile-email"><%= label :page ,@current_user.email %></li>
+            </ul>
           </div>
           <div class="sidebar-menu">
             <div class="sidebar-nav">
