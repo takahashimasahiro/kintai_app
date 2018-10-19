@@ -11,7 +11,7 @@
           <tr name='row_<%=row%>'>
             <th name='date_<%=row%>'><%=row%></th>
             <th name='row_of_week_<%=@today.change(day: row ).wday%>'>
-              <%= @DATE_OF_WEEK[@today.change(day: row ).wday] %>
+              <%= date_of_week(@today.change(day: row ).wday) %>
             </th>
             <th name='start_work_<%=row%>'>
               <%= time_select("work_#{row}", 'start',:default => {:hour => '10', :minute => '00'}) %>
@@ -21,7 +21,7 @@
             </th>
             <th>
               <%= select_tag("status_#{row}",
-                  options_for_select(@WORK_STATUS))%>
+                  options_for_select(work_status))%>
             </th>
           </tr>
         <% end %>
