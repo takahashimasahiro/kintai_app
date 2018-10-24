@@ -1,0 +1,19 @@
+<div class='main item'>
+  <%= f.label :page, 'email' %> 
+  <%= f.email_field :email %>
+</div>
+<div class='main item'>
+  <%= f.label :page,  'password' %>
+  <%= f.password_field :password %>
+</div>
+<% if @user %>
+  <% @user.errors.full_messages.each do |message|  %>
+    <div class='error_message'>
+      <%= message %>
+    </div>
+  <% end %>
+<% elsif @error_messages %>
+  <div class='error_message'>
+    <%= @error_messages %>
+  </div>
+<% end %>

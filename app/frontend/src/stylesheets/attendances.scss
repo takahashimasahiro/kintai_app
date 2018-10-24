@@ -1,18 +1,12 @@
+@import "./application";
 
 body{
   font-size: 15px
 }
 h1{
   font-size: 25px;
-  color: red;
-
 }
-// .pulldown-year{
-//   background-color: aqua
-// }
-// .pulldown-month{
-//   background-color: red;
-// }
+
 .search{
   margin-top: 50px;
 }
@@ -25,13 +19,12 @@ h1{
   display: inline;
   flex-basis: 100%
 }
-.search-rightend{
+.search-rightend, .save-button{
   float: right;
 }
 .inputtime, .attend-save{
   display: inline;
 }
-
 .table {
   margin: 10px;
 }

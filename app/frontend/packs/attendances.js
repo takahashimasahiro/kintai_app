@@ -1,6 +1,11 @@
-import '../src/stylesheets/users.scss';
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+import '../src/stylesheets/application.scss';
+import '../src/stylesheets/attendances.scss';
 // import moment from require('moment');
-const $ = require('jquery');
+// import $  from require('jquery');
+import $  from 'jquery';
+
 const today = new Date();
 
 let thisHour = () =>{return (`00${today.getHours()}`).slice(-2)}

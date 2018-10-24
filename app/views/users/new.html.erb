@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <div class="container">
+      <div class="main">
+        <div class="login-form">
+          <h1>新規登録</h1>
+          <%= form_with model: @user, url: users_path ,method: :post , local: true do |form| %>
+            <%= render :partial => "templates/input", :locals => {f: form}%>
+            <%= form.submit "新規登録" , class: "btn btn-default" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

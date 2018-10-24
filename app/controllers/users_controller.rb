@@ -1,19 +1,28 @@
 class UsersController < ApplicationController
-  before_action :authenticate_current_user
-
-  def home
-
+  # before_action :authenticate_current_user
+  def new
+    @user = User.new
+    session[:id] = nil
+    @current_user = nil
+    @error_messages =nil
+  end
+  
+  def create
+    @user = User.new(user_params)
+    @user.name = "テストユーザー"
+    if @user.save
+      session[:id] = @user.id
+      redirect_to attendance_path(@user.id), flash: {notise: 'ログインしました'}
+    else
+      @email = params[:email]
+      @password = params[:password]
+      # redirect_to new_user_path
+      render 'new'
+    end
   end
 
-  def attendance
-    @dateofweek = ["日","月","火","水","木","金","土"]
-    @today = Date.today
-    @first_year = @today.year.to_i - 10
-    @lastday = @today.end_of_month.day
-  end
-
-  def save
-
+  def user_params
+    params.require(:user).permit(:email, :password, :name)
   end
 
 end

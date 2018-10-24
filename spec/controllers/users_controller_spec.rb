@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# TODOルートに合わせる
 RSpec.describe UsersController, type: :controller do
   describe "GET #login" do
     it "returns http success" do

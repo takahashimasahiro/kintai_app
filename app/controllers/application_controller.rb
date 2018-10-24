@@ -1,23 +1,28 @@
+# BaseController
 class ApplicationController < ActionController::Base
-  before_action :set_current_user
-
-  def set_current_user
-    if session[:user_id]
-      @current_user = User.find_by(user_id: session[:user_id])
+  before_action :current_user
+  def current_user
+    if logged_in?
+       @current_user ||= User.find(session[:id])
     end
   end
 
   def authenticate_current_user
-    if @current_user == nil
+    unless logged_in? 
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
   end
 
-  def fobid_current_user
-    if @current_user
+  def forbid_current_user
+    if logged_in?
       flash[:notice] = 'すでにログインしています'
-      redirect_to('/users/home')
+      redirect_to attendance_path(session[:id])
     end
+  end
+
+  # ログイン状態か判別
+  def logged_in?
+    session[:id]
   end
 end
