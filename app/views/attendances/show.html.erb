@@ -5,15 +5,17 @@
       <div class="search-year">
         <div id="pulldown">
           <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
-            <%= select_tag('select_year',
+            <%= select_tag('select_year', 
                 options_for_select(show_years_map ,
                         class: 'opt_year',
                         selected: @today.year.to_i),
+                # form: 'attend-save',
                 :onchange => 'this.form.submit();')%>年
             <%= select_tag('select_month',
                 options_for_select((1..12),
                         class:'opt_month',
                         selected: @today.month.to_i),
+                # form: 'attend-save',
                 :onchange => 'this.form.submit();')%>月
           <% end %>
         </div>
@@ -25,13 +27,14 @@
           <%= form_with url: attendance_path(@current_user.id) ,method: 'patch',
            local: true, class: 'save-button' do |f| %>
             <div class='attend-save'>
+              <input id='attend-save' type='submit' value= 'save'>
               <%= button_tag('保存', name: 'attend_save') %>
             </div>
           <% end %>
         </div>
       </div>
     </div>
-    <%= render :partial => 'templates/attendance_table' %>
+    <%= render :partial => 'templates/attendance_table', :locals => {form_id: 'attend-save'} %>
   </body>
 </html>
  

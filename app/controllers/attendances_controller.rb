@@ -12,6 +12,7 @@ class AttendancesController < ApplicationController
   end
 
   def update
+    @today 
     byebug
     redirect_to attendance_path(@current_user.id)
   end

@@ -1,29 +1,32 @@
-    <div id="attendance-table" class="table">
-      <table class='table table-bordered' >
-        <tr>
-          <th><%= label :page, '日付'%></th>
-          <th><%= label :page, '曜日'%></th>
-          <th><%= label :page, '出勤時間'%></th>
-          <th><%= label :page, '退勤時間'%></th>
-          <th><%= label :page, '状態'%></th>
-        </tr>
-        <% (1..@lastday).each do |row| %>
-          <tr name='row_<%=row%>'>
-            <th name='date_<%=row%>'><%=row%></th>
-            <th name='row_of_week_<%=@today.change(day: row ).wday%>'>
-              <%= date_of_week(@today.change(day: row ).wday) %>
-            </th>
-            <th name='start_work_<%=row%>'>
-              <%= time_select("work_#{row}", 'start',:default => {:hour => '10', :minute => '00'}) %>
-            </th>
-            <th name='end_work_<%=row%>'>
-              <%= time_select("work_#{row}", 'end',:default => {:hour => '19', :minute => '00'}) %>
-            </th>
-            <th>
-              <%= select_tag("status_#{row}",
-                  options_for_select(work_status))%>
-            </th>
-          </tr>
-        <% end %>
-      </table>
-    </div>
+<div id="attendance-table" class="table">
+  <table class='table table-bordered' >
+    <tr>
+      <th><%= label :page, '日付'%></th>
+      <th><%= label :page, '曜日'%></th>
+      <th><%= label :page, '出勤時間'%></th>
+      <th><%= label :page, '退勤時間'%></th>
+      <th><%= label :page, '状態'%></th>
+    </tr>
+    <% (1..@lastday).each do |row| %>
+    <%# <% byebug %>
+    <%# ヘルパーに任せてその日のAttendanceTimeを取得 %>
+    <% @attendance_row = choice_attendanceTime(@attendance_table ,@today, row) %>
+      <tr name='row_<%=row%>'>
+        <th name='date_<%=row%>'><%=row%></th>
+        <th name='row_of_week_<%=@today.change(day: row ).wday%>'>
+          <%= date_of_week(@today.change(day: row ).wday) %>
+        </th>
+        <th name='start_work_<%=row%>'>
+          <%= time_select("work_#{row}", 'start',:default => {:hour => '10', :minute => '00',form: form_id}) %>
+        </th>
+        <th name='end_work_<%=row%>'>
+          <%= time_select("work_#{row}", 'end',:default => {:hour => '19', :minute => '00',form: form_id}) %>
+        </th>
+        <th>
+          <%= select_tag("status_#{row}",
+              options_for_select(work_status))%>
+        </th>
+      </tr>
+    <% end %>
+  </table>
+</div>
