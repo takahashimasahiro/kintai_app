@@ -19,12 +19,14 @@ h1{
   display: inline;
   flex-basis: 100%
 }
-.search-rightend, .save-button{
+.search-rightend, {
   float: right;
 }
 .inputtime, .attend-save{
+  float: right;
   display: inline;
 }
-.table {
+.table .save-button {
+  float: left;
   margin: 10px;
 }

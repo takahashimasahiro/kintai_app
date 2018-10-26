@@ -15,10 +15,10 @@
           <%= date_of_week(@select_date.change(day: row ).wday) %>
         </th>
         <th name='start_work_<%=row%>'>
-          <%= show_start_attendanceTime(@attendance_row,row) %>
+          <%= show_start_attendanceTime(@attendance_row,row,form) %>
         </th>
         <th name='end_work_<%=row%>'>
-          <%= show_end_attendanceTime(@attendance_row,row) %>
+          <%= show_end_attendanceTime(@attendance_row,row,form) %>
         </th>
         <th>
           <%= select_tag("status_#{row}",

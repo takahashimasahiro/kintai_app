@@ -24,21 +24,39 @@ module AttendancesHelper
     attendance_table.select{|x| x.work_date == select_date.change(day: row)}[0]
   end
 
-  def show_start_attendanceTime(attendance_row,row)
+  def show_start_attendanceTime(attendance_row,row,form)
     if attendance_row
       time_select("work_#{row}", 'start',:default =>
-        {:hour => attendance_row.work_start.hour,:minute => attendance_row.work_start.min }) 
+      {:year =>attendance_row.work_date.year ,
+        :month => attendance_row.work_date.month,
+        :day => row ,
+        :hour => attendance_row.work_start.hour,
+        :minute => attendance_row.work_start.min })
     else
-      time_select("work_#{row}", 'start',:default => {:hour => '10', :minute => '00'}) 
+      time_select("work_#{row}", 'start',:default =>
+        {:year => @select_date.year ,
+          :month => @select_date.month,
+          :day => row ,
+          :hour => '10',
+          :minute => '00'})
     end
   end
 
-  def show_end_attendanceTime(attendance_row,row)
+  def show_end_attendanceTime(attendance_row,row,form)
     if attendance_row
       time_select("work_#{row}", 'end',:default =>
-        {:hour => attendance_row.work_end.hour, :minute => attendance_row.work_end.min})
+        {:year =>attendance_row.work_date.year ,
+          :month => attendance_row.work_date.month,
+          :day => row ,
+          :hour => attendance_row.work_end.hour,
+           :minute => attendance_row.work_end.min})
     else
-      time_select("work_#{row}", 'end',:default => {:hour => '19', :minute => '00'})
+      time_select("work_#{row}", 'end',:default => 
+        {:year => @select_date.year ,
+        :month => @select_date.month,
+        :day => row ,
+        :hour => '19', 
+        :minute => '00'})
     end
   end
 
