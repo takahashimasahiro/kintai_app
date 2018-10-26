@@ -1,5 +1,10 @@
 module AttendancesHelper
 
+  module AttendanceConstant
+    DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
+    WORK_STATUS = ['出勤','有給休暇','午前休暇','午後休暇','休日出勤','欠勤'].map(&:freeze).freeze
+  end
+
   def date_of_week(count)
     AttendanceConstant.freeze
     AttendanceConstant::DATE_OF_WEEK[count]
@@ -11,16 +16,30 @@ module AttendancesHelper
   end
   
   def show_years_map
-    (@today.year.to_i - 10..@today.year.to_i + 10).map{|y| y}
+    (@select_date.year.to_i - 10..@select_date.year.to_i + 10).map{|y| y}
   end
 
-  # 
-  def choice_attendanceTime(attendance_table ,today, row)
-    
+  # 日付を指定して勤怠状況を検索する
+  def choice_attendanceTime(attendance_table ,select_date, row)
+    attendance_table.select{|x| x.work_date == select_date.change(day: row)}[0]
   end
 
-  module AttendanceConstant
-    DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
-    WORK_STATUS = ['出勤','有給休暇','午前休暇','午後休暇','休日出勤','欠勤'].map(&:freeze).freeze
+  def show_start_attendanceTime(attendance_row,row)
+    if attendance_row
+      time_select("work_#{row}", 'start',:default =>
+        {:hour => attendance_row.work_start.hour,:minute => attendance_row.work_start.min }) 
+    else
+      time_select("work_#{row}", 'start',:default => {:hour => '10', :minute => '00'}) 
+    end
   end
+
+  def show_end_attendanceTime(attendance_row,row)
+    if attendance_row
+      time_select("work_#{row}", 'end',:default =>
+        {:hour => attendance_row.work_end.hour, :minute => attendance_row.work_end.min})
+    else
+      time_select("work_#{row}", 'end',:default => {:hour => '19', :minute => '00'})
+    end
+  end
+
 end
