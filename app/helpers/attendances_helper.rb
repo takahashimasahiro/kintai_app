@@ -68,6 +68,7 @@ module AttendancesHelper
       attendance_row.status
     elsif select_date.change(day: row ).wday == 0 || select_date.change(day: row ).wday == 6
       AttendanceConstant::WORK_STATUS.fetch(6)
+      # TODO 祝日判定
     else
       AttendanceConstant::WORK_STATUS.fetch(0)
     end

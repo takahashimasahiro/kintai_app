@@ -1,7 +1,7 @@
 <div class="table">
   <table id="attendance-table" class='table table-condensed table-hover table-bordered table-sm' >
     <thead class='thead-light'>
-      <tr>
+      <tr class='text-center'>
         <th><%= label :page, '日付'%></th>
         <th><%= label :page, '曜日'%></th>
         <th><%= label :page, '出勤時間'%></th>
@@ -13,7 +13,7 @@
       <% (1..@lastday).each do |row| %>
       <%# 日付を指定して勤怠状況を検索する %>
       <% @attendance_row = choice_attendanceTime(@attendance_table ,@select_date, row) %>
-        <tr name='row_<%=row%>' class='row_<%=@select_date.change(day: row ).wday%>'>
+        <tr name='row_<%=row%>' class='text-center row_<%=@select_date.change(day: row ).wday%>'>
           <th name='date_<%=row%>'><%=row%></th>
           <th name='row_of_week_<%=@select_date.change(day: row ).wday%>'>
             <%= date_of_week(@select_date.change(day: row ).wday) %>
