@@ -21,18 +21,23 @@
             </ul>
           </div>
           <div class="list-group">
-            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">出勤状況一覧
+            <a href="/attendances/<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">出勤状況一覧
               <span class="badge badge-primary badge-pill"></span>
             </a>
-            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">出勤者リスト
+            <a href="/users/" class="list-group-item list-group-item-action list-group-item-light">出勤者リスト
               <span class="badge badge-primary badge-pill"></span>
             </a>
-            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">有休休暇申請
+            <a href="/holidays/<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">有休休暇申請
               <span class="badge badge-primary badge-pill"></span>
             </a>
-            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">ユーザー設定
+            <a href="/users/<%=@current_user.id%>/edit" class="list-group-item list-group-item-action list-group-item-light">ユーザー設定
               <span class="badge badge-primary badge-pill"></span>
             </a>
+            <% if @current_user.role == 'owner' %>
+            <a href="/users/<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">ユーザー管理
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
+            <% end %>
             <a href="/sessions/new" class="list-group-item list-group-item-action list-group-item-light">ログアウト
               <span class="badge badge-primary badge-pill"></span>
             </a>

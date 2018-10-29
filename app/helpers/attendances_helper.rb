@@ -39,7 +39,7 @@ module AttendancesHelper
         {:year => @select_date.year ,
           :month => @select_date.month,
           :day => row ,
-          :hour => AttendanceConstant::DEFAULT_WORK_START,
+          :hour => holiday?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_START,
           :minute => '00'})
     end
   end
@@ -57,21 +57,24 @@ module AttendancesHelper
         {:year => @select_date.year ,
         :month => @select_date.month,
         :day => row ,
-        :hour => AttendanceConstant::DEFAULT_WORK_END, 
+        :hour => holiday?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_END, 
         :minute => '00'})
     end
   end
 
   # 状態の初期選択
-  def selected_status(attendance_row,select_date,row)
+  def selected_status(attendance_row,row)
     if attendance_row
       attendance_row.status
-    elsif select_date.change(day: row ).wday == 0 || select_date.change(day: row ).wday == 6
+    elsif holiday?(row)
       AttendanceConstant::WORK_STATUS.fetch(6)
-      # TODO 祝日判定
     else
       AttendanceConstant::WORK_STATUS.fetch(0)
     end
+  end
 
+  def holiday?(row)
+    # TODO 祝日判定
+    @select_date.change(day: row ).wday == 0 || @select_date.change(day: row ).wday == 6
   end
 end

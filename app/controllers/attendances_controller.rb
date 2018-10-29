@@ -7,7 +7,7 @@ class AttendancesController < ApplicationController
   def show
     @select_date = Date.today
     if params[:select_year] && params[:select_month]
-      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i)
+      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
     @lastday = @select_date.end_of_month.day
 
@@ -30,7 +30,7 @@ class AttendancesController < ApplicationController
   def update
     @select_date = Date.today
     if params[:select_year] && params[:select_month]
-      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i)
+      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
     (1.. @select_date.end_of_month.day).each do |i|
       # 登録する日付を宣言
@@ -62,7 +62,6 @@ class AttendancesController < ApplicationController
       @attend.status = params[:"status_#{i}"]
       @attend.save
     end
-
-    redirect_to attendance_path(@current_user.id),flash: {notise: '保存しました'}
+    redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
 end

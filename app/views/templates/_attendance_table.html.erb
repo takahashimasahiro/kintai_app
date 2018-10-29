@@ -27,7 +27,7 @@
           <td>
             <%= select_tag("status_#{row}",
                 options_for_select(work_status,
-                :selected => selected_status(@attendance_row,@select_date,row)),
+                :selected => selected_status(@attendance_row,row)),
                 class: 'form-control-sm')%>
           </th>
         </tr>
