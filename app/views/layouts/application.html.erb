@@ -20,24 +20,22 @@
               <li class="profile-email"><%= label :page ,@current_user.email %></li>
             </ul>
           </div>
-          <div class="sidebar-menu">
-            <div class="sidebar-nav">
-              <%= render partial: "templates/sidebar_tab",
-              locals: {controller_name: "attendances", action_name: "show",
-              tabname: "出勤状況一覧", showcount: ""}%>
-              <%= render partial: "templates/sidebar_tab",
-              locals: {controller_name: "attendances", action_name: "show",
-              tabname: "出勤者リスト", showcount: ""}%>
-              <%= render partial: "templates/sidebar_tab",
-              locals: {controller_name: "attendances", action_name: "show",
-              tabname: "有休休暇申請", showcount: 12}%>
-              <%= render partial: "templates/sidebar_tab",
-              locals: {controller_name: "attendances" , action_name: "show",
-              tabname: "ユーザー設定", showcount: ""}%>
-              <%= render partial: "templates/sidebar_tab",
-              locals: {controller_name: "sessions" , action_name: "new",
-              tabname: "ログアウト", showcount: ""}%>
-            </div>
+          <div class="list-group">
+            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">出勤状況一覧
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
+            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">出勤者リスト
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
+            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">有休休暇申請
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
+            <a href="<%=@current_user.id%>" class="list-group-item list-group-item-action list-group-item-light">ユーザー設定
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
+            <a href="/sessions/new" class="list-group-item list-group-item-action list-group-item-light">ログアウト
+              <span class="badge badge-primary badge-pill"></span>
+            </a>
           </div>
         </div>
         <%= render partial: "templates/flash",locals: {class_name: "flash-login"} %>

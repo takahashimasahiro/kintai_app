@@ -3,11 +3,13 @@
 
 html,
 body {
-  background-color: #B2E2EC;
+  // background-color: #B2E2EC;
+  background-color: #cdf0f7;
   position: relative;
   color: #5B5B5B;
   min-height: 100%;
-  height: 100%;
+  max-height: 150%;
+  height: 150%;
 }
 body {
   font-size: 20px;
@@ -16,13 +18,9 @@ body {
 .row{
   height: 100%;
 }
-// .caret {
-//   display: inline-block;
-//   width: 0;
-//   height: 0;
-//   margin-left: 2px;
-//   vertical-align: middle;
-// }
+.wrapper-login{
+  background-color: #cdf0f7;
+}
 
 .wrapper-login {
   top: 50px;
@@ -35,13 +33,16 @@ body {
   position: relative;
   vertical-align: top;
 }
+.list-group-item{
+  margin-top: 10px;
+}
 
 .sidebar {
   position: fixed;
   display: block;
   min-height: 100%;
   // height: calc(100% - 250px);
-  background-color: #00e676;
+  background-color: #5bd878;
   min-width: 250px;
   max-width: 250px;
   .sidebar-header {
@@ -50,29 +51,20 @@ body {
     margin-bottom: 8px;
   }
   .sidebar-header.header-cover {
-    background-color: #76ff03;
+    background-color: #aadbb6;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     padding: 30px 30px;
   }
- .sidebar-image img {
-  width: 54px;
-  height: 54px;
-  margin: 16px;
-  border-radius: 50%;
-  }
 }
 .sidebar-menu{
-  // background-color:black;
   height: 100%;
-  // height: calc(100% - 250px);
 }
 
 .sidebar-nav {
   font-size: 15px;
   vertical-align: middle;
-  // margin: 30px 30px;
 }
 
 .sidebar-nav-item{
@@ -89,9 +81,6 @@ body {
   padding: 0px 0px;
  .profile-profile ,.profile-username,.profile-userid,.profile-email{
     text-align: left;
-    // position: absolute;
-
-    // padding: 0px 0px 0px 80px;
   }
 }
 
@@ -123,8 +112,8 @@ a:hover{
 .flash-login{
   top: 0px;
   margin-left: 250px;
-  color: white;
-  background: #F99F48;
+  color: #5B5B5B;
+  background: #fce08e;
   text-align: center;
   z-index: 10;
   width: 100%;
@@ -134,8 +123,8 @@ a:hover{
 .flash-logout{
   top: 0px;
   // margin-left: 250px;
-  color: white;
-  background: #F99F48;
+  color: #5B5B5B;
+  background: #fce08e;
   text-align: center;
   z-index: 10;
   width: 100%;

@@ -1,30 +1,37 @@
 <div class="table">
-  <table id="attendance-table" class='table table-bordered' >
-    <tr>
-      <th><%= label :page, '日付'%></th>
-      <th><%= label :page, '曜日'%></th>
-      <th><%= label :page, '出勤時間'%></th>
-      <th><%= label :page, '退勤時間'%></th>
-      <th><%= label :page, '状態'%></th>
-    </tr>
-    <% (1..@lastday).each do |row| %>
-    <% @attendance_row = choice_attendanceTime(@attendance_table ,@select_date, row) %>
-      <tr name='row_<%=row%>'>
-        <th name='date_<%=row%>'><%=row%></th>
-        <th name='row_of_week_<%=@select_date.change(day: row ).wday%>'>
-          <%= date_of_week(@select_date.change(day: row ).wday) %>
-        </th>
-        <th name='start_work_<%=row%>'>
-          <%= show_start_attendanceTime(@attendance_row,row,form) %>
-        </th>
-        <th name='end_work_<%=row%>'>
-          <%= show_end_attendanceTime(@attendance_row,row,form) %>
-        </th>
-        <th>
-          <%= select_tag("status_#{row}",
-              options_for_select(work_status))%>
-        </th>
+  <table id="attendance-table" class='table table-condensed table-hover table-bordered table-sm' >
+    <thead class='thead-light'>
+      <tr>
+        <th><%= label :page, '日付'%></th>
+        <th><%= label :page, '曜日'%></th>
+        <th><%= label :page, '出勤時間'%></th>
+        <th><%= label :page, '退勤時間'%></th>
+        <th><%= label :page, '状態'%></th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% (1..@lastday).each do |row| %>
+      <%# 日付を指定して勤怠状況を検索する %>
+      <% @attendance_row = choice_attendanceTime(@attendance_table ,@select_date, row) %>
+        <tr name='row_<%=row%>' class='row_<%=@select_date.change(day: row ).wday%>'>
+          <th name='date_<%=row%>'><%=row%></th>
+          <th name='row_of_week_<%=@select_date.change(day: row ).wday%>'>
+            <%= date_of_week(@select_date.change(day: row ).wday) %>
+          </th>
+          <th name='start_work_<%=row%>'>
+            <%= show_start_attendanceTime(@attendance_row,row,form) %>
+          </th>
+          <th name='end_work_<%=row%>'>
+            <%= show_end_attendanceTime(@attendance_row,row,form) %>
+          </th>
+          <td>
+            <%= select_tag("status_#{row}",
+                options_for_select(work_status,
+                :selected => selected_status(@attendance_row,@select_date,row)),
+                class: 'form-control-sm')%>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 </div>
