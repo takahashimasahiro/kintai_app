@@ -3,6 +3,7 @@ class AttendancesController < ApplicationController
   end
 
   def show
+    # TODO not use Date
     @select_date = Date.today
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
@@ -26,6 +27,7 @@ class AttendancesController < ApplicationController
   end
 
   def update
+        # TODO not use Date
     @select_date = Date.today
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
