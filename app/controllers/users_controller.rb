@@ -24,4 +24,17 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :name)
   end
+
+  def edit
+    
+  end
+
+  def update 
+    # byebug
+    @User = User.find(id:@current_user.id)
+    unless params[:new_password1] == params[:new_password2]
+      'false'
+    end
+    redirect_to user_path(@current_user.id)
+  end
 end

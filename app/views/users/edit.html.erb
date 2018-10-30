@@ -1,2 +1,23 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class='container'>
+  <div class='edit'>
+    <%= form_with url: user_path(@current_user.id) , method: :put, local: true do |form| %>
+    <div class='edit item'>
+      <%= form.label :page, '名前' %>
+      <%= text_field :page, :name %>
+    </div>
+    <div class='esit item'>
+      <%= form.label :page , '古いパスワード' %>
+      <%= form.password_field :old_password %>
+    </div>
+    <div class='edit item'>
+      <%= form.label :page , '新しいパスワード' %>
+      <%= form.password_field :new_password1 %>
+    </div>
+    <div class='edit item'>
+      <%= form.label :page , '新しいパスワードをもう一度' %>
+      <%= form.password_field :new_password2 %>
+    </div>
+      <%= form.submit 'Save', class: 'btn btn-default'%>
+    <% end %>
+  </div>
+</div>
