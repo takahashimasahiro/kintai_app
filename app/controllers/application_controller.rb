@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
   def forbid_current_user
     if logged_in?
-      flash[:notice] = 'すでにログインしています'
+      # flash[:notice] = 'すでにログインしています'
       redirect_to attendance_path(session[:id])
     end
   end

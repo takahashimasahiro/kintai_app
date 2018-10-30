@@ -18,6 +18,7 @@
               <li class="profile-profile"><%= label :page ,'プロフィール' %></li>
               <li class="profile-username"><%= label :page ,@current_user.name %></li>
               <li class="profile-email"><%= label :page ,@current_user.email %></li>
+              <li class="profile-holidaycount">残有休数: <%= label :page ,@current_user.paid_holiday_count %></li>
             </ul>
           </div>
           <div class="list-group">

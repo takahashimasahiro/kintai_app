@@ -14,7 +14,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-gem 'holiday_japan', require: './vendor/bundle/ruby/2.5.0/gems/holiday_japan-1.4.1/lib/holiday_japan.rb'
+gem 'holiday_japan', require: './vendor/bundler/ruby/2.5.0/gems/holiday_japan-1.4.1/lib/holiday_japan.rb'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby

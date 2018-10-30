@@ -1,5 +1,6 @@
 <div class='container'>
   <div class='edit'>
+    <h1>ユーザー設定</h1>
     <%= form_with url: user_path(@current_user.id) , method: :put, local: true do |form| %>
     <div class='edit item'>
       <%= form.label :page, '名前' %>
@@ -17,7 +18,8 @@
       <%= form.label :page , '新しいパスワードをもう一度' %>
       <%= form.password_field :new_password2 %>
     </div>
-      <%= form.submit 'Save', class: 'btn btn-default'%>
+    <%= render :partial => "templates/errmessage"%>
+      <%= form.submit '保存', class: 'btn btn-default'%>
     <% end %>
   </div>
 </div>

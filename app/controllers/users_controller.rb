@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     else
       @email = params[:email]
       @password = params[:password]
-      # redirect_to new_user_path
       render 'new'
     end
   end
@@ -26,15 +25,22 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
   end
 
   def update 
-    # byebug
-    @User = User.find(id:@current_user.id)
-    unless params[:new_password1] == params[:new_password2]
-      'false'
+    @user = User.find(@current_user.id)
+    if params[:new_password1] == params[:new_password2] && @user.authenticate(params[:old_password])
+        @user.name = params[:page]['name']
+        @user.password = params[:new_password1]
+        if @user.save
+          redirect_to edit_user_path(@current_user.id) ,flash: {notice: '保存しました'}
+          # render 'edit'
+        else
+          render 'edit'
+        end
+    else
+      @error_messages = 'パスワードが異なっています'
+      render 'edit'
     end
-    redirect_to user_path(@current_user.id)
   end
 end

@@ -16,12 +16,9 @@ module AttendancesHelper
       AttendanceConstant::WORK_STATUS
   end
   
+  # 
   def create_day_of_week_classname(row)
-    if holiday?(row)
-      "holiday"
-    else
-      @select_date.change(day: row ).wday
-    end
+    holiday?(row) ? 'holiday' : @select_date.change(day: row ).wday
   end
 
   # 年セレクトボックス
@@ -75,7 +72,7 @@ module AttendancesHelper
   def selected_status(attendance_row,row)
     if attendance_row
       attendance_row.status
-    elsif weekend?(row) || holiday?(row)
+    elsif weekend?(row)
       AttendanceConstant::WORK_STATUS.fetch(6)
     else
       AttendanceConstant::WORK_STATUS.fetch(0)
@@ -84,10 +81,10 @@ module AttendancesHelper
 
   # 土日祝日か判別する
   def weekend?(row)
-    @select_date.change(day: row ).wday == 0 ||
-     @select_date.change(day: row ).wday == 6 || 
-     HolidayJapan.check(Date.new(@select_date.year,@select_date.month,row))
+    @select_date.change(day: row ).wday == 0 || @select_date.change(day: row ).wday == 6 || holiday?(row)
   end
+
+  # 祝日か判別する
   def holiday?(row)
     HolidayJapan.check(Date.new(@select_date.year,@select_date.month,row))
   end
