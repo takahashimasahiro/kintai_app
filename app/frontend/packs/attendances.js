@@ -17,25 +17,4 @@ $(function(){
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
   });
-  $('button[name=attend_save]').on('click',function(){
-    
-    // $.ajax({
-    //   url: '2',
-    //   type: 'patch',
-    //   data: {select_year: 2010,
-    //     select_month: 10},
-    //   dataType: 'html',
-    //   success: function(data){
-    //     console.log('success')
-    //   },
-    //   error: function(data){
-    //     console.log('error')
-    //   }
-    // })
-    
-    //  テーブルから必要なものをまとめる
-    // let workTime =[]
-    // for(let i = 1;i < document.getElementById('attendance-table').rows.length ;i++){
-    // }
-  });
 });

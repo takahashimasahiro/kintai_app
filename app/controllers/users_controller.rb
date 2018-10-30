@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
-  # before_action :authenticate_current_user
   def new
     @user = User.new
     session[:id] = nil
     @current_user = nil
-    @error_messages =nil
+    @error_messages = nil
   end
   
   def create
@@ -34,7 +33,6 @@ class UsersController < ApplicationController
         @user.password = params[:new_password1]
         if @user.save
           redirect_to edit_user_path(@current_user.id) ,flash: {notice: '保存しました'}
-          # render 'edit'
         else
           render 'edit'
         end

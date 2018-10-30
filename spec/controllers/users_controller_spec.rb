@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe "GET #login" do
     it "returns http success" do
-
+      
     end
   end
   

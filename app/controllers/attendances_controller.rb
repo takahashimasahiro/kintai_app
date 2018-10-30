@@ -1,17 +1,13 @@
 class AttendancesController < ApplicationController
   def new
   end
-
   def show
-    # TODO not use Date
-    @select_date = Date.today
+    @select_date = Time.now
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
     @lastday = @select_date.end_of_month.day
-
     if @current_user.role == 'owner'
-      # byebug
       @user_all =[]
       User.all.each do |x|
         @user_all.push([x.name,x.id])
@@ -27,14 +23,13 @@ class AttendancesController < ApplicationController
   end
 
   def update
-        # TODO not use Date
-    @select_date = Date.today
+    @select_date = Time.now
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
     (1.. @select_date.end_of_month.day).each do |i|
       # 登録する日付を宣言
-      @registration_date = Date.new(
+      @registration_date = DateTime.new(
         params[:"work_#{i}"]["start(1i)"].to_i,
         params[:"work_#{i}"]["start(2i)"].to_i,
         params[:"work_#{i}"]["start(3i)"].to_i)

@@ -3,17 +3,16 @@
   <%# 管理者ならユーザー一覧を表示 %>
   <% if @current_user.role == 'owner' %>
     <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
+      <div class='search-user'>ユーザー
+        <%= select_tag('select_user', 
+                      options_for_select(@user_all ,
+                              class:'opt_user',
+                              selected: @selected_user),
+                      :onchange => 'this.form.submit();',
+                      class: 'form-control-sm') %>
+      </div>
       <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
       <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
-      <div class='search-user'>
-      UserChange
-      <%= select_tag('select_user', 
-          options_for_select(@user_all ,
-                  class:'opt_user',
-                  selected: @selected_user),
-          :onchange => 'this.form.submit();',
-          class: 'form-control-sm') %>
-      </div>
     <% end %>
   <% end %>
   <div class="search-year">
@@ -21,17 +20,17 @@
       <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
         <input type='hidden' name='select_user' value='<%= @selected_user[1] %>' >
         <%= select_tag('select_year', 
-            options_for_select(show_years_map ,
-                    class:'opt_year',
-                    selected: @select_date.year.to_i),
-            :onchange => 'this.form.submit();',
-            class: 'form-control-sm' )%>年
+                      options_for_select(show_years_map ,
+                              class:'opt_year',
+                              selected: @select_date.year.to_i),
+                      :onchange => 'this.form.submit();',
+                      class: 'form-control-sm' )%>年
         <%= select_tag('select_month',
-            options_for_select((1..12),
-                    class:'opt_month',
-                    selected: @select_date.month.to_i),
-            :onchange => 'this.form.submit();',
-            class: 'form-control-sm')%>月
+                      options_for_select((1..12),
+                              class:'opt_month',
+                              selected: @select_date.month.to_i),
+                      :onchange => 'this.form.submit();',
+                      class: 'form-control-sm')%>月
       <% end %>
     </div>
   </div>
@@ -43,7 +42,7 @@
   </div>
 </div>
 <%= form_with url: attendance_path(@current_user.id) ,
-  method: 'patch', local: true, class: 'save-button' do |f| %>
+              method: 'patch', local: true, class: 'save-button' do |f| %>
   <input type='hidden' name='select_user' value='<%= @selected_user[1] %>' >
   <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
   <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>      
