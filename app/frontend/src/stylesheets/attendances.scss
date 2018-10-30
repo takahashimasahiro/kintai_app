@@ -4,13 +4,14 @@ h1{
   font-size: 25px;
 }
 
-.row_0 {
+.day_of_week_0, .day_of_week_holiday {
   background-color: #f5c6cb;
 }
-.row_1,.row_2,.row_3,.row_4,.row_5{
+.day_of_week_1, .day_of_week_2,
+.day_of_week_3, .day_of_week_4, .day_of_week_5{
   background-color: #f7ebc7;
 }
-.row_6 {
+.day_of_week_6{
   background-color: #bee5eb;
 }
 .search{

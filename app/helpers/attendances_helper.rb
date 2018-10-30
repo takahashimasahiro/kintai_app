@@ -1,5 +1,5 @@
+require './vendor/bundle/ruby/2.5.0/gems/holiday_japan-1.4.1/lib/holiday_japan.rb'
 module AttendancesHelper
-
   module AttendanceConstant
     DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
     WORK_STATUS = ['出勤','有給休暇','午前休暇','午後休暇','休日出勤','欠勤','休日'].map(&:freeze).freeze
@@ -17,16 +17,26 @@ module AttendancesHelper
       AttendanceConstant::WORK_STATUS
   end
   
+  def create_day_of_week_classname(row)
+    if holiday?(row)
+      "holiday"
+    else
+      @select_date.change(day: row ).wday
+    end
+  end
+
+  # 年セレクトボックス
   def show_years_map
     (@select_date.year.to_i - 10..@select_date.year.to_i + 10).map{|y| y}
   end
 
+  # 選択した日付の勤怠状況を取得
   def choice_attendanceTime(attendance_table ,select_date, row)
     attendance_table.select{|x| x.work_date == select_date.change(day: row)}[0]
   end
 
   # 勤務開始時間を表示する
-  def show_start_attendanceTime(attendance_row,row,form)
+  def show_start_attendanceTime(attendance_row,row)
     if attendance_row
       time_select("work_#{row}", 'start',:default =>
       {:year =>attendance_row.work_date.year ,
@@ -39,12 +49,12 @@ module AttendancesHelper
         {:year => @select_date.year ,
           :month => @select_date.month,
           :day => row ,
-          :hour => holiday?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_START,
+          :hour => weekend?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_START,
           :minute => '00'})
     end
   end
   # 勤務終了時間を表示する
-  def show_end_attendanceTime(attendance_row,row,form)
+  def show_end_attendanceTime(attendance_row,row)
     if attendance_row
       time_select("work_#{row}", 'end',:default =>
         {:year =>attendance_row.work_date.year ,
@@ -57,7 +67,7 @@ module AttendancesHelper
         {:year => @select_date.year ,
         :month => @select_date.month,
         :day => row ,
-        :hour => holiday?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_END, 
+        :hour => weekend?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_END, 
         :minute => '00'})
     end
   end
@@ -66,15 +76,20 @@ module AttendancesHelper
   def selected_status(attendance_row,row)
     if attendance_row
       attendance_row.status
-    elsif holiday?(row)
+    elsif weekend?(row) || holiday?(row)
       AttendanceConstant::WORK_STATUS.fetch(6)
     else
       AttendanceConstant::WORK_STATUS.fetch(0)
     end
   end
 
+  # 土日祝日か判別する
+  def weekend?(row)
+    @select_date.change(day: row ).wday == 0 ||
+     @select_date.change(day: row ).wday == 6 || 
+     HolidayJapan.check(Date.new(@select_date.year,@select_date.month,row))
+  end
   def holiday?(row)
-    # TODO 祝日判定
-    @select_date.change(day: row ).wday == 0 || @select_date.change(day: row ).wday == 6
+    HolidayJapan.check(Date.new(@select_date.year,@select_date.month,row))
   end
 end

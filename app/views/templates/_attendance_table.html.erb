@@ -13,16 +13,16 @@
       <% (1..@lastday).each do |row| %>
       <%# 日付を指定して勤怠状況を検索する %>
       <% @attendance_row = choice_attendanceTime(@attendance_table ,@select_date, row) %>
-        <tr name='row_<%=row%>' class='text-center row_<%=@select_date.change(day: row ).wday%>'>
+        <tr name='row_<%=row%>' class='text-center day_of_week_<%= create_day_of_week_classname(row) %>'>
           <th name='date_<%=row%>'><%=row%></th>
           <th name='row_of_week_<%=@select_date.change(day: row ).wday%>'>
             <%= date_of_week(@select_date.change(day: row ).wday) %>
           </th>
           <th name='start_work_<%=row%>'>
-            <%= show_start_attendanceTime(@attendance_row,row,form) %>
+            <%= show_start_attendanceTime(@attendance_row,row) %>
           </th>
           <th name='end_work_<%=row%>'>
-            <%= show_end_attendanceTime(@attendance_row,row,form) %>
+            <%= show_end_attendanceTime(@attendance_row,row) %>
           </th>
           <td>
             <%= select_tag("status_#{row}",

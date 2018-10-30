@@ -1,0 +1,18 @@
+current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundle/ruby/2.5.0/gems/debase-0.2.2/ext/attach
+/Users/takahashi/.rbenv/versions/2.5.1/bin/ruby -r ./siteconf20181030-98363-vn8cn7.rb extconf.rb
+checking for vm_core.h... no
+checking for vm_core.h... no
+checking for vm_core.h... yes
+creating Makefile
+
+current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundle/ruby/2.5.0/gems/debase-0.2.2/ext/attach
+make "DESTDIR=" clean
+
+current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundle/ruby/2.5.0/gems/debase-0.2.2/ext/attach
+make "DESTDIR="
+compiling attach.c
+linking shared-object attach.bundle
+
+current directory: /Users/takahashi/Ruby/kintai_app/vendor/bundle/ruby/2.5.0/gems/debase-0.2.2/ext/attach
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 attach.bundle ./.gem.20181030-98363-9xc6uc

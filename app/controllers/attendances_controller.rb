@@ -1,6 +1,4 @@
 class AttendancesController < ApplicationController
-  @select_date 
-
   def new
   end
 
