@@ -1,4 +1,3 @@
-require './vendor/bundle/ruby/2.5.0/gems/holiday_japan-1.4.1/lib/holiday_japan.rb'
 module AttendancesHelper
   module AttendanceConstant
     DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
