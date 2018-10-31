@@ -13,16 +13,20 @@ $(function(){
   $('button[name=syukkin]').on('click',function(){
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
+    addChangeRow(today.getDate())
   });
   $('button[name=taikin]').on('click',function(){
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
+    addChangeRow(today.getDate())
   });
   $('th').children('select').on('change', function(){
-    // 何日目を編集したのかを取得
-    changeRow.push($(this).parent().attr('name').split('_')[2])
-    changeRow = changeRow.filter((x, i, self) => self.indexOf(x) === i).sort()
-    console.log(changeRow)
-    $('input[name=change_rows]')[0].value = changeRow
+    addChangeRow(Number($(this).parent().attr('name').split('_')[2]))
   });
 });
+function addChangeRow(row){
+  changeRow.push(row)
+  changeRow = changeRow.filter((x, i, self) => self.indexOf(x) === i).sort()
+  console.log(changeRow)
+  $('input[name=change_rows]')[0].value = changeRow
+}
