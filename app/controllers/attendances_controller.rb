@@ -6,24 +6,20 @@ class AttendancesController < ApplicationController
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
-    @lastday = @select_date.end_of_month.day
     if @current_user.role == 'owner'
-      @user_all =[]
-      User.all.each do |x|
-        @user_all.push([x.name,x.id])
-      end
+      @user_all = User.all.map { |x| [x.name, x.id] }
     end
-    if params[:select_user]
-      @selected_user = [User.find_by(id: params[:select_user]).name, User.find_by(id: params[:select_user]).id]
-      @attendance_table = AttendanceTime.where(:work_date => @select_date.all_month,user_id: params[:select_user])
-    else
-      @selected_user = [@current_user.name,@current_user.id]
-      @attendance_table = AttendanceTime.where(:work_date => @select_date.all_month,user_id: @current_user.id)
-    end
+
+    @lastday = @select_date.end_of_month.day
+    @selected_user = params[:select_user] ? User.find(params[:select_user]) : @current_user
+    @attendance_table = @selected_user.attendance_times.where(:work_date => @select_date.all_month)
+
+    @selected_user = [@selected_user.name,@selected_user.id]
   end
 
   def update
     @select_date = Time.now
+    # TODO チェンジフラグ　全部やるのはNG
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
