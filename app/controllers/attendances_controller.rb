@@ -9,12 +9,9 @@ class AttendancesController < ApplicationController
     if @current_user.role == 'owner'
       @user_all = User.all.map { |x| [x.name, x.id] }
     end
-
     @lastday = @select_date.end_of_month.day
-    @selected_user = params[:select_user] ? User.find(params[:select_user]) : @current_user
-    @attendance_table = @selected_user.attendance_times.where(:work_date => @select_date.all_month)
-
-    @selected_user = [@selected_user.name,@selected_user.id]
+    @selected_user = params[:select_user] ? User.find(params[:select_user]).pluck(:name,:id) : [@current_user.name,@current_user.id]
+    @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
   end
 
   def update
@@ -23,7 +20,10 @@ class AttendancesController < ApplicationController
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
-    (1.. @select_date.end_of_month.day).each do |i|
+
+    byebug
+    @change_rows = params[:change_rows].split(',')
+    @change_rows.map do |i|
       # 登録する日付を宣言
       @registration_date = DateTime.new(
         params[:"work_#{i}"]["start(1i)"].to_i,

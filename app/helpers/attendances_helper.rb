@@ -1,7 +1,9 @@
 module AttendancesHelper
   module AttendanceConstant
     DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
-    WORK_STATUS = ['出勤','有給休暇','午前休暇','午後休暇','休日出勤','欠勤','休日'].map(&:freeze).freeze
+    WORK_STATUS = [['出勤','work'],['有給休暇','vacation'],['午前休暇','am_vacation'],
+                  ['午後休暇','pm_vacation'],['休日出勤','holiday_work'],
+                  ['欠勤','absence'],['休日','absence']].map(&:freeze).freeze
     DEFAULT_WORK_START = "10".freeze # 出勤時間
     DEFAULT_WORK_END = "19".freeze # 退勤時間
   end
@@ -28,7 +30,7 @@ module AttendancesHelper
 
   # 選択した日付の勤怠状況を取得
   def choice_attendanceTime(attendance_table ,select_date, row)
-    attendance_table.select{|x| x.work_date == select_date.change(day: row)}[0]
+    attendance_table.select{|x| x.work_date == Date.new(select_date.year,select_date.month,row)}[0]
   end
 
   # 勤務開始時間を表示する

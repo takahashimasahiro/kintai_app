@@ -1,4 +1,12 @@
 class AttendanceTime < ApplicationRecord
   belongs_to :user
-  enum status: [:work,:vacation,:am_vacation,:pm_vacation,:holiday_work,:absence]
+
+  enum status: {
+    work: 'work',
+    vacation: 'vacation',
+    am_vacation: 'am_vacation',
+    pm_vacation: 'pm_vacation',
+    holiday_work: 'holiday_work',
+    absence: 'absence'
+  }
 end
