@@ -16,12 +16,9 @@ class AttendancesController < ApplicationController
 
   def update
     @select_date = Time.now
-    # TODO チェンジフラグ　全部やるのはNG
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
-
-    byebug
     @change_rows = params[:change_rows].split(',')
     @change_rows.map do |i|
       # 登録する日付を宣言
