@@ -1,0 +1,7 @@
+<h1>新規作成</h1>
+<div class='user_new'>
+  <%= form_with model:@user, url: user_managements_path, method: 'post', local: true  do |f| %>
+    <%= render :partial => "templates/user_edit" , :locals => {form: f,user: @user} %>
+    <%= f.submit '作成', class: 'btn btn-success' %>
+  <%end%>
+</div>

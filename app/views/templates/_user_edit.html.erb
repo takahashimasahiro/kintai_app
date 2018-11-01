@@ -1,0 +1,27 @@
+<div class='item'>
+  <%= form.label :page, 'メールアドレス' %>
+  <%= text_field :page, :email, value: user.email %>
+</div>
+<div class='item'>
+  <%= form.label :page, '名前' %>
+  <%= text_field :page, :name,value: user.name %>
+</div>
+<div class='item'>
+  <%= form.label :page, '役割' %>
+  <%= select_tag('role',
+                options_for_select(all_role,
+                                  :selected => user.role),
+                class: 'form-control-sm')%>
+</div>
+<div class='item'>
+  <%= form.label :page, '残有休日数' %>
+  <%= select_tag('holiday_count',
+                options_for_select(0.step(20,0.5),
+                                  :selected => user.paid_holiday_count),
+                class: 'form-control-sm')%>
+</div>
+<div class='item'>
+  <%= form.label :page, 'パスワード' %>
+  <%= password_field :page, :password %>
+</div>
+<%= render :partial => "templates/errmessage"%>

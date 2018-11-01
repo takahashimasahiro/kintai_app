@@ -10,7 +10,7 @@ class AttendancesController < ApplicationController
       @user_all = User.all.map { |x| [x.name, x.id] }
     end
     @lastday = @select_date.end_of_month.day
-    @selected_user = params[:select_user] ? User.find(params[:select_user]).pluck(:name,:id) : [@current_user.name,@current_user.id]
+    @selected_user =  params[:select_user] ? User.where(id: params[:select_user]).pluck(:name,:id)[0] : [@current_user.name,@current_user.id]
     @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
   end
 
@@ -28,10 +28,10 @@ class AttendancesController < ApplicationController
         params[:"work_#{i}"]["start(3i)"].to_i)
 
       # 日付をもとにcreate or update 
-      if @current_user.role == 'owner'
-        @attend = AttendanceTime.find_or_initialize_by(user_id: params[:select_user] ,work_date: @registration_date)
+      @attend = if @current_user.role == 'owner'
+        AttendanceTime.find_or_initialize_by(user_id: params[:select_user] ,work_date: @registration_date)
       else
-        @attend = AttendanceTime.find_or_initialize_by(user_id: @current_user.id ,work_date: @registration_date)
+        AttendanceTime.find_or_initialize_by(user_id: @current_user.id ,work_date: @registration_date)
       end
       @attend.work_start = DateTime.new(
         params[:"work_#{i}"]["start(1i)"].to_i,
