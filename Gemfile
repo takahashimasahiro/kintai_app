@@ -59,7 +59,6 @@ group :development do
   gem 'rubocop', require: false
   gem 'ruby-debug-ide'
   gem 'debase'
-  gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
