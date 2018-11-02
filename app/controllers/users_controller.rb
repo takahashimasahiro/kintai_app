@@ -8,7 +8,9 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    # テスト用
     @user.name = "テストユーザー"
+    @user.role = 'owner'
     if @user.save
       session[:id] = @user.id
       redirect_to attendance_path(@user.id), flash: {notise: 'ログインしました'}
