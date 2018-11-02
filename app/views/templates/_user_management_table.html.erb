@@ -1,32 +1,35 @@
-<table class='table table-bordered  table-striped table-success table-hover table-sm'>
-  <thead>
-    <tr class='text-center align-middle'>
-      <th>id</th>
-      <th>氏名</th>
-      <th>権限</th>
-      <th>削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @all_user.each do |user| %>
-      <tr class='text-center'>
-        <%= form_with url: edit_user_management_path(user.id), method: 'get',local: true do |f| %>
-          <td class='align-middle'>
-            <%= user.id %>
-          </td>
-          <td class='align-middle user-name'>
-            <%= link_to user.name, edit_user_management_path(user.id), class: 'list-group' %>
-          </td>
-          <td class='align-middle'>
-            <%= select_role(user.role) %>
-          </td>
-        <%end%>
-        <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
-        <td>
-          <%= button_tag '削除' ,name: 'user_del', class:'btn btn-danger' %>
-        </td>
-        <%end%>
+<div class='user-management-table'>
+  <table class='table table-bordered  table-striped table-light table-hover'>
+   <%# table-sm %>
+    <thead>
+      <tr class='text-center align-middle'>
+        <th class='col-md-01 col-sm-01'>id</th>
+        <th class='col-md-04 col-sm-04'>氏名</th>
+        <th class='col-md-04 col-sm-04'>権限</th>
+        <th class='col-md-03 col-sm-03'>削除</th>
       </tr>
-    <%end%>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @all_user.each do |user| %>
+        <tr class='text-center'>
+          <%= form_with url: edit_user_management_path(user.id), method: 'get',local: true do |f| %>
+            <td class='align-middle item-id col-md-01 col-sm-01'>
+              <%= user.id %>
+            </td>
+            <td class='align-middle item-name col-md-04 col-sm-04'>
+              <%= link_to user.name, edit_user_management_path(user.id), class: 'list-group' %>
+            </td>
+            <td class='align-middle item-role col-md-04 col-sm-04'>
+              <%= select_role(user.role) %>
+            </td>
+          <%end%>
+          <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
+          <td class='item-del col-md-03 col-sm-03'>
+            <%= button_tag '削除' ,name: 'user_del', class:'btn btn-danger' %>
+          </td>
+          <%end%>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
