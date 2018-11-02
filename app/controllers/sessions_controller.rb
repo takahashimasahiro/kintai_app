@@ -1,7 +1,5 @@
 # LoginFormsController
 class SessionsController < ApplicationController
-  # before_action :forbid_current_user, {only: [:login]}
-
   def new
     session[:id] = nil
     @current_user = nil

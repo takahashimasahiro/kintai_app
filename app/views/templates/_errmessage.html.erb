@@ -1,0 +1,11 @@
+<% if @user && @user.errors.messages.length !=0 %>
+  <% @user.errors.full_messages.each do |message|  %>
+    <div class='error_message'>
+      <%= message %>
+    </div>
+  <% end %>
+<% elsif @error_messages %>
+  <div class='error_message'>
+    <%= @error_messages %>
+  </div>
+<% end %>

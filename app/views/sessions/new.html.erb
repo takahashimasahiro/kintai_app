@@ -1,19 +1,15 @@
-<html>
-  <body>
-    <div class="container">
-      <div class="main">
-        <div class="login-form">
-          <h1>ログイン</h1>
-          <%= form_with model: @user, url: '/login', local: true do |form| %>
-            <%= render :partial => "templates/input", :locals => {f: form}%>
-            <%= form.submit "ログイン" , class: "btn btn-default" %>
-          <% end %>
-        </div>
-          新規登録はこちら
-          <%= form_with url: new_user_path,method: :get, local: true do |form| %>
-            <%= form.submit "新規登録" , class: "btn btn-default" %>
-          <% end %>
-      </div>
+<div class="container">
+  <div class="main">
+    <div class="login-form">
+      <h1>ログイン</h1>
+      <%= form_with model: @user, url: '/login', local: true do |form| %>
+        <%= render :partial => "templates/input", :locals => {f: form}%>
+        <%= form.submit "ログイン" , class: "btn btn-default" %>
+      <% end %>
     </div>
-  </body>
-</html>
+      <%= form_with url: new_user_path,method: :get, local: true do |form| %>
+        <p>新規登録はこちら</p>
+        <%= form.submit "新規登録" , class: "btn btn-default" %>
+      <% end %>
+  </div>
+</div>

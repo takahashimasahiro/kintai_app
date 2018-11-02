@@ -10,36 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_093535) do
+ActiveRecord::Schema.define(version: 2018_10_31_075355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
- 
-  # 勤怠管理テーブル
+
   create_table "attendance_times", force: :cascade do |t|
-    t.integer "user_id"
-    # 日付
-    t.date "work_date" 
-    # 出勤時間
-    t.time "work_start"
-    # 退勤時間
-    t.time "work_end"
-    # 勤怠状況
-    t.string "status"
+    t.integer "user_id", comment: "ユーザーID"
+    t.date "work_date", comment: "勤怠日付"
+    t.time "work_start", comment: "出勤時間"
+    t.time "work_end", comment: "退勤時間"
+    t.string "status", comment: "勤怠状況"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    # 権限
-    t.string "role", default: "employee"
-    # 残有休数
-    t.decimal "paid_holiday_count", default: "10.0"
+    t.string "email", comment: "メールアドレス"
+    t.string "name", comment: "ユーザー名"
+    t.string "role", default: "employee", comment: "権限"
+    t.decimal "paid_holiday_count", default: "10.0", comment: "残有休日数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
+    t.string "password_digest", comment: "パスワード"
   end
 
 end

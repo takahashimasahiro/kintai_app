@@ -6,14 +6,4 @@
   <%= f.label :page,  'password' %>
   <%= f.password_field :password %>
 </div>
-<% if @user %>
-  <% @user.errors.full_messages.each do |message|  %>
-    <div class='error_message'>
-      <%= message %>
-    </div>
-  <% end %>
-<% elsif @error_messages %>
-  <div class='error_message'>
-    <%= @error_messages %>
-  </div>
-<% end %>
+<%= render :partial => "templates/errmessage"%>

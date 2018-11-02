@@ -1,0 +1,5 @@
+<h1>ユーザー管理</h1>
+  <%= form_with url: new_user_management_path, method: 'get', local: true do |f| %>
+    <%= button_tag '新規作成', name: 'user_new', class: 'btn btn-info' %>
+  <%end%>
+<%= render :partial => "templates/user_management_table"%>

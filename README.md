@@ -3,9 +3,13 @@
 install 
 
 $ bundle install --path=vendor/bundle
+
 $ yarn install
+
 $ bin/webpack
+
 $ bundle exec rails s
+
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
