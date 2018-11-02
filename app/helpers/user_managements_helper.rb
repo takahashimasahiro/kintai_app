@@ -6,4 +6,15 @@ module UserManagementsHelper
     ManagementsConstant.freeze
     ManagementsConstant::ROLE
   end
+
+  def select_role(role)
+    ManagementsConstant.freeze
+    show_role = nil
+    ManagementsConstant::ROLE.each do |x| 
+      if x[1] == role
+        show_role = x[0]
+      end
+    end
+    show_role
+  end
 end

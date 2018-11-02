@@ -16,9 +16,10 @@
           </td>
           <td class='align-middle user-name'>
             <%= link_to user.name, edit_user_management_path(user.id), class: 'list-group' %>
+             <%# list-group-item list-group-item-success %>
           </td>
           <td class='align-middle'>
-            <%= user.role %>
+            <%= select_role(user.role) %>
           </td>
         <%end%>
         <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
