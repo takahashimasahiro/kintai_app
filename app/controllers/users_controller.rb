@@ -26,13 +26,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(@current_user.id)
   end
 
   def update 
     @user = User.find(@current_user.id)
-    if params[:new_password1] == params[:new_password2] && @user.authenticate(params[:old_password])
+    if params[:user]['new_password1'] == params[:user]['new_password2'] && @user.authenticate(params[:user]['old_password'])
         @user.name = params[:page]['name']
-        @user.password = params[:new_password1]
+        @user.password = params[:user]['new_password1']
         if @user.save
           redirect_to edit_user_path(@current_user.id) ,flash: {notice: '保存しました'}
         else
