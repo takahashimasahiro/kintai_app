@@ -24,11 +24,11 @@ class UserManagementsController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find(user_params)
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find(user_params)
     @user.email = params[:page]['email']
     @user.name = params[:page]['name']
     @user.role = params[:role]
@@ -49,4 +49,9 @@ class UserManagementsController < ApplicationController
     @user.destroy
     redirect_to user_managements_path, flash: {notice: '削除しました'}
   end
+
+  private 
+    def user_params
+      params.require(:id)
+    end
 end
