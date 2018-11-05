@@ -26,11 +26,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(@current_user.id)
+    @user = @current_user
   end
 
   def update 
-    @user = User.find(@current_user.id)
+    @user = @current_user
     if params[:user]['new_password1'] == params[:user]['new_password2'] && @user.authenticate(params[:user]['old_password'])
         @user.name = params[:page]['name']
         @user.password = params[:user]['new_password1']

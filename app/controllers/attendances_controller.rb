@@ -7,9 +7,11 @@ class AttendancesController < ApplicationController
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
     if @current_user.role == 'owner'
+      # TODO こっちをpluckで補う
       @user_all = User.all.map { |x| [x.name, x.id] }
     end
     @lastday = @select_date.end_of_month.day
+    # TODO strong parametor対応
     @selected_user =  params[:select_user] ? User.where(id: params[:select_user]).pluck(:name,:id)[0] : [@current_user.name,@current_user.id]
     @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
   end
