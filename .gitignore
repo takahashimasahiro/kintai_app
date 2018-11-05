@@ -35,5 +35,6 @@ yarn-debug.log*
 .yarn-integrity
 
 /vendor/bundler
+/vendor/bundle
 
 .rspec
