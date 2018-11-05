@@ -11,7 +11,6 @@ class AttendancesController < ApplicationController
       @user_all = User.all.pluck(:name,:id)
     end
     @lastday = @select_date.end_of_month.day
-
     @selected_user =  User.select(:name,:id).find(select_user_params ? select_user_params : @current_user.id)
     @attendance_table = User.find(@selected_user.id).attendance_times.where(:work_date => @select_date.all_month)
   end
