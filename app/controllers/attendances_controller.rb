@@ -6,15 +6,16 @@ class AttendancesController < ApplicationController
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
+
     if @current_user.role == 'owner'
-      # TODO こっちをpluckで補う
-      @user_all = User.all.map { |x| [x.name, x.id] }
+      @user_all = User.all.pluck(:name,:id)
     end
     @lastday = @select_date.end_of_month.day
-    # TODO strong parametor対応
-    @selected_user =  params[:select_user] ? User.where(id: params[:select_user]).pluck(:name,:id)[0] : [@current_user.name,@current_user.id]
-    @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
+
+    @selected_user =  User.select(:name,:id).find(select_user_params ? select_user_params : @current_user.id)
+    @attendance_table = User.find(@selected_user.id).attendance_times.where(:work_date => @select_date.all_month)
   end
+
 
   def update
     @select_date = Time.now
@@ -54,4 +55,11 @@ class AttendancesController < ApplicationController
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
+
+  private
+
+  def select_user_params
+    params.require(:select_user)
+  end
+
 end

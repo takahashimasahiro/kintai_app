@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def new
     @user = User.new
     session[:id] = nil
@@ -21,10 +22,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # def user_params
-  #   params.require(:user).permit(:email, :password, :name)
-  # end
-
   def edit
     @user = @current_user
   end
@@ -45,4 +42,10 @@ class UsersController < ApplicationController
     end
   end
 
+  private
+
+    def user_params
+      params.require(:user).permit(:email, :password, :name)
+    end
+    
 end
