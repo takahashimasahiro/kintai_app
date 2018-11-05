@@ -1,23 +1,33 @@
 require 'rails_helper'
 
-# TODOルートに合わせる
 RSpec.describe UsersController, type: :controller do
-  describe "GET #login" do
+
+  describe "GET #new" do
     it "returns http success" do
-      
+      get :new
+      expect(response).to have_http_status(:success)
     end
   end
   
-  describe 'GET /' do
+  describe 'POST #create' do
     it 'returns http success' do
-      get :login
+      post :create
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe 'GET /users/home' do
+  describe 'GET #edit' do
     it 'returns http success' do
-      # get :
+      get :edit
+      expect(response).to  have_http_status(:success)
     end
   end
+
+  describe 'PATCh #update' do
+    it 'returns http success' do
+      patch :update 
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end
