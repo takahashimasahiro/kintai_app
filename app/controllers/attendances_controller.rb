@@ -8,11 +8,11 @@ class AttendancesController < ApplicationController
     end
 
     if @current_user.role == 'owner'
-      @user_all = User.all.pluck(:name,:id)
+      @user_all = User.all.order(:id).pluck(:name, :id)
     end
     @lastday = @select_date.end_of_month.day
-    @selected_user =  User.select(:name,:id).find(select_user_params ? select_user_params : @current_user.id)
-    @attendance_table = User.find(@selected_user.id).attendance_times.where(:work_date => @select_date.all_month)
+    @selected_user =  User.where(id: params[:select_user] ? params[:select_user] : @current_user.id).pluck(:name, :id)[0]
+    @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
   end
 
 
@@ -54,11 +54,5 @@ class AttendancesController < ApplicationController
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
-
-  private
-
-  def select_user_params
-    params.require(:select_user)
-  end
-
+  
 end
