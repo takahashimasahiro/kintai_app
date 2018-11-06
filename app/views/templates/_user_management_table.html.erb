@@ -1,6 +1,5 @@
 <div class='user-management-table'>
-  <table class='table table-bordered  table-striped table-light table-hover'>
-   <%# table-sm %>
+  <table class='table table-bordered  table-striped table-light table-hover table-sm'>
     <thead>
       <tr class='text-center align-middle'>
         <th class='col-md-01 col-sm-01'>id</th>
@@ -17,7 +16,7 @@
               <%= user.id %>
             </td>
             <td class='align-middle item-name col-md-04 col-sm-04'>
-              <%= link_to user.name, edit_user_management_path(user.id), class: 'list-group' %>
+            <%= link_to user.name, edit_user_management_path(user.id) %>
             </td>
             <td class='align-middle item-role col-md-04 col-sm-04'>
               <%= select_role(user.role) %>
