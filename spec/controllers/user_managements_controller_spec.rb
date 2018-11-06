@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe UserManagementsController, type: :controller do
+  let(:params) { { id: 1 } }
+  before do
+    params
+  end
+
   describe 'GET #index' do
     subject { get :index, params }
     it 'returns http success' do
@@ -15,29 +20,43 @@ RSpec.describe UserManagementsController, type: :controller do
     end
   end
 
-  describe 'POST #create' do
-    subject { post :create }
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
+  describe 'user create or update' do
+    let(:params) do
+      {
+        page: {
+          email: 'test@example.com',
+          name: 'testuser',
+          password: 'password'
+        },
+        holiday_count: 10,
+        role: 'owner'
+      }
+    end
+    
+    describe 'POST #create' do
+      subject { post :create, params }
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe 'PATCH #update' do
+      subject { patch :update, params }
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
     end
   end
-
+  
   describe 'GET #edit' do
-    subject { get :edit }
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'PATCH #update' do
-    subject { patch :update }
+    subject { get :edit, params }
     it 'returns http success' do
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'DELETE #destroy' do
-    subject { delete :destroy }
+    subject { delete :destroy, params }
     it 'returns http success' do
       expect(response).to have_http_status(:success)
     end
