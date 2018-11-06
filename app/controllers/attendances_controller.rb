@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
   def new
   end
+  
   def show
     @select_date = Time.now
     if params[:select_year] && params[:select_month]
@@ -54,5 +55,5 @@ class AttendancesController < ApplicationController
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
-  
+
 end
