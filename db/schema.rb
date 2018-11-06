@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_075355) do
+ActiveRecord::Schema.define(version: 2018_11_06_064651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "apply_vacations", force: :cascade do |t|
+    t.integer "applicant_id", comment: "申請者ID"
+    t.date "get_start_date", comment: "取得開始日"
+    t.decimal "get_days", comment: "取得日数"
+    t.integer "authorizer_id", comment: "承認者ID"
+    t.string "status", default: "applying", comment: "申請状態"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "attendance_times", force: :cascade do |t|
     t.integer "user_id", comment: "ユーザーID"
