@@ -11,7 +11,8 @@
     "moment": "^2.22.2",
     "popper": "^1.0.1",
     "popper.js": "^1.14.4",
-    "rails-ujs": "^5.2.1"
+    "rails-ujs": "^5.2.1",
+    "vue": "^2.5.17"
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2",

@@ -1,18 +1,21 @@
 class AttendancesController < ApplicationController
   def new
   end
+  
   def show
     @select_date = Time.now
     if params[:select_year] && params[:select_month]
       @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
     end
+
     if @current_user.role == 'owner'
-      @user_all = User.all.map { |x| [x.name, x.id] }
+      @user_all = User.all.order(:id).pluck(:name, :id)
     end
     @lastday = @select_date.end_of_month.day
-    @selected_user =  params[:select_user] ? User.where(id: params[:select_user]).pluck(:name,:id)[0] : [@current_user.name,@current_user.id]
+    @selected_user =  User.where(id: params[:select_user] ? params[:select_user] : @current_user.id).pluck(:name, :id)[0]
     @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
   end
+
 
   def update
     @select_date = Time.now
@@ -52,4 +55,5 @@ class AttendancesController < ApplicationController
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
+
 end
