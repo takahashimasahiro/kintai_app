@@ -52,6 +52,9 @@ class AttendancesController < ApplicationController
         0,"+09:00")
       @attend.status = params[:"status_#{i}"]
       @attend.save
+      # TODO statusにvacationが含まれる場合は有給休暇申請処理を行う
+      if params[:"status_#{i}"] && params[:"status_#{i}"].include?('vacation')
+      end
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
   end
