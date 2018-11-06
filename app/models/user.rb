@@ -5,7 +5,8 @@ class User < ApplicationRecord
 
   # https://railsguides.jp/association_basics.html
   has_many :attendance_times, dependent: :destroy
-
+  has_many :apply_vacations, foreign_key: 'applicant_id', dependent: :destroy
+  
   enum role: {
     part_time_job: 'part_time_job',
     employee: 'employee',
