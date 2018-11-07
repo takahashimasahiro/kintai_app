@@ -22,6 +22,7 @@ $(function(){
   });
   $('th').children('select').on('change', function(){
     addChangeRow(Number($(this).parent().attr('name').split('_')[2]))
+    $('#save-button').submit()
   });
 });
 function addChangeRow(row){

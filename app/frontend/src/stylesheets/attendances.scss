@@ -1,8 +1,9 @@
 @import "./application";
 
-h1{
-  font-size: 30px;
+.search-user{
+  line-height: 45px;
 }
+
 
 .day_of_week_0, .day_of_week_holiday {
   background-color: #f5c6cb;
@@ -10,7 +11,6 @@ h1{
 .day_of_week_1, .day_of_week_2,
 .day_of_week_3, .day_of_week_4, .day_of_week_5{
   background-color: rgb(235, 235, 235);
-
 }
 .day_of_week_6{
   background-color: #bee5eb;
@@ -23,16 +23,20 @@ h1{
   display: inline-block;
   width: 100%;
 }
-#pulldown{
+
+.pulldown{
   display: inline;
-  flex-basis: 100%
+  flex-basis: 100%;
+  line-height: 45px;
 }
 .search-rightend, {
   float: right;
 }
-.inputtime, .attend-save{
+
+.inputtime{
   float: right;
   display: inline;
+  line-height: 65px;
 }
 .table .save-button {
   float: left;

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     if logged_in?
       @current_user ||= User.find(session[:id])
     elsif @current_user.nil?
-      # TODO ログイン画面に返す
+      redirect_to('/')
     end
   end
 
