@@ -9,11 +9,11 @@
     <%= javascript_pack_tag 'application' %>
     <%= javascript_pack_tag params[:controller] %>
   </head>
-  <body>
+  <body class='bg-light'>
     <% if @current_user %>
       <div class="row">
-        <div class="col-sm-3 sidebar open">
-          <div class="row sidebar-header header-cover" >
+        <div class="col-sm-3 sidebar open bg-dark">
+          <div class="row sidebar-header header-cover text-light" >
             <ul class="col-md-7 user-profile">
               <li class="profile-profile"><%= 'プロフィール' %></li>
               <li class="profile-username"><%= @current_user.name %></li>

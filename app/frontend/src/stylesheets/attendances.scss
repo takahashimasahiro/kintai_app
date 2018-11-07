@@ -1,7 +1,7 @@
 @import "./application";
 
 h1{
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .day_of_week_0, .day_of_week_holiday {
@@ -9,7 +9,8 @@ h1{
 }
 .day_of_week_1, .day_of_week_2,
 .day_of_week_3, .day_of_week_4, .day_of_week_5{
-  background-color: #f7ebc7;
+  background-color: rgb(235, 235, 235);
+
 }
 .day_of_week_6{
   background-color: #bee5eb;

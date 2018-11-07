@@ -12,10 +12,6 @@ body {
 body {
   line-height: 1.4;
   font-size: 15px;
-  // TODO 背景色の設定 白〜薄灰色
-}
-
-.wrapper-login{
 }
 
 .wrapper-login {
@@ -37,7 +33,6 @@ body {
   position: fixed;
   display: block;
   min-height: 100%;
-  background-color: #B2E2EC;
   min-width: 250px;
   max-width: 250px;
   .sidebar-header {
@@ -46,7 +41,6 @@ body {
     margin-bottom: 8px;
   }
   .sidebar-header.header-cover {
-    background-color: #00e5ff;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -117,7 +111,6 @@ a:hover{
 }
 .flash-logout{
   top: 0px;
-  // margin-left: 250px;
   color: #5B5B5B;
   background: #fce08e;
   text-align: center;
