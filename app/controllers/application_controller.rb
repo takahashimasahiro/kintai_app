@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   def current_user
     if logged_in?
       @current_user ||= User.find(session[:id])
+    elsif @current_user.nil?
+      # TODO ログイン画面に返す
     end
   end
 
