@@ -53,11 +53,12 @@ class AttendancesController < ApplicationController
       @attend.status = params[:"status_#{i}"]
       @attend.save
       # TODO statusにvacationが含まれる場合は有給休暇申請処理を行う
-
       if is_full_vacation?(params[:"status_#{i}"])
         # 全休
+        @vacation = @current_user.apply_vacations.new(get_days: 1)
       elsif is_half_vacation?(params[:"status#{i}"])
         # 半休
+        @vacation = @current_user.apply_vacations.new(get_days: 0.5)
       end
     end
     redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
@@ -65,7 +66,9 @@ class AttendancesController < ApplicationController
 
   def is_full_vacation?(status)
     status && status.index('vacation') == 0
+
   end
+
   def is_half_vacation?(status)
     status && status.index('vacation') != 0
   end

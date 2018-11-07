@@ -1,5 +1,5 @@
 class ApplyVacation < ApplicationRecord
-  belongs_to :applicant, :class_name => 'user', foreign_key: 'id'
+  belongs_to :applicant_id, :class_name => 'user', foreign_key: 'id'
 
   validates :applicant_id, { presence: true }
   validates :get_start_date, { presence: true }
