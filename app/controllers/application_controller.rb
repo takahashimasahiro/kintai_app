@@ -4,13 +4,11 @@ class ApplicationController < ActionController::Base
   def current_user
     if logged_in?
       @current_user ||= User.find(session[:id])
-    # elsif @current_user.nil?
-    #   redirect_to('/')
     end
   end
 
   def authenticate_current_user
-    unless logged_in? 
+    if !logged_in? || !@current_user
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
@@ -21,7 +19,6 @@ class ApplicationController < ActionController::Base
       redirect_to attendance_path(session[:id])
     end
   end
-
   # ログイン状態か判別
   def logged_in?
     session[:id]
