@@ -1,0 +1,18 @@
+<table class='table table-bordered table-striped table-light table-hover table-sm'>
+  <thead>
+    <tr>
+      <th>申請日</th>
+      <th>消化日数</th>
+      <th>申請状況</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @my_vacation.each do |row| %>
+      <tr>
+        <th><%= row.get_start_date %></th>
+        <th><%= row.get_days %></th>
+        <th><%= select_status(row.status) %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

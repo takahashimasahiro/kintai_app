@@ -1,7 +1,6 @@
 <table class='table table-bordered table-striped table-light table-hover table-sm'>
   <thead>
     <tr>
-      <th>ID</th>
       <th>申請日</th>
       <th>申請者</th>
       <th>消化日数</th>
@@ -10,13 +9,14 @@
     </tr>
   </thead>
   <tbody>
+  <% for row in @applying_vacation do %>
     <tr>
-      <th>1</th>
-      <th>2018/12/31</th>
-      <th>testuser</th>
-      <th>20</th>
+      <th><%= row.get_start_date%></th>
+      <th><%= row.name %></th>
+      <th><%= row.get_days %></th>
       <th><%= button_tag '許可', name:'btn-approve', class:'btn btn-success' %></th>
       <th><%= button_tag '却下', name:'btn-dismiss', class:'btn btn-danger'%></th>
     </tr>
+  <% end %>
   </tbody>
 </table>
