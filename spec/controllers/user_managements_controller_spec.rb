@@ -1,65 +1,78 @@
 require 'rails_helper'
 
 RSpec.describe UserManagementsController, type: :controller do
-  let(:params) { { id: 1 } }
+  include ApplicationHelperSpec
+  session = { 'id' => 1 }
+  let(:user) { User.create(
+    id: 1,
+    email: 'test@example.com',
+    name: 'testuser',
+    password: 'password') }
   before do
-    params
+    user
+    add_session(session)
   end
 
   describe 'GET #index' do
-    subject { get :index, params }
     it 'returns http success' do
+      get :index
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET #new' do
-    subject { get :new }
     it 'returns http success' do
+      params = {
+        id: 1
+      }
+      get :new, params: params
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'user create or update' do
-    let(:params) do
-      {
-        page: {
-          email: 'test@example.com',
-          name: 'testuser',
-          password: 'password'
-        },
-        holiday_count: 10,
-        role: 'owner'
-      }
-    end
-    
+    params = {
+      id: 1,
+      page: {
+        email: 'test@example.com',
+        name: 'testuser',
+        password: 'password'
+      },
+      holiday_count: 10,
+      role: 'owner'
+    }
     describe 'POST #create' do
-      subject { post :create, params }
       it 'returns http success' do
+        post :create, params: params
         expect(response).to have_http_status(:success)
       end
     end
 
     describe 'PATCH #update' do
-      subject { patch :update, params }
       it 'returns http success' do
-        expect(response).to have_http_status(:success)
+        patch :update, params: params
+        expect(response).to have_http_status '302'
       end
     end
   end
   
   describe 'GET #edit' do
-    subject { get :edit, params }
     it 'returns http success' do
+      params = {
+        id: 1
+      }
+      get :edit, params: params
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'DELETE #destroy' do
-    subject { delete :destroy, params }
     it 'returns http success' do
-      expect(response).to have_http_status(:success)
+      params = {
+        id: 1
+      }
+      delete :destroy, params: params
+      expect(response).to have_http_status '302'
     end
   end
-
 end

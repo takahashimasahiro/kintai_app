@@ -33,6 +33,7 @@ class UserManagementsController < ApplicationController
     @user.name = params[:page]['name']
     @user.role = params[:role]
     @user.paid_holiday_count = params[:holiday_count]
+
     if params[:page]['password'].empty?
       @user.password = params[:page]['password']
     end

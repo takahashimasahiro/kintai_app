@@ -1,6 +1,4 @@
 class AttendancesController < ApplicationController
-  def new
-  end
   
   def show
     @select_date = Time.now

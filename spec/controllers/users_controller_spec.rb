@@ -1,50 +1,65 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  include ApplicationHelperSpec
+  session = { 'id' => 1 }
   let(:user) { User.create(
+    id: 1,
     email: 'test@example.com',
     name: 'testuser',
     password: 'password') }
 
   before do
     user
+    add_session(session)
   end
+
   describe 'GET #new' do
-    subject { get :new }
     it 'returns http success' do
+      get :new
       expect(response).to have_http_status(:success)
     end
   end
+
   describe 'POST #create' do
-    subject { post :create }
     it 'returns http success' do
+      params = {
+        user: {
+          email: 'test@example.com',
+          name: 'testuser',
+          password: 'password'
+        }
+      }
+      post :create, params: params
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET #edit' do
-    subject { get :edit }
     it 'returns http success' do
+      params = {
+        id: user.id
+      }
+      get :edit, params: params
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'PATCh #update' do
-    subject { patch :update, params }
-    let(:params) do
-      {
+    it 'returns http success' do
+      params = {
+        id: user.id,
         page: {
           name: 'user_new_name'
         },
-        name: {
+        user: {
           old_password: user.password,
           new_password1: 'new_password',
           new_password2: 'new_password'
         }
       }
-    end
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
+      patch :update, params: params
+      expect(response).to have_http_status '302'
     end
   end
 end

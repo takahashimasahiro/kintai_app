@@ -10,21 +10,21 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    subject { get :new }
     it 'returns http success' do
+      get :new
+      expect(response).to have_http_status(:success)
+    end
+    it 'リダイレクトが繰り返し呼ばれていないこと' do
+      get :new
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'POST #login' do
-    let(:params) do
-      {
-        email: user.email,
-        password: user.password
-      }
-    end
-    subject { post :login, params }
+    let(:email) { user.email }
+    let(:password) { user.password }
     it 'returns http success' do
+      post :login
       expect(response).to have_http_status(:success)
     end
   end
