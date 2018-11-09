@@ -1,5 +1,5 @@
 class ApplyVacation < ApplicationRecord
-  belongs_to :users
+  # belongs_to :users
 
   validates :applicant_id, { presence: true }
   validates :get_start_date, { presence: true }
