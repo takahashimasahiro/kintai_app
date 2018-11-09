@@ -1,4 +1,6 @@
 class HolidaysController < ApplicationController
+  before_action :authenticate_current_user
+  before_action :apply_count
 
   def show
     @my_vacation = @current_user.apply_vacations.all.order(:get_start_date)

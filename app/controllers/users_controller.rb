@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  before_action :forbid_current_user, {only: [:new, :create]}
+  before_action :authenticate_current_user, {only: [:edit, :update, :index]}
+  before_action :apply_count, {only: [:edit, :update, :index]}
+
+  def index 
+  end
 
   def new
     @user = User.new

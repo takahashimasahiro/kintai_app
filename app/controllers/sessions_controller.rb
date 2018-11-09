@@ -1,5 +1,8 @@
 # LoginFormsController
 class SessionsController < ApplicationController
+  before_action :forbid_current_user, {only: [:login, :new]}
+  before_action :authenticate_current_user, {only: [:destroy]}
+
   def new
     session[:id] = nil
     @current_user = nil
@@ -19,4 +22,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    session[:id] = nil
+    @current_user = nil
+    @error_messages = nil
+    redirect_to('/')
+  end
 end

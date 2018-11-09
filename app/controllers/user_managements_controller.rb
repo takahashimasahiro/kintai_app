@@ -1,4 +1,6 @@
 class UserManagementsController < ApplicationController
+  before_action :authenticate_current_user
+  before_action :apply_count
   
   def index
     @all_user = User.all.order(:id)

@@ -1,5 +1,7 @@
 class AttendancesController < ApplicationController
-  
+  before_action :authenticate_current_user
+  before_action :apply_count
+
   def show
     @select_date = Time.now
     if params[:select_year] && params[:select_month]
@@ -48,14 +50,15 @@ class AttendancesController < ApplicationController
         params[:"work_#{i}"]["end(4i)"].to_i,
         params[:"work_#{i}"]["end(5i)"].to_i,
         0,"+09:00")
-      @attend.status = params[:"status_#{i}"]
-      @attend.save
       if vacation?(params[:"status_#{i}"])
         @vacation = @current_user.apply_vacations.find_or_create_by(get_start_date: @registration_date)
         @vacation.get_days = params[:"status_#{i}"].index('vacation').zero? ? 1 : 0.5
         @vacation.status = 'applying'
         @vacation.save
+
       end
+      @attend.status = params[:"status_#{i}"]
+      @attend.save
     end
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
   end

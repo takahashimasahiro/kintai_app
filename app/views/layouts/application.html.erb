@@ -27,7 +27,8 @@
             <% if @current_user.role == 'owner' %>
               <%= link_to edit_holiday_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' do %>
                 有給休暇申請
-                <span class="badge badge-primary badge-pill"></span>
+                <%# 申請数を表示 %>
+                <span class="badge badge-primary badge-pill"><%= @apply_count %></span>
               <%end%>
             <%# TODO 実装し次第表示を分割させる %>
             <%# <% else %> 
@@ -40,7 +41,7 @@
             <% if @current_user.role == 'owner' %>
               <%= link_to 'ユーザー管理',user_managements_path , method: 'get', class: 'list-group-item list-group-item-action list-group-item-light'%>
             <% end %>
-            <%= link_to 'ログアウト', new_session_path, class: 'list-group-item list-group-item-action list-group-item-light'%>
+            <%= link_to 'ログアウト', session_path(@current_user.id), method: 'delete', class: 'list-group-item list-group-item-action list-group-item-light'%>
           </div>
         </div>
         <%= render partial: "templates/flash",locals: {class_name: "flash-login"} %>
