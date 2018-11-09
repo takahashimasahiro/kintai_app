@@ -5,7 +5,7 @@ import '../src/stylesheets/holidays.scss';
 import $ from 'jquery';
 
 $(function(){
-  $('button[name=btn-dismiss]').on('click',function(){
+  $('button[name=dismiss]').on('click',function(){
     if(confirm('削除しますか？')){
       $(this).submit();
     }else{

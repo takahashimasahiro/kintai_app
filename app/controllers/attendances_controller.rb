@@ -51,9 +51,10 @@ class AttendancesController < ApplicationController
       @attend.status = params[:"status_#{i}"]
       @attend.save
       if vacation?(params[:"status_#{i}"])
-        @vacation = @current_user.apply_vacations.create(
-          get_start_date: @registration_date,
-          get_days: params[:"status_#{i}"].index('vacation').zero? ? 1 : 0.5 )
+        @vacation = @current_user.apply_vacations.find_or_create_by(get_start_date: @registration_date)
+        @vacation.get_days = params[:"status_#{i}"].index('vacation').zero? ? 1 : 0.5
+        @vacation.status = 'applying'
+        @vacation.save
       end
     end
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }

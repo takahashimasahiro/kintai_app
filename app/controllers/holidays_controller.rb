@@ -15,6 +15,7 @@ class HolidaysController < ApplicationController
         @vacation_data.status = 'admin_applied'
       elsif params[:dismiss]
         @vacation_data.status = 'apply_rejection'
+        # TODO勤怠状況のステータスを変更
       end
       @vacation_data.save
     end
