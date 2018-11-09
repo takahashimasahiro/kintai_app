@@ -1,10 +1,9 @@
 FactoryBot.define do
   factory :user do
-    user_id { "" }
-    email { "" }
-    name { "" }
-    password { "" }
-    role { "MyString" }
-    paid_holiday_count { "" }
+    email { |n| "TEST#{n}@example.com"}
+    name { |n| "TEST_NAME#{n}" }
+    password { "password" }
+    role { "owner" }
+    paid_holiday_count { "10" }
   end
 end

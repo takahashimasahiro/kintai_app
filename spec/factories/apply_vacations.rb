@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :apply_vacation do
-    applicant_id { 1 }
-    get_start_date { "2018-11-06" }
-    get_days { "" }
-    authorizer_id { 1 }
-    status { "MyString" }
+    applicant_id { |n| "#{n}" }
+    get_start_date { Date.Today }
+    get_days { '1' }
+    authorizer_id { nil }
+    status { "applying" }
   end
 end

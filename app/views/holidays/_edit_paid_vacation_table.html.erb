@@ -10,7 +10,7 @@
   </thead>
   <tbody>
   <% for row in @applying_vacation do %>
-    <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do |f|%>
+    <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do %>
     <tr>
       <input type='hidden' value="<%=row.get_start_date%>">
       <input type='hidden' value="<%=row.applicant_id%>">

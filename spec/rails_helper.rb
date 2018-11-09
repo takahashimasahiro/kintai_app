@@ -62,5 +62,6 @@ RSpec.configure do |config|
 
 
   Dir[Rails.root.join('spec/helper/application_helper_spec.rb')].each { |f| require f }
+  # Dir[Rails.root.join('spec/factories/**/*.rb')].each { |f| require f }
 
 end

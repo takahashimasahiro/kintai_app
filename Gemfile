@@ -49,6 +49,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  # gem 'factory_girl_rails', '~> 4.9'
   gem 'rails-controller-testing'
   gem "rspec_junit_formatter"
   gem 'rubocop', require: false
