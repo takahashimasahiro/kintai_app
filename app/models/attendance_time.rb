@@ -7,6 +7,7 @@ class AttendanceTime < ApplicationRecord
     am_vacation: 'am_vacation',
     pm_vacation: 'pm_vacation',
     holiday_work: 'holiday_work',
-    absence: 'absence'
+    absence: 'absence',
+    holiday: 'holiday'
   }
 end

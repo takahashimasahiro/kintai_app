@@ -3,7 +3,7 @@ module AttendancesHelper
     DATE_OF_WEEK = ["日","月","火","水","木","金","土"].map(&:freeze).freeze
     WORK_STATUS = [['出勤','work'],['有給休暇','vacation'],['午前休暇','am_vacation'],
                   ['午後休暇','pm_vacation'],['休日出勤','holiday_work'],
-                  ['欠勤','absence'],['休日','absence']].map(&:freeze).freeze
+                  ['欠勤','absence'],['休日','holiday']].map(&:freeze).freeze
     DEFAULT_WORK_START = "10".freeze # 出勤時間
     DEFAULT_WORK_END = "19".freeze # 退勤時間
   end
@@ -59,7 +59,7 @@ module AttendancesHelper
           :month => attendance_row.work_date.month,
           :day => row ,
           :hour => attendance_row.work_end.hour,
-           :minute => attendance_row.work_end.min})
+          :minute => attendance_row.work_end.min})
     else
       time_select("work_#{row}", 'end',:default => 
         {:year => @select_date.year ,
