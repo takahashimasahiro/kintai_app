@@ -11,7 +11,6 @@ RSpec.describe UsersController, type: :controller do
 
   before do
     user
-    add_session(session)
   end
 
   describe 'GET #new' do
@@ -40,6 +39,7 @@ RSpec.describe UsersController, type: :controller do
       params = {
         id: user.id
       }
+      add_session(session)
       get :edit, params: params
       expect(response).to have_http_status(:success)
     end
@@ -58,6 +58,7 @@ RSpec.describe UsersController, type: :controller do
           new_password2: 'new_password'
         }
       }
+      add_session(session)
       patch :update, params: params
       expect(response).to have_http_status '302'
     end
