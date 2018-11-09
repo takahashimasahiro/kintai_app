@@ -4,6 +4,14 @@ class UsersController < ApplicationController
   before_action :apply_count, {only: [:edit, :update, :index]}
 
   def index 
+    # ユーザー一覧を表示する
+    @state_of_all_user = User.joins(
+      "LEFT OUTER JOIN attendance_times ON 
+      users.id = attendance_times.user_id 
+      and attendance_times.work_date = '#{Date.today}'"
+      ).select(
+        'users.*, attendance_times.*'
+      )
   end
 
   def new

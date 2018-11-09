@@ -10,8 +10,6 @@ module HolidaysHelper
 
   def select_status(status)
     HolidaysConstant.freeze
-    val = nil
-    HolidaysConstant::APPLICATION_STATUS.each{ |r| r[0] == status ? val = r[1] : val }
-    val
+    HolidaysConstant::APPLICATION_STATUS.map { |r| r[1] if r[0] == status }.compact[0]
   end
 end
