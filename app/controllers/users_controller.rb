@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :authenticate_current_user, {only: [:edit, :update, :index]}
   before_action :apply_count, {only: [:edit, :update, :index]}
 
-  def index 
+  def index
     # ユーザー一覧を表示する
     @state_of_all_user = User.joins(
       "LEFT OUTER JOIN attendance_times ON 

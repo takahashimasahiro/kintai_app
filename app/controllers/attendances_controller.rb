@@ -50,13 +50,15 @@ class AttendancesController < ApplicationController
         params[:"work_#{i}"]["end(4i)"].to_i,
         params[:"work_#{i}"]["end(5i)"].to_i,
         0,"+09:00")
+      # 有給休暇申請を行う？
       if vacation?(params[:"status_#{i}"])
         @vacation = @current_user.apply_vacations.find_or_create_by(get_start_date: @registration_date)
         @vacation.get_days = params[:"status_#{i}"].index('vacation').zero? ? 1 : 0.5
         @vacation.status = 'applying'
         @vacation.save
-
       end
+      # TODO 有休申請取消処理
+      
       @attend.status = params[:"status_#{i}"]
       @attend.save
     end

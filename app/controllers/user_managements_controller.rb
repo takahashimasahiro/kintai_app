@@ -18,11 +18,10 @@ class UserManagementsController < ApplicationController
       paid_holiday_count: params[:holiday_count],
       password: params[:page]['password'])
     if @user.save
-      redirect_to user_managements_path, flash: {notice: '作成しました'}
+      redirect_to user_managements_path, flash: { notice: '作成しました' }
     else
       render new_user_management_path
     end
-
   end
 
   def edit
@@ -41,16 +40,16 @@ class UserManagementsController < ApplicationController
     end
 
     if @user.save
-      redirect_to user_managements_path, flash: {notice: '編集しました'}
+      redirect_to user_managements_path, flash: { notice: '編集しました' }
     else
-      render "edit"
+      render 'edit'
     end
   end
 
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_managements_path, flash: {notice: '削除しました'}
+    redirect_to user_managements_path, flash: { notice: '削除しました' }
   end
 
   private 

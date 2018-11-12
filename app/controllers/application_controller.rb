@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   # 有休申請数がいつくなのか数える
   def apply_count
-    @apply_count = 0
+    # @apply_count = 0
     if are_you_owner?
       @apply_count = ApplyVacation.where(status: 'applying').count
     end
