@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemovePasswordToUsers < ActiveRecord::Migration[5.2]
   def change
     # 暗号化していないパスワードの削除

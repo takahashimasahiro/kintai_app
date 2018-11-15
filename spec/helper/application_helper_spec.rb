@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module ApplicationHelperSpec
   def add_session(arg)

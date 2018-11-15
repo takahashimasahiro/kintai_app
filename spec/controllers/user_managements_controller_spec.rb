@@ -1,13 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe UserManagementsController, type: :controller do
   include ApplicationHelperSpec
   session = { 'id' => 1 }
-  let(:user) { User.create(
-    id: 1,
-    email: 'test@example.com',
-    name: 'testuser',
-    password: 'password') }
+  let(:user) do
+    User.create(
+      id: 1,
+      email: 'test@example.com',
+      name: 'testuser',
+      password: 'password'
+    )
+  end
   before do
     user
     add_session(session)
@@ -55,7 +60,7 @@ RSpec.describe UserManagementsController, type: :controller do
       end
     end
   end
-  
+
   describe 'GET #edit' do
     it 'returns http success' do
       params = {

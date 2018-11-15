@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class UserManagementsController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
-  
+
   def index
     @all_user = User.all.order(:id)
   end
@@ -16,7 +18,8 @@ class UserManagementsController < ApplicationController
       name: params[:page]['name'],
       role: params[:role],
       paid_holiday_count: params[:holiday_count],
-      password: params[:page]['password'])
+      password: params[:page]['password']
+    )
     if @user.save
       redirect_to user_managements_path, flash: { notice: '作成しました' }
     else
@@ -52,8 +55,9 @@ class UserManagementsController < ApplicationController
     redirect_to user_managements_path, flash: { notice: '削除しました' }
   end
 
-  private 
-    def user_params
-      params.require(:id)
-    end
+  private
+
+  def user_params
+    params.require(:id)
+  end
 end

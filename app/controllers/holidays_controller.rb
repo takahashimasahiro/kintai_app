@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HolidaysController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
@@ -7,9 +9,9 @@ class HolidaysController < ApplicationController
   end
 
   def edit
-    @applying_vacation = User.joins(:apply_vacations).where(apply_vacations: {status: 'applying'}).select("apply_vacations.* , users.name ")
+    @applying_vacation = User.joins(:apply_vacations).where(apply_vacations: { status: 'applying' }).select('apply_vacations.* , users.name ')
   end
-  
+
   def update
     @vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
     if @vacation_data
@@ -28,17 +30,17 @@ class HolidaysController < ApplicationController
 
   # ユーザーの有休残日数を減らす
   def reduce_holiday_count(vacation_data)
-        user = User.find(vacation_data.applicant_id)
-        # TODO 残有休数が0以下になる場合は欠勤となる処理をかく
-        
-        user.paid_holiday_count -= vacation_data.get_days
-        user.save
+    user = User.find(vacation_data.applicant_id)
+    # TODO: 残有休数が0以下になる場合は欠勤となる処理をかく
+
+    user.paid_holiday_count -= vacation_data.get_days
+    user.save
   end
 
   # 勤怠状況のステータスを欠勤にする
   def change_attend_status(vacation_data)
-        attend_data = AttendanceTime.find_by(user_id: vacation_data.applicant_id ,work_date: vacation_data.get_start_date)
-        attend_data.status = 'absence'
-        attend_data.save
+    attend_data = AttendanceTime.find_by(user_id: vacation_data.applicant_id, work_date: vacation_data.get_start_date)
+    attend_data.status = 'absence'
+    attend_data.save
   end
 end

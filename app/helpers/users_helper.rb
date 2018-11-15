@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # UsersHelper
 module UsersHelper
   module UsersConstant
-    WORK_STATUS = [['出勤','work'],['有給休暇','vacation'],['午前休暇','am_vacation'],
-                  ['午後休暇','pm_vacation'],['休日出勤','holiday_work'],
-                  ['欠勤','absence'],['休日','holiday']].map(&:freeze).freeze
+    WORK_STATUS = [%w[出勤 work], %w[有給休暇 vacation], %w[午前休暇 am_vacation],
+                   %w[午後休暇 pm_vacation], %w[休日出勤 holiday_work],
+                   %w[欠勤 absence], %w[休日 holiday]].map(&:freeze).freeze
   end
 
   def user_select_status(status)

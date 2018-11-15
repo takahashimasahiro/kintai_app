@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveUserIdForUserTable < ActiveRecord::Migration[5.2]
   # remove_columnを使うときはchangeよりup/downを使う
   def change

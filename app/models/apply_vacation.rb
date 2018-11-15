@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class ApplyVacation < ApplicationRecord
   # belongs_to :users
 
-  validates :applicant_id, { presence: true }
-  validates :get_start_date, { presence: true }
-  validates :get_days, { presence: true }
+  validates :applicant_id, presence: true
+  validates :get_start_date, presence: true
+  validates :get_days, presence: true
 
   enum status: {
     applying: 'applying', # 申請中

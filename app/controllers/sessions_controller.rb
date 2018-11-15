@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # LoginFormsController
 class SessionsController < ApplicationController
-  before_action :forbid_current_user, {only: [:login, :new]}
-  before_action :authenticate_current_user, {only: [:destroy]}
+  before_action :forbid_current_user, only: %i[login new]
+  before_action :authenticate_current_user, only: [:destroy]
 
   def new
     session[:id] = nil
@@ -11,14 +13,14 @@ class SessionsController < ApplicationController
 
   def login
     @user = User.find_by(email: params[:email])
-    if @user && @user.authenticate(params[:password])
-        session[:id] = @user.id
-      redirect_to attendance_path(@user.id), flash: {notice: 'ログインしました'}
+    if @user&.authenticate(params[:password])
+      session[:id] = @user.id
+      redirect_to attendance_path(@user.id), flash: { notice: 'ログインしました' }
     else
-      @error_messages = "メールアドレスもしくはパスワードが間違っています"
+      @error_messages = 'メールアドレスもしくはパスワードが間違っています'
       @email = params[:email]
       @password = params[:password]
-      render :action => 'new'
+      render action: 'new'
     end
   end
 

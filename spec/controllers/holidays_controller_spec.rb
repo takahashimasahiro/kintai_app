@@ -1,13 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe HolidaysController, type: :controller do
   include ApplicationHelperSpec
   session = { 'id' => 1 }
-  let(:user) { User.create(
-    id: 1,
-    email: 'test@example.com',
-    name: 'testuser',
-    password: 'password') }
+  let(:user) do
+    User.create(
+      id: 1,
+      email: 'test@example.com',
+      name: 'testuser',
+      password: 'password'
+    )
+  end
   before do
     user
     add_session(session)
@@ -29,15 +34,15 @@ RSpec.describe HolidaysController, type: :controller do
   end
 
   describe ' #update' do
-  params = {
-    id: 1,
-    user_id: 1,
-    get_date: Date.today,
-    approve: nil,
-    dismiss: nil
-  }
+    params = {
+      id: 1,
+      user_id: 1,
+      get_date: Date.today,
+      approve: nil,
+      dismiss: nil
+    }
     it '申請許可' do
-      params[:approve] = ""
+      params[:approve] = ''
       params[:dismiss] = nil
       patch :update, params: params
       expect(response).to have_http_status '302'
@@ -45,7 +50,7 @@ RSpec.describe HolidaysController, type: :controller do
 
     it '申請却下' do
       params[:approve] = nil
-      params[:dismiss] = ""
+      params[:dismiss] = ''
       patch :update, params: params
       expect(response).to have_http_status '302'
     end

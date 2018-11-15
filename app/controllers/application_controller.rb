@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 # BaseController
 class ApplicationController < ActionController::Base
   before_action :current_user
 
   def current_user
-    if logged_in?
-      @current_user ||= User.find(session[:id])
-    end
+    @current_user ||= User.find(session[:id]) if logged_in?
   end
 
   # ログインしていない場合は中の画面を表示させない
@@ -18,9 +18,7 @@ class ApplicationController < ActionController::Base
 
   # すでにログインしている場合はログイン画面を表示させない
   def forbid_current_user
-    if logged_in?
-      redirect_to attendance_path(session[:id])
-    end
+    redirect_to attendance_path(session[:id]) if logged_in?
   end
 
   # ログイン状態か判別
