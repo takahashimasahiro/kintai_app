@@ -6,6 +6,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
+Dir[Rails.root.join('spec/helper/application_helper_spec.rb')].each { |f| require f }
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -62,6 +63,4 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
 
-  Dir[Rails.root.join('spec/helper/application_helper_spec.rb')].each { |f| require f }
-  # Dir[Rails.root.join('spec/factories/**/*.rb')].each { |f| require f }
 end

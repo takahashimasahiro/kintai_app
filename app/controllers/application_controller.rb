@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   # ログインしていない場合は中の画面を表示させない
   def authenticate_current_user
-    if !(logged_in? && @current_user)
+    if !logged_in?
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
