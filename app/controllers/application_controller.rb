@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   # ログインしていない場合は中の画面を表示させない
   def authenticate_current_user
-    if !logged_in? || !@current_user
+    if !(logged_in? && @current_user)
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
@@ -28,14 +28,7 @@ class ApplicationController < ActionController::Base
 
   # 有休申請数がいつくなのか数える
   def apply_count
-    # @apply_count = 0
-    if are_you_owner?
-      @apply_count = ApplyVacation.where(status: 'applying').count
-    end
+    @apply_count = ApplyVacation.where(status: :applying).count if @current_user.owner?
   end
 
-  # オーナーか判別する
-  def are_you_owner?
-    @current_user.role == 'owner'
-  end
 end

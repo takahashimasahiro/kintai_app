@@ -24,21 +24,21 @@
           <div class="list-group">
             <%= link_to '勤怠状況一覧', attendance_path(@current_user.id),class: 'list-group-item list-group-item-action list-group-item-light' %>
             <%= link_to '出勤者リスト', users_path, class: 'list-group-item list-group-item-action list-group-item-light'%>
-            <% if @current_user.role == 'owner' %>
+            <% if @current_user.owner? %>
               <%= link_to edit_holiday_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' do %>
                 有給休暇申請
                 <%# 申請数を表示 %>
                 <span class="badge badge-primary badge-pill"><%= @apply_count %></span>
               <%end%>
             <%# TODO 実装し次第表示を分割させる %>
-            <%# <% else %> 
+            <%# <% else %>
             <%end%>
               <%= link_to holiday_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' do %>
                 有給申請確認
                 <span class="badge badge-primary badge-pill"></span>
               <% end %>
             <%= link_to 'ユーザー設定', edit_user_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' %>
-            <% if @current_user.role == 'owner' %>
+            <% if @current_user.owner? %>
               <%= link_to 'ユーザー管理',user_managements_path , method: 'get', class: 'list-group-item list-group-item-action list-group-item-light'%>
             <% end %>
             <%= link_to 'ログアウト', session_path(@current_user.id), method: 'delete', class: 'list-group-item list-group-item-action list-group-item-light'%>

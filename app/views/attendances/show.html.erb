@@ -1,7 +1,7 @@
 <h1>勤怠状況一覧</h1>
 <div class="search">
   <%# 管理者ならユーザー一覧を表示 %>
-  <% if @current_user.role == 'owner' %>
+  <% if @current_user.owner? %>
     <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
       <div class='search-user'>ユーザー
         <%= select_tag('select_user', 
