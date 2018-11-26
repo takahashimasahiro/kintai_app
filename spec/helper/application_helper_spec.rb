@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO
 module ApplicationHelperSpec
   def add_session(arg)
     arg.each { |k, v| session[k] = v }

@@ -18,5 +18,9 @@ class User < ApplicationRecord
   def posts
     Post.where(user_id: id)
   end
-  
+
+  # 選択したユーザーの情報を取得する
+  def self.select_user(user_id)
+    User.find(id: user_id || @current_user.id) ? @current_user.owner?
+  end
 end

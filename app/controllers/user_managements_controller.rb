@@ -45,7 +45,7 @@ class UserManagementsController < ApplicationController
     if @user.save
       redirect_to user_managements_path, flash: { notice: '編集しました' }
     else
-      render 'edit'
+      render :edit
     end
   end
 

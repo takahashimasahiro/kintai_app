@@ -8,14 +8,14 @@ const today = new Date();
 let thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
 let getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
 let changeRow = []
-
+// TODO:ES6使う
 $(function () {
-  $('button[name=syukkin]').on('click', function () {
+  $('button[name=syukkin]').on('click', () => {
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
     addChangeRow(today.getDate())
   });
-  $('button[name=taikin]').on('click', function () {
+  $('button[name=taikin]').on('click', () => {
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
     addChangeRow(today.getDate())

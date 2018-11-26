@@ -28,4 +28,19 @@ class ApplyVacation < ApplicationRecord
     attend_data = AttendanceTime.find_by(user_id: self.applicant_id, work_date: self.get_start_date)
     attend_data.absence!
   end
+
+  # 休暇申請をする
+  def apply_for_vacation(status, user, date)
+    begin
+      if AttendanceTime::vacation?(status)
+        @vacation = user.apply_vacations.find_or_create_by(get_start_date: date)
+        @vacation.get_days = status.start_with?(:vacation) ? 1 : 0.5
+        @vacation.status = :applying
+        @vacation.save!
+      end
+    rescue => e
+      # TODO:例外処理
+      raise e
+    end
+  end
 end
