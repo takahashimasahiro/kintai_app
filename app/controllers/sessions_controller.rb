@@ -2,8 +2,8 @@
 
 # LoginFormsController
 class SessionsController < ApplicationController
-  before_action :forbid_current_user, only: %i[login new]
-  before_action :authenticate_current_user, only: [:destroy]
+  before_action :forbid_current_user, only: %i(login new)
+  before_action :authenticate_current_user, only: %i(destroy)
 
   def new
     session[:id] = nil

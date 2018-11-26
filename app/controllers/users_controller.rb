@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :forbid_current_user, only: %i[new create]
-  before_action :authenticate_current_user, only: %i[edit update index]
-  before_action :apply_count, only: %i[edit update index]
+  before_action :forbid_current_user, only: %i(new create)
+  before_action :authenticate_current_user, only: %i(edit update index)
+  before_action :apply_count, only: %i(edit update index)
 
   def index
-    # ユーザー一覧を表示する
+    # ユーザー名と本日の出勤状況を取得する
+    # AttendanceTimeのstatusが取得できない場合は
+    # ユーザー名だけ取得
     @state_of_all_user = User.joins(
       "LEFT OUTER JOIN attendance_times ON
       users.id = attendance_times.user_id
       and attendance_times.work_date = '#{Date.today}'"
     ).select(
-      'users.*, attendance_times.*'
+      'users.name,attendance_times.status,attendance_times.updated_at'
     )
   end
 

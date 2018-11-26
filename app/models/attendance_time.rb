@@ -12,4 +12,8 @@ class AttendanceTime < ApplicationRecord
     absence: 'absence',
     holiday: 'holiday'
   }
+
+  def self.vacation?(status)
+    status.present? && status.include?('vacation')
+  end
 end

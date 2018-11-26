@@ -24,7 +24,9 @@
           <%end%>
           <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
           <td class='item-del col-md-03 col-sm-03'>
-            <%= button_tag '削除' ,name: 'user_del', class:'btn btn-danger' %>
+            <% if @current_user.id != user.id%>
+              <%= button_tag '削除' ,name: 'user_del', class:'btn btn-danger' %>
+            <% end %>
           </td>
           <%end%>
         </tr>
