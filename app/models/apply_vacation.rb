@@ -4,7 +4,6 @@ class ApplyVacation < ApplicationRecord
 
   validates :applicant_id, presence: true
   validates :get_start_date, presence: true
-  validates :get_days, presence: true
 
   enum status: {
     applying: 'applying', # 申請中
@@ -34,7 +33,7 @@ class ApplyVacation < ApplicationRecord
     begin
       if AttendanceTime::vacation?(status)
         @vacation = user.apply_vacations.find_or_create_by!(get_start_date: date)
-        @vacation.get_days = status.start_with?(:vacation) ? 1 : 0.5
+        @vacation.get_days = status.start_with?('vacation') ? 1 : 0.5
         @vacation.status = :applying
         ApplyVacation.transaction do
           @vacation.save!
