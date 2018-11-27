@@ -11,14 +11,14 @@ class HolidaysController < ApplicationController
   def edit
     # 有休申請者一覧を表示
     # ユーザー名はUserに入れているためjoinする
-    @applying_vacation = User.joins(:apply_vacations)
-                             .where(apply_vacations: {status: :applying})
-                             .select('apply_vacations.* , users.name ')
+    @applying_vacation= User.joins(:apply_vacations)
+                            .where(apply_vacations: {status: :applying})
+                            .select('apply_vacations.* , users.name ')
   end
 
   def update
-    @vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
-    if @vacation_data
+    begin
+      @vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
       @vacation_data.status = params[:button]
       if params[:approve]
         # 許可
@@ -28,7 +28,10 @@ class HolidaysController < ApplicationController
         @vacation_data.change_attend_status
       end
       @vacation_data.save!
+      redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
+    rescue => e
+      # TODO 例外処理
+      raise e
     end
-    redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
   end
 end

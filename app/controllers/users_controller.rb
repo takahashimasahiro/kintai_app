@@ -19,6 +19,10 @@ class UsersController < ApplicationController
       attendance_times.status,
       attendance_times.updated_at'
     )
+
+    # User.left_joins(:attendance_times)
+    # .where(attendance_times: {work_date: "#{Date.today}"})
+    # .pluck(users: [:name], attenadance_times: [:status, :update_at])
   end
 
   def new

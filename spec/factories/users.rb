@@ -2,8 +2,9 @@
 
 FactoryBot.define do
   factory :user do
-    email { |n| "TEST#{n}@example.com" }
-    name { |n| "TEST_NAME#{n}" }
+    id 1
+    email {"TEST@example.com" }
+    name { "TEST_NAME" }
     password { 'password' }
     role { 'owner' }
     paid_holiday_count { '10' }

@@ -13,13 +13,8 @@ class User < ApplicationRecord
     owner: 'owner'
   }
 
-  def posts
-    Post.where(user_id: id)
-  end
-
   # 選択したユーザーの情報を取得する
   def self.select_user(user_id,user)
-    # User.find(id: user_id || @current_user.id) if @current_user.owner?
     User.find(user_id || user.id) if user.owner?
   end
 end
