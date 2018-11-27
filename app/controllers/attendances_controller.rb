@@ -20,7 +20,7 @@ class AttendancesController < ApplicationController
       @registration_date = registration_date(row)
 
       # ユーザー取得
-      @selected_user =  User::select_user(params[:select_user])
+      @selected_user =  User::select_user(params[:select_user],@current_user)
 
       # ID,日付をもとにcreate or update
       @attend = AttendanceTime.find_or_initialize_by(
@@ -44,6 +44,7 @@ class AttendancesController < ApplicationController
 
       redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
     rescue => e
+      raise e
       # TODO:例外処理
     end
   end

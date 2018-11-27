@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user&.authenticate(params[:password])
       session[:id] = @user.id
+      current_user
       redirect_to attendance_path(@user.id), flash: { notice: 'ログインしました' }
     else
       @error_messages = 'メールアドレスもしくはパスワードが間違っています'

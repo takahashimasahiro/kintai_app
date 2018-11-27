@@ -33,12 +33,14 @@ class ApplyVacation < ApplicationRecord
   def apply_for_vacation(status, user, date)
     begin
       if AttendanceTime::vacation?(status)
-        @vacation = user.apply_vacations.find_or_create_by(get_start_date: date)
+        @vacation = user.apply_vacations.find_or_create_by!(get_start_date: date)
         @vacation.get_days = status.start_with?(:vacation) ? 1 : 0.5
         @vacation.status = :applying
-        @vacation.save!
+        ApplyVacation.transaction do
+          @vacation.save!
+        end
       end
-    rescue => e
+    rescue Error => e
       # TODO:例外処理
       raise e
     end

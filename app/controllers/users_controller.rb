@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     @user.role = 'owner'
     if @user.save
       session[:id] = @user.id
+      current_user
       redirect_to attendance_path(@user.id), flash: { notise: 'ログインしました' }
     else
       @email = params[:email]
