@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def new
     session[:id] = nil
     @current_user = nil
-    @error_messages = nil
+    @error_message = nil
   end
 
   def login
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       current_user
       redirect_to attendance_path(@user.id), flash: { notice: 'ログインしました' }
     else
-      @error_messages = 'メールアドレスもしくはパスワードが間違っています'
+      @error_message = 'メールアドレスもしくはパスワードが間違っています'
       @email = params[:email]
       @password = params[:password]
       render action: :new
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:id] = nil
     @current_user = nil
-    @error_messages = nil
+    @error_message = nil
     redirect_to('/')
   end
 end

@@ -24,7 +24,7 @@ class ApplyVacation < ApplicationRecord
   # 勤怠状況のステータスを欠勤にする
   def change_attend_status
     attend_data = AttendanceTime.find_by(user_id: applicant_id, work_date: get_start_date)
-    attend_data.absence
+    attend_data.status = :absence
     attend_data.save!
   rescue StandardError => e
     raise e
@@ -49,7 +49,7 @@ class ApplyVacation < ApplicationRecord
   def apply_cancel(user, date)
     ApplyVacation.transaction do
       vacation = user.apply_vacations.find_by(get_start_date: date, status: :applying)
-      vacation.withdrawal
+      vacation.status = :withdrawal
       vacation.save!
     end
   rescue SomeError

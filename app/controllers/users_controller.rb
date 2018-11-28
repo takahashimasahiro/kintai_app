@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user = User.new
     session[:id] = nil
     @current_user = nil
-    @error_messages = nil
+    @error_message = nil
   end
 
   def create
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
         render :edit
       end
     else
-      @error_messages = 'パスワードが異なっています'
+      @error_message = 'パスワードが異なっています'
       render :edit
     end
   end

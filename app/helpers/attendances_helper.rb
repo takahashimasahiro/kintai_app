@@ -1,9 +1,16 @@
 module AttendancesHelper
   module AttendanceConstant
     DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
-    WORK_STATUS = [%w[出勤 work], %w[有給休暇 vacation], %w[午前休暇 am_vacation],
-                   %w[午後休暇 pm_vacation], %w[休日出勤 holiday_work],
-                   %w[欠勤 absence], %w[休日 holiday]].map(&:freeze).freeze
+    WORK_STATUS = {
+      'work':         '出勤',
+      'vacation':     '有給休暇',
+      'am_vacation':  '午前休暇',
+      'pm_vacation':  '午後休暇',
+      'holiday_work': '休日出勤',
+      'absence':      '欠勤',
+      'holiday':      '休日',
+    }
+
     DEFAULT_WORK_START = '10'.freeze # 出勤時間
     DEFAULT_WORK_END = '19'.freeze # 退勤時間
   end
@@ -13,9 +20,14 @@ module AttendancesHelper
     AttendanceConstant::DATE_OF_WEEK[count]
   end
 
-  def work_status
+  def all_status
     AttendanceConstant.freeze
     AttendanceConstant::WORK_STATUS
+  end
+  
+  def work_status(status)
+    AttendanceConstant.freeze
+    AttendanceConstant::WORK_STATUS[status]
   end
 
   def create_day_of_week_classname(row)
@@ -71,9 +83,9 @@ module AttendancesHelper
     if attendance_row
       attendance_row.status
     elsif weekend?(row)
-      AttendanceConstant::WORK_STATUS.fetch(6)
+      [work_status(:absence), :absence]
     else
-      AttendanceConstant::WORK_STATUS.fetch(0)
+      [work_status(:work), :work]
     end
   end
 

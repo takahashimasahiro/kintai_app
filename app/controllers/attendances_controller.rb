@@ -24,7 +24,7 @@ class AttendancesController < ApplicationController
     # transaction処理
     AttendanceTime.transaction do
       # ID,日付をもとにcreate or update
-      @attend = AttendanceTime.find_or_initialize_by!(
+      @attend = AttendanceTime.find_or_initialize_by(
         user_id: @selected_user.id,
         work_date: @registration_date
       )
