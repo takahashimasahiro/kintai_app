@@ -5,8 +5,8 @@ import '../src/stylesheets/attendances.scss';
 import $ from 'jquery';
 
 const today = new Date();
-let thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
-let getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
+const thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
+const getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
 let changeRow = []
 // TODO:ES6使う
 $(function () {

@@ -3,8 +3,8 @@ import '../src/stylesheets/users.scss';
 const $ = require('jquery');
 const today = new Date();
 
-let thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
-let getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
+const thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
+const getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
 
 $(function () {
   $('button[name=syukkin]').on('click', function () {

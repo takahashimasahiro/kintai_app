@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UserManagementsController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count

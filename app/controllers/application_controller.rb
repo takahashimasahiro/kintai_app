@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# BaseController
 class ApplicationController < ActionController::Base
   before_action :current_user
 
@@ -10,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # ログインしていない場合は中の画面を表示させない
   def authenticate_current_user
-    if !logged_in?
+    unless logged_in?
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
@@ -30,5 +27,4 @@ class ApplicationController < ActionController::Base
   def apply_count
     @apply_count = ApplyVacation.where(status: :applying).count if @current_user.owner?
   end
-
 end

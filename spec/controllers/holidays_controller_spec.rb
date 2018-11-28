@@ -1,19 +1,16 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe HolidaysController, type: :controller do
   include ApplicationHelperSpec
-  let(:id) { "1" }
+  let(:id) { '1' }
   before do
-    user = FactoryBot.create :user
-    add_session({ 'id' => 1 })
+    FactoryBot.create :user
+    add_session('id' => 1)
   end
 
   describe 'GET #show' do
-
     it 'returns http success' do
-      get :show, params: {id: :id }
+      get :show, params: { id: :id }
       expect(response).to have_http_status(:success)
     end
   end
@@ -27,11 +24,11 @@ RSpec.describe HolidaysController, type: :controller do
 
   xdescribe ' #update' do
     # before do
-      # FactoryBot.create :apply_vacation, applicant_id: :id
+    # FactoryBot.create :apply_vacation, applicant_id: :id
     # end
     params = {
       id: 1,
-      user_id: "1",
+      user_id: '1',
       get_date: Date.today,
       approve: nil,
       dismiss: nil

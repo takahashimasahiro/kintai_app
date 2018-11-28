@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json

@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 class UsersController < ApplicationController
-  before_action :forbid_current_user, only: %i(new create)
-  before_action :authenticate_current_user, only: %i(edit update index)
-  before_action :apply_count, only: %i(edit update index)
+  before_action :forbid_current_user, only: %i[new create]
+  before_action :authenticate_current_user, only: %i[edit update index]
+  before_action :apply_count, only: %i[edit update index]
 
   def index
     # ユーザー名と本日の出勤状況を取得する
@@ -34,7 +32,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    # TODO:テスト用
+    # TODO: テスト用
     @user.name = 'テストユーザー'
     @user.role = 'owner'
     if @user.save

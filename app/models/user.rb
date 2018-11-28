@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -14,7 +12,7 @@ class User < ApplicationRecord
   }
 
   # 選択したユーザーの情報を取得する
-  def self.select_user(user_id,user)
+  def self.select_user(user_id, user)
     User.find(user_id || user.id) if user.owner?
   end
 end

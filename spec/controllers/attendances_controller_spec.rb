@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-# TODO:specを全面的に見直す
+# TODO: specを全面的に見直す
 
 require 'rails_helper'
 

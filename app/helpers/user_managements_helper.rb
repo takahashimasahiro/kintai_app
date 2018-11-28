@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module UserManagementsHelper
   module ManagementsConstant
     ROLE = [%w[管理者 owner], %w[社員 employee], %w[アルバイト part_time_job]].map(&:freeze).freeze

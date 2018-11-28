@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # TODO
 module ApplicationHelperSpec
   def add_session(arg)

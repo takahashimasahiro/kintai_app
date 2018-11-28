@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 FactoryBot.define do
   factory :user do
     id 1
-    email {"TEST@example.com" }
-    name { "TEST_NAME" }
+    email { 'TEST@example.com' }
+    name { 'TEST_NAME' }
     password { 'password' }
     role { 'owner' }
     paid_holiday_count { '10' }
