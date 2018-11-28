@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserManagementsController, type: :controller do
-  include ApplicationHelperSpec
-  session = { 'id' => 1 }
+
   let(:user) do
     User.create(
       id: 1,
@@ -13,7 +12,7 @@ RSpec.describe UserManagementsController, type: :controller do
   end
   before do
     user
-    add_session(session)
+    session[:id] = 1
   end
 
   describe 'GET #index' do

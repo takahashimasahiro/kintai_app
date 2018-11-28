@@ -15,16 +15,16 @@ class HolidaysController < ApplicationController
   end
 
   def update
-    @vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
-    @vacation_data.status = params[:button]
+    vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
+    vacation_data.status = params[:button]
     if params[:approve]
       # 許可
-      @vacation_data.reduce_holiday_count
+      vacation_data.reduce_holiday_count
     elsif params[:dismiss]
       # 却下
-      @vacation_data.change_attend_status
+      vacation_data.change_attend_status(:absence)
     end
-    @vacation_data.save!
+    vacation_data.save!
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
   rescue StandardError => e
     # TODO: 例外処理

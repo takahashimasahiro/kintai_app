@@ -12,7 +12,7 @@ class User < ApplicationRecord
   }
 
   # 選択したユーザーの情報を取得する
-  def self.select_user(user_id, user)
-    User.find(user_id || user.id) if user.owner?
+  def self.select_user(select_user_id, user)
+    User.find(user.owner? && select_user_id ? select_user_id : user.id)
   end
 end

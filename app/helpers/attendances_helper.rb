@@ -83,7 +83,7 @@ module AttendancesHelper
     if attendance_row
       attendance_row.status
     elsif weekend?(row)
-      [work_status(:absence), :absence]
+      [work_status(:holiday), :holiday]
     else
       [work_status(:work), :work]
     end

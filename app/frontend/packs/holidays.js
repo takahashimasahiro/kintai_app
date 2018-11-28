@@ -7,14 +7,14 @@ import $ from 'jquery';
 $(function () {
   $('button[name=dismiss]').on('click', function () {
     if (confirm('削除しますか？')) {
-      $('input[name=button]')[0].value = 'admin_applied'
+      $('input[name=button]')[0].value = 'apply_rejection'
       $(this).submit()
     } else {
       return false
     }
   })
   $('button[name=approve]').on('click', function () {
-    $('input[name=button]')[0].value = 'apply_rejection'
+    $('input[name=button]')[0].value = 'admin_applied'
     $(this).submit()
   })
 })

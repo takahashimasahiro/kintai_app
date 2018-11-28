@@ -1,4 +1,3 @@
-# TODO: スコープの見直し
 class AttendancesController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
@@ -16,7 +15,7 @@ class AttendancesController < ApplicationController
     row = params[:change_rows]
 
     # 取得日
-    @registration_date = registration_date(row)
+    work_date = registration_date(row)
 
     # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
@@ -24,24 +23,24 @@ class AttendancesController < ApplicationController
     # transaction処理
     AttendanceTime.transaction do
       # ID,日付をもとにcreate or update
-      @attend = AttendanceTime.find_or_initialize_by(
+      attend = AttendanceTime.find_or_initialize_by(
         user_id: @selected_user.id,
-        work_date: @registration_date
+        work_date: work_date
       )
-      @attend.work_start = work_start_time(row)
-      @attend.work_end = work_end_time(row)
+      attend.work_start = work_start_time(row)
+      attend.work_end = work_end_time(row)
 
       # 有給休暇申請を行う
-      ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, @registration_date)
+      ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, work_date)
 
       # 有休申請取消処理
-      if AttendanceTime.vacation?(@attend.status) &&
+      if AttendanceTime.vacation?(attend.status) &&
          !AttendanceTime.vacation?(params[:"status_#{row}"])
-        ApplyVacation.new.apply_cancel(@selected_user, @registration_date)
+        ApplyVacation.new.apply_cancel(@selected_user, work_date)
       end
 
-      @attend.status = params[:"status_#{row}"]
-      @attend.save!
+      attend.status = params[:"status_#{row}"]
+      attend.save!
     end
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
   rescue SomeError

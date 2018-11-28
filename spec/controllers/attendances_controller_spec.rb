@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe AttendancesController, type: :controller do
-  include ApplicationHelperSpec
 
   let(:user) do
     User.create(
@@ -14,11 +13,10 @@ RSpec.describe AttendancesController, type: :controller do
       password: 'password'
     )
   end
-  session = { 'id' => 1 }
 
   before do
     user
-    add_session(session)
+    session[:id] = 1
   end
 
   describe 'GET #show' do

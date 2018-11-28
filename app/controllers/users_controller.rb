@@ -32,16 +32,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    # TODO: テスト用
-    @user.name = 'テストユーザー'
-    @user.role = 'owner'
+    @user.role = :employee
     if @user.save
       session[:id] = @user.id
-      current_user
+      p @user.id
       redirect_to attendance_path(@user.id), flash: { notise: 'ログインしました' }
     else
-      @email = params[:email]
-      @password = params[:password]
       render :new
     end
   end

@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe HolidaysController, type: :controller do
-  include ApplicationHelperSpec
   let(:id) { '1' }
   before do
     FactoryBot.create :user
-    add_session('id' => 1)
+    session[:id] = 1
   end
 
   describe 'GET #show' do
