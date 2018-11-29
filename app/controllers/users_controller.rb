@@ -35,7 +35,6 @@ class UsersController < ApplicationController
     @user.role = :employee
     if @user.save
       session[:id] = @user.id
-      p @user.id
       redirect_to attendance_path(@user.id), flash: { notise: 'ログインしました' }
     else
       render :new
@@ -48,7 +47,10 @@ class UsersController < ApplicationController
 
   def update
     @user = @current_user
-    if params[:user]['new_password1'] == params[:user]['new_password2'] && @user.authenticate(params[:user]['old_password'])
+    if params[:user]['new_password1'] ==
+        params[:user]['new_password2'] &&
+        @user.authenticate(params[:user]['old_password'])
+
       @user.name = params[:page]['name']
       @user.password = params[:user]['new_password1']
       if @user.save

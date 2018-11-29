@@ -16,17 +16,14 @@ module AttendancesHelper
   end
 
   def date_of_week(count)
-    AttendanceConstant.freeze
     AttendanceConstant::DATE_OF_WEEK[count]
   end
 
   def all_status
-    AttendanceConstant.freeze
     AttendanceConstant::WORK_STATUS
   end
-  
+
   def work_status(status)
-    AttendanceConstant.freeze
     AttendanceConstant::WORK_STATUS[status]
   end
 
