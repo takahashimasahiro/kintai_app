@@ -1,9 +1,10 @@
+# TODO: params[:○○]['××'] => params[:○○][:"××"]
 class UserManagementsController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
 
   def index
-    @all_user = User.all.order(:id)
+    @all_users = User.all.order(:id)
   end
 
   def new
@@ -31,8 +32,8 @@ class UserManagementsController < ApplicationController
 
   def update
     @user = User.find(user_params)
-    @user.email = params[:page]['email']
-    @user.name = params[:page]['name']
+    @user.email = params[:page][:email]
+    @user.name = params[:page][:name]
     @user.role = params[:role]
     @user.paid_holiday_count = params[:holiday_count]
 
