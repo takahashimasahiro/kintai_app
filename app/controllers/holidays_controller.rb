@@ -16,6 +16,7 @@ class HolidaysController < ApplicationController
 
   def update
     vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
+    p vacation_data
     vacation_data.status = params[:button]
     if params[:approve]
       # 許可

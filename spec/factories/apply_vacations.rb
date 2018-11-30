@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :apply_vacation do
-    id 1
+    id { '1' }
     applicant_id(&:to_s)
     get_start_date { Date.today }
     get_days { '1' }
