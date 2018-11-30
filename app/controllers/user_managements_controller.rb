@@ -1,4 +1,3 @@
-# TODO: params[:○○]['××'] => params[:○○][:"××"]
 class UserManagementsController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
@@ -13,11 +12,11 @@ class UserManagementsController < ApplicationController
 
   def create
     @user = User.new(
-      email: params[:page]['email'],
-      name: params[:page]['name'],
+      email: params[:page][:email],
+      name: params[:page][:name],
       role: params[:role],
       paid_holiday_count: params[:holiday_count],
-      password: params[:page]['password']
+      password: params[:page][:password]
     )
     if @user.save
       redirect_to user_managements_path, flash: { notice: '作成しました' }
@@ -37,8 +36,9 @@ class UserManagementsController < ApplicationController
     @user.role = params[:role]
     @user.paid_holiday_count = params[:holiday_count]
 
-    if params[:page]['password'].empty?
-      @user.password = params[:page]['password']
+
+    unless params[:page][:password].empty?
+      @user.password = params[:page][:password]
     end
 
     if @user.save

@@ -34,8 +34,7 @@ class AttendancesController < ApplicationController
       ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, work_date)
 
       # 有休申請取消処理
-      if AttendanceTime.vacation?(attend.status) &&
-         !AttendanceTime.vacation?(params[:"status_#{row}"])
+      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:"status_#{row}"])
         ApplyVacation.new.apply_cancel(@selected_user, work_date)
       end
 
@@ -50,30 +49,30 @@ class AttendancesController < ApplicationController
 
   def registration_date(row)
     DateTime.new(
-      params[:"work_#{row}"]['start(1i)'].to_i,
-      params[:"work_#{row}"]['start(2i)'].to_i,
-      params[:"work_#{row}"]['start(3i)'].to_i
+      params[:"work_#{row}"][:"start(1i)"].to_i,
+      params[:"work_#{row}"][:"start(2i)"].to_i,
+      params[:"work_#{row}"][:"start(3i)"].to_i
     )
   end
 
   def work_start_time(row)
     DateTime.new(
-      params[:"work_#{row}"]['start(1i)'].to_i,
-      params[:"work_#{row}"]['start(2i)'].to_i,
-      params[:"work_#{row}"]['start(3i)'].to_i,
-      params[:"work_#{row}"]['start(4i)'].to_i,
-      params[:"work_#{row}"]['start(5i)'].to_i,
+      params[:"work_#{row}"][:"start(1i)"].to_i,
+      params[:"work_#{row}"][:"start(2i)"].to_i,
+      params[:"work_#{row}"][:"start(3i)"].to_i,
+      params[:"work_#{row}"][:"start(4i)"].to_i,
+      params[:"work_#{row}"][:"start(5i)"].to_i,
       0, '+09:00'
     )
   end
 
   def work_end_time(row)
     DateTime.new(
-      params[:"work_#{row}"]['end(1i)'].to_i,
-      params[:"work_#{row}"]['end(2i)'].to_i,
-      params[:"work_#{row}"]['end(3i)'].to_i,
-      params[:"work_#{row}"]['end(4i)'].to_i,
-      params[:"work_#{row}"]['end(5i)'].to_i,
+      params[:"work_#{row}"][:"end(1i)"].to_i,
+      params[:"work_#{row}"][:"end(2i)"].to_i,
+      params[:"work_#{row}"][:"end(3i)"].to_i,
+      params[:"work_#{row}"][:"end(4i)"].to_i,
+      params[:"work_#{row}"][:"end(5i)"].to_i,
       0, '+09:00'
     )
   end

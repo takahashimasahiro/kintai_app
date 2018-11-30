@@ -4,9 +4,8 @@ RSpec.describe UserManagementsController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
   before do
-    user
-    session[:id] = 1
-    expect(User).to receive_message_chain(:find,:owner?).with(session[:id]).with(no_args).and_return([])
+    session[:id] = '1'
+    expect(User).to receive(:find).with(session[:id]).and_return(user)
   end
 
   describe 'GET #index' do
@@ -42,33 +41,55 @@ RSpec.describe UserManagementsController, type: :controller do
     end
     describe 'POST #create' do
       it 'returns http success' do
+        expect(User).to receive(:new).and_return(user)
+        expect(user).to receive(:save).and_return(true)
         post :create, params: params
-        expect(response).to have_http_status '302'
+        expect(response).to redirect_to user_managements_path
+      end
+      
+      it 'returns http Failed' do
+        expect(User).to receive(:new).and_return(user)
+        expect(user).to receive(:save).and_return(false)
+        post :create, params: params
+        expect(response).to have_http_status :success
       end
     end
 
     describe 'PATCH #update' do
+
       it 'returns http success' do
-        p params[:page][:email]
+        expect(User).to receive(:find).with(session[:id]).and_return(user)
+        expect(user).to receive(:save).and_return(true)
+        params[:page][:password] = ""
         patch :update, params: params
-        expect(response).to have_http_status '302'
+        expect(response).to redirect_to user_managements_path
+      end
+
+      it 'returns http Failed' do
+        expect(User).to receive(:find).with(session[:id]).and_return(user)
+        expect(user).to receive(:save).and_return(false)
+        patch :update, params: params
+        expect(response).to have_http_status :success
       end
     end
   end
 
-  xdescribe 'GET #edit' do
+  describe 'GET #edit' do
     let(:params){{id: 1}}
     it 'returns http success' do
+      expect(User).to receive(:find)
       get :edit, params: params
       expect(response).to have_http_status(:success)
     end
   end
 
-  xdescribe 'DELETE #destroy' do
+  describe 'DELETE #destroy' do
     let(:params){{id: 1}}
     it 'returns http success' do
+      expect(User).to receive(:find).and_return(user)
+      expect(user).to receive(:destroy).and_return(true)
       delete :destroy, params: params
-      expect(response).to have_http_status '302'
+      expect(response).to redirect_to user_managements_path
     end
   end
 end
