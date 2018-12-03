@@ -1,5 +1,5 @@
 require 'rails_helper'
-# TODO: Modelのspecを書く
+
 RSpec.describe User, type: :model do
   let(:owner_user) { User.find_by(role: :owner) }
   let(:employee_user) { User.find_by(role: :employee) }

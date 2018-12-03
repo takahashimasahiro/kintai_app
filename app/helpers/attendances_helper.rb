@@ -1,30 +1,27 @@
 module AttendancesHelper
-  module AttendanceConstant
-    DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
-    WORK_STATUS = {
-      'work':         '出勤',
-      'vacation':     '有給休暇',
-      'am_vacation':  '午前休暇',
-      'pm_vacation':  '午後休暇',
-      'holiday_work': '休日出勤',
-      'absence':      '欠勤',
-      'holiday':      '休日'
-    }.freeze
-
-    DEFAULT_WORK_START = '10'.freeze # 出勤時間
-    DEFAULT_WORK_END = '19'.freeze # 退勤時間
-  end
+  DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
+  WORK_STATUS = {
+    'work':         '出勤',
+    'vacation':     '有給休暇',
+    'am_vacation':  '午前休暇',
+    'pm_vacation':  '午後休暇',
+    'holiday_work': '休日出勤',
+    'absence':      '欠勤',
+    'holiday':      '休日'
+  }.freeze
+  DEFAULT_WORK_START = '10'.freeze # 出勤時間
+  DEFAULT_WORK_END = '19'.freeze # 退勤時間
 
   def date_of_week(count)
-    AttendanceConstant::DATE_OF_WEEK[count]
+    DATE_OF_WEEK[count]
   end
 
   def all_status
-    AttendanceConstant::WORK_STATUS
+    WORK_STATUS
   end
 
   def work_status(status)
-    AttendanceConstant::WORK_STATUS[status]
+    WORK_STATUS[status]
   end
 
   def create_day_of_week_classname(row)
@@ -53,7 +50,7 @@ module AttendancesHelper
       time_select("work_#{row}", 'start', default: { year: @select_date.year,
                                                      month: @select_date.month,
                                                      day: row,
-                                                     hour: weekend?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_START,
+                                                     hour: weekend?(row) ? '00' : DEFAULT_WORK_START,
                                                      minute: '00' })
     end
   end
@@ -70,7 +67,7 @@ module AttendancesHelper
       time_select("work_#{row}", 'end', default: { year: @select_date.year,
                                                    month: @select_date.month,
                                                    day: row,
-                                                   hour: weekend?(row) ? '00' : AttendanceConstant::DEFAULT_WORK_END,
+                                                   hour: weekend?(row) ? '00' : DEFAULT_WORK_END,
                                                    minute: '00' })
     end
   end

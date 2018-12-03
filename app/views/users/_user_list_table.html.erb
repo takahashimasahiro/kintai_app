@@ -11,7 +11,7 @@
       <% @state_of_all_user.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user_select_status(user.status) %></td>
+          <td><%= user.status ? user_select_status(user.status.to_sym) : '未定' %></td>
           <td><%= user.updated_at %></td>
         </tr>
       <% end %>

@@ -5,7 +5,8 @@ RSpec.describe HolidaysController, type: :controller do
   let(:vacation) { FactoryBot.create(:apply_vacation, applicant_id: user.id) }
 
   before do
-    user.save
+    user
+    vacation
     session[:id] = '1'
   end
 
@@ -13,6 +14,7 @@ RSpec.describe HolidaysController, type: :controller do
     it 'returns http success' do
       get :show, params: { id: user.id }
       expect(response).to have_http_status(:success)
+      expect(ApplyVacation.all.size).to eq 1
     end
   end
 
@@ -47,7 +49,7 @@ RSpec.describe HolidaysController, type: :controller do
     it '申請却下' do
       params[:button] = 'admin_applied'
       expect(ApplyVacation).to receive(:find_by).with(applicant_id: params[:user_id], get_start_date: params[:get_date]).and_return(vacation)
-      expect(vacation).to receive(:change_attend_status).with(:absence)
+      expect(vacation).to receive(:change_vacation_status).with(:absence)
       expect(vacation).to receive(:save!).and_return(false)
       patch :update, params: params
       expect(response).to redirect_to edit_holiday_path(user.id)

@@ -19,7 +19,7 @@
             <%= link_to user.name, edit_user_management_path(user.id) %>
             </td>
             <td class='align-middle item-role col-md-04 col-sm-04'>
-              <%= select_role(user.role) %>
+              <%= select_role(user.role.to_sym) %>
             </td>
           <%end%>
           <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>

@@ -15,19 +15,20 @@ RSpec.describe ApplyVacation, type: :model do
     it 'success' do
       user.paid_holiday_count = 0
       user.save
-      expect(apply_vacation).to receive(:change_attend_status).with(:absence)
+      expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(:absence).and_return([])
       expect(apply_vacation.reduce_holiday_count).to eq true
     end
 
     it 'no count' do
-      expect(apply_vacation).to receive(:change_attend_status).with(:admin_applied)
+      expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(:admin_applied).and_return([])
       expect(apply_vacation.reduce_holiday_count).to eq true
     end
   end
 
-  describe 'change_attend_status' do
+  describe 'change_vacation_status' do
     it 'success' do
-      expect(apply_vacation.change_attend_status(:vacation)).to eq true
+      expect(apply_vacation.change_vacation_status(:admin_applied)).to eq true
+      expect(apply_vacation.status).to eq 'admin_applied'
     end
   end
 

@@ -24,4 +24,13 @@ class AttendanceTime < ApplicationRecord
       Time.zone.now
     end
   end
+
+  # 勤怠状況のステータスを変更する
+  def change_attend_status(vacation, status)
+    attend_data = AttendanceTime.find_by(user_id: vacation.applicant_id, work_date: vacation.get_start_date)
+    attend_data.status = status
+    attend_data.save!
+  rescue StandardError => e
+    raise e
+  end
 end

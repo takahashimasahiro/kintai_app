@@ -1,18 +1,16 @@
 # UsersHelper
 module UsersHelper
-  module UsersConstant
-    WORK_STATUS = [%w[出勤 work], %w[有給休暇 vacation], %w[午前休暇 am_vacation],
-                   %w[午後休暇 pm_vacation], %w[休日出勤 holiday_work],
-                   %w[欠勤 absence], %w[休日 holiday]].map(&:freeze).freeze
-  end
+  WORK_STATUS = {
+    work:         '出勤',
+    vacation:     '有給休暇',
+    am_vacation:  '午前休暇',
+    pm_vacation:  '午後休暇',
+    holiday_work: '休日出勤',
+    absence:      '欠勤',
+    holiday:      '休日'
+  }.freeze
 
   def user_select_status(status)
-    UsersConstant.freeze
-    value = UsersConstant::WORK_STATUS.map { |r| r[0] if r[1] == status }.compact
-    if value.empty?
-      '未定'
-    else
-      value[0]
-    end
+    WORK_STATUS[status] || '未定'
   end
 end

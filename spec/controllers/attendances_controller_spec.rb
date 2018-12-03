@@ -20,7 +20,7 @@ RSpec.describe AttendancesController, type: :controller do
       {
         id: user.id,
         change_rows: '1',
-        "status#{user.id}": 'work',
+        "status_#{user.id}": 'work',
         "work_#{user.id}": {
           "start(1i)": '2018',
           "start(2i)": '11',
@@ -38,7 +38,10 @@ RSpec.describe AttendancesController, type: :controller do
 
     it 'returns http success' do
       patch :update, params: params, as: :json
-      expect(response).to have_http_status '302'
+      expect(response).to redirect_to attendance_path(user.id)
+      expect(AttendanceTime.all.size).to eq 1
+      attend_time = AttendanceTime.find_by(user_id: user.id, work_date: Date.new(2018,11,1))
+      expect(attend_time.status).to eq 'work'
     end
   end
 end
