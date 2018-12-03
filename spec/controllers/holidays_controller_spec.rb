@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe HolidaysController, type: :controller do
-  let(:user){ FactoryBot.create :user }
-  let(:vacation){ FactoryBot.create(:apply_vacation, applicant_id: user.id) }
+  let(:user) { FactoryBot.create :user }
+  let(:vacation) { FactoryBot.create(:apply_vacation, applicant_id: user.id) }
 
   before do
     user.save
@@ -24,7 +24,8 @@ RSpec.describe HolidaysController, type: :controller do
   end
 
   describe ' #update' do
-    let(:params) do {
+    let(:params) do
+      {
         id: '1',
         user_id: '1',
         get_date: Date.today.strftime('%Y-%m-%d'),

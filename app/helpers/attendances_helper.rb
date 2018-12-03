@@ -8,8 +8,8 @@ module AttendancesHelper
       'pm_vacation':  '午後休暇',
       'holiday_work': '休日出勤',
       'absence':      '欠勤',
-      'holiday':      '休日',
-    }
+      'holiday':      '休日'
+    }.freeze
 
     DEFAULT_WORK_START = '10'.freeze # 出勤時間
     DEFAULT_WORK_END = '19'.freeze # 退勤時間

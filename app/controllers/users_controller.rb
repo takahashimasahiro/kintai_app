@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       attendance_times.status,
       attendance_times.updated_at'
     )
-    
+
     # User.left_joins(:attendance_times)
     # .where(attendance_times: {work_date: "#{Date.today}"})
     # .pluck(users: [:name], attenadance_times: [:status, :update_at])
@@ -47,8 +47,8 @@ class UsersController < ApplicationController
   def update
     @user = @current_user
     if params[:user][:new_password1] ==
-        params[:user][:new_password2] &&
-        @user.authenticate(params[:user][:old_password])
+       params[:user][:new_password2] &&
+       @user.authenticate(params[:user][:old_password])
 
       @user.name = params[:page][:name]
       @user.password = params[:user][:new_password1]

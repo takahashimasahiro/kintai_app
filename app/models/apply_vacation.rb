@@ -13,10 +13,10 @@ class ApplyVacation < ApplicationRecord
   # ユーザーの有休残日数を減らす
   def reduce_holiday_count
     user = User.find(applicant_id)
-    if user.paid_holiday_count < self.get_days
+    if user.paid_holiday_count < get_days
       change_attend_status(:absence)
     else
-      user.paid_holiday_count -= self.get_days
+      user.paid_holiday_count -= get_days
       change_attend_status(:admin_applied)
     end
     user.save!

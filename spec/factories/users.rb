@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user ,class: User do
+  factory :user, class: User do
     id { '1' }
     email { 'TEST@example.com' }
     name { 'TEST_NAME' }
@@ -17,7 +17,7 @@ FactoryBot.define do
     end
   end
 
-  factory :apply_vacations , class: ApplyVacation do
+  factory :apply_vacations, class: ApplyVacation do
     get_start_date { Date.today }
     get_days { '1' }
     authorizer_id { nil }

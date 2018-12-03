@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AttendancesController, type: :controller do
-
-  let(:user){ FactoryBot.create :user }
+  let(:user) { FactoryBot.create :user }
 
   before do
     user
@@ -17,7 +16,7 @@ RSpec.describe AttendancesController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:params){
+    let(:params)  do
       {
         id: user.id,
         change_rows: '1',
@@ -35,8 +34,8 @@ RSpec.describe AttendancesController, type: :controller do
           "end(5i)": '0'
         }
       }
-    }
-    
+    end
+
     it 'returns http success' do
       patch :update, params: params, as: :json
       expect(response).to have_http_status '302'

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ApplyVacation, type: :model do
-  let(:user){ User.find(1)}
-  let(:apply_vacation){ ApplyVacation.find_by(applicant_id: user.id)}
-  let(:attendance_time){ AttendanceTime.find_by(user_id: user.id) }
+  let(:user) { User.find(1) }
+  let(:apply_vacation) { ApplyVacation.find_by(applicant_id: user.id) }
+  let(:attendance_time) { AttendanceTime.find_by(user_id: user.id) }
 
   before do
     FactoryBot.create :user
@@ -33,14 +33,14 @@ RSpec.describe ApplyVacation, type: :model do
 
   describe 'apply_for_vacation' do
     it 'success' do
-      expect(apply_vacation.apply_for_vacation('vacation',user,Date.today)).to eq true
+      expect(apply_vacation.apply_for_vacation('vacation', user, Date.today)).to eq true
       expect(apply_vacation.status).to eq 'applying'
     end
   end
 
   describe 'apply_cancel' do
     it 'success' do
-      expect(apply_vacation.apply_cancel(user,Date.today)).to eq true
+      expect(apply_vacation.apply_cancel(user, Date.today)).to eq true
       vacation = ApplyVacation.find_by(applicant_id: user.id, get_start_date: Date.today.strftime('%Y-%m-%d'))
       expect(vacation.status).to eq 'withdrawal'
     end

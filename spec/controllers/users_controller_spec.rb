@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:user) { FactoryBot.create :user }
 
-
   describe 'GET #new' do
     it 'returns http success' do
       get :new
@@ -12,22 +11,22 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST #create　ユーザーの作成' do
-
-    let(:params) do {
-      id: user.id,
-      user: {
-        email: 'test@example.com',
-        name: 'testuser',
-        password: 'password'
+    let(:params) do
+      {
+        id: user.id,
+        user: {
+          email: 'test@example.com',
+          name: 'testuser',
+          password: 'password'
         }
       }
     end
 
-    let(:user_params) {
-      ActionController::Parameters.new( email:'test@example.com',
-                                        password: 'password',
-                                        name: 'testuser')
-    }
+    let(:user_params) do
+      ActionController::Parameters.new(email: 'test@example.com',
+                                       password: 'password',
+                                       name: 'testuser')
+    end
 
     context '成功した時' do
       it 'ログインに成功すること' do
@@ -60,7 +59,8 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'PATCh #update' do
-    let(:params) do {
+    let(:params) do
+      {
         id: user.id,
         page: {
           name: 'user_new_name'
