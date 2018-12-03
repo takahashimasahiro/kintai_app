@@ -8,7 +8,6 @@ const today = new Date();
 const thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
 const getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
 let changeRow = []
-// TODO:ES6使う
 $(function () {
   $('button[name=syukkin]').on('click', () => {
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()

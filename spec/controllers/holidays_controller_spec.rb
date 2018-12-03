@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe HolidaysController, type: :controller do
   let(:user){ FactoryBot.create :user }
   let(:vacation){ FactoryBot.create(:apply_vacation, applicant_id: user.id) }
-  
+
   before do
     user.save
     session[:id] = '1'

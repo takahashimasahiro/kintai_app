@@ -44,7 +44,6 @@ class AttendancesController < ApplicationController
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
   rescue SomeError
     raise ActiveRecord::Rollback
-    # TODO: 例外処理
   end
 
   def registration_date(row)

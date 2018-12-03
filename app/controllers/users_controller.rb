@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     # ユーザー名と本日の出勤状況を取得する
     # AttendanceTimeのstatusが取得できない場合は
     # ユーザー名だけ取得
-    # TODO:可読性を上げる
     @state_of_all_user = User.joins(
       "LEFT OUTER JOIN attendance_times ON
       users.id = attendance_times.user_id
@@ -17,7 +16,7 @@ class UsersController < ApplicationController
       attendance_times.status,
       attendance_times.updated_at'
     )
-
+    
     # User.left_joins(:attendance_times)
     # .where(attendance_times: {work_date: "#{Date.today}"})
     # .pluck(users: [:name], attenadance_times: [:status, :update_at])

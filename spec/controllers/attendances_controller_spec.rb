@@ -1,18 +1,8 @@
-# TODO: specを全面的に見直す
-
 require 'rails_helper'
 
 RSpec.describe AttendancesController, type: :controller do
 
-  let(:user) do
-    User.create(
-      id: 1,
-      email: 'test@example.com',
-      name: 'testuser',
-      role: 'owner',
-      password: 'password'
-    )
-  end
+  let(:user){ FactoryBot.create :user }
 
   before do
     user
@@ -20,18 +10,16 @@ RSpec.describe AttendancesController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:id) { user.id }
     it 'returns http success' do
-      get :show, params: { id: id }
+      get :show, params: { id: user.id }
       expect(response).to have_http_status(:success)
     end
   end
 
-  xdescribe 'PATCH #update' do
-    let(:id) { user.id }
-    it 'returns http success' do
-      params = {
-        id: id,
+  describe 'PATCH #update' do
+    let(:params){
+      {
+        id: user.id,
         change_rows: '1',
         "status#{user.id}": 'work',
         "work_#{user.id}": {
@@ -47,6 +35,9 @@ RSpec.describe AttendancesController, type: :controller do
           "end(5i)": '0'
         }
       }
+    }
+    
+    it 'returns http success' do
       patch :update, params: params, as: :json
       expect(response).to have_http_status '302'
     end

@@ -23,5 +23,5 @@ class AttendanceTime < ApplicationRecord
     else
       Time.zone.now
     end
- end
+  end
 end

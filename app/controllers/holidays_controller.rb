@@ -27,7 +27,6 @@ class HolidaysController < ApplicationController
     vacation_data.save!
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
   rescue StandardError => e
-    # TODO: 例外処理
     raise e
   end
 end

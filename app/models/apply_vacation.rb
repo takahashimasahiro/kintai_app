@@ -43,7 +43,6 @@ class ApplyVacation < ApplicationRecord
     end
   rescue SomeError
     raise ActiveRecord::Rollback
-    # TODO: 例外処理
   end
 
   # 休暇申請を取り消す
@@ -55,6 +54,5 @@ class ApplyVacation < ApplicationRecord
     end
   rescue SomeError
     raise ActiveRecord::Rollback
-    # TODO: 例外処理
   end
 end
