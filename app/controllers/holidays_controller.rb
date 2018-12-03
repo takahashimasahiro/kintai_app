@@ -16,12 +16,11 @@ class HolidaysController < ApplicationController
 
   def update
     vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
-    p vacation_data
     vacation_data.status = params[:button]
-    if params[:approve]
+    if params[:button] == 'apply_rejection'
       # 許可
       vacation_data.reduce_holiday_count
-    elsif params[:dismiss]
+    elsif params[:button] == 'admin_applied'
       # 却下
       vacation_data.change_attend_status(:absence)
     end
