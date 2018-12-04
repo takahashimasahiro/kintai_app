@@ -30,18 +30,34 @@
     <% end %>
   </div>
 </div>
-<%= form_with url: attendance_path(@current_user.id),
-              method: 'patch', local: true, id: 'save-button' do |f| %>
-  <div class='search-rightend'>
-    <div class='inputtime'>
+<div class='search-rightend'>
+  <div class='inputtime'>
+    <%= form_with url: attendance_path(@current_user.id),
+              method: 'patch', local: true, id: 'save-button', class: 'attend-save' do |f| %>
       <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
-    </div>
+      <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
+      <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+      <input type='hidden' name='change_day' value='' >
+      <input type='hidden' name='change_start_hour' value='' >
+      <input type='hidden' name='change_start_minute' value='' >
+      <input type='hidden' name='change_end_hour' value='' >
+      <input type='hidden' name='change_end_mitute' value='' >
+      <input type='hidden' name='change_status' value='' >
+    <% end %>
   </div>
-  <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-  <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-  <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
-  <input type='hidden' name='change_rows' value='' >
-  <%= render :partial => 'attendances/attendance_table', :locals => {form: f} %>
+</div>
+<%= form_with url: attendance_to_csv_path(id: @current_user.id, format: :csv),
+              method: 'get', local: true, class: 'attend-output' do |f| %>
+  <% if @current_user.owner? %>
+    <%# CSVを出力する処理 %>
+    <%= button_tag('CSV出力', name:'output', class: 'btn btn-success') %>
+    <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
+    <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
+    <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+  <% end %>
+  <%= render :partial => 'attendances/attendance_table' %>
 <% end %>
+
 

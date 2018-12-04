@@ -22,7 +22,7 @@ class HolidaysController < ApplicationController
       vacation_data.reduce_holiday_count
     elsif params[:button] == 'admin_applied'
       # 却下
-      vacation_data.change_vacation_status(:absence)
+      AttendanceTime.new.change_attend_status(vacation_data, :absence)
     end
     vacation_data.save!
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }

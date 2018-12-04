@@ -49,7 +49,7 @@ RSpec.describe HolidaysController, type: :controller do
     it '申請却下' do
       params[:button] = 'admin_applied'
       expect(ApplyVacation).to receive(:find_by).with(applicant_id: params[:user_id], get_start_date: params[:get_date]).and_return(vacation)
-      expect(vacation).to receive(:change_vacation_status).with(:absence)
+      expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(vacation, :absence).and_return([])
       expect(vacation).to receive(:save!).and_return(false)
       patch :update, params: params
       expect(response).to redirect_to edit_holiday_path(user.id)

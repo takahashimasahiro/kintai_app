@@ -4,41 +4,35 @@ class AttendancesController < ApplicationController
 
   def show
     @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
-    @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
-    @lastday = @select_date.end_of_month.day
     @selected_user = User.select_user(params[:select_user], @current_user)
     @attendance_table = User.find(@selected_user.id).attendance_times.where(work_date: @select_date.all_month)
+    @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
+    @lastday = @select_date.end_of_month.day
   end
 
   def update
+    # 月初取得
     @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
-    row = params[:change_rows]
-
     # 取得日
-    work_date = registration_date(row)
-
+    work_date = registration_date
     # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
 
-    # transaction処理
     AttendanceTime.transaction do
-      # ID,日付をもとにcreate or update
       attend = AttendanceTime.find_or_initialize_by(
         user_id: @selected_user.id,
         work_date: work_date
       )
-      attend.work_start = work_start_time(row)
-      attend.work_end = work_end_time(row)
+      attend.work_start = work_start_time
+      attend.work_end = work_end_time
 
       # 有給休暇申請を行う
-      ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, work_date)
-
+      ApplyVacation.new.apply_for_vacation(params[:change_status], @selected_user, work_date)
       # 有休申請取消処理
-      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:"status_#{row}"])
+      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:change_status])
         ApplyVacation.new.apply_cancel(@selected_user, work_date)
       end
-
-      attend.status = params[:"status_#{row}"]
+      attend.status = params[:change_status]
       attend.save!
     end
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
@@ -46,32 +40,32 @@ class AttendancesController < ApplicationController
     raise ActiveRecord::Rollback
   end
 
-  def registration_date(row)
+  def registration_date
     DateTime.new(
-      params[:"work_#{row}"][:"start(1i)"].to_i,
-      params[:"work_#{row}"][:"start(2i)"].to_i,
-      params[:"work_#{row}"][:"start(3i)"].to_i
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i
     )
   end
 
-  def work_start_time(row)
+  def work_start_time
     DateTime.new(
-      params[:"work_#{row}"][:"start(1i)"].to_i,
-      params[:"work_#{row}"][:"start(2i)"].to_i,
-      params[:"work_#{row}"][:"start(3i)"].to_i,
-      params[:"work_#{row}"][:"start(4i)"].to_i,
-      params[:"work_#{row}"][:"start(5i)"].to_i,
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i,
+      params[:change_start_hour].to_i,
+      params[:change_start_minute].to_i,
       0, '+09:00'
     )
   end
 
-  def work_end_time(row)
+  def work_end_time
     DateTime.new(
-      params[:"work_#{row}"][:"end(1i)"].to_i,
-      params[:"work_#{row}"][:"end(2i)"].to_i,
-      params[:"work_#{row}"][:"end(3i)"].to_i,
-      params[:"work_#{row}"][:"end(4i)"].to_i,
-      params[:"work_#{row}"][:"end(5i)"].to_i,
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i,
+      params[:change_end_hour].to_i,
+      params[:change_end_mitute].to_i,
       0, '+09:00'
     )
   end

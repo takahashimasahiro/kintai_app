@@ -3,7 +3,7 @@ module HolidaysHelper
     applying: '申請中',
     boss_applied: '上長承認済',
     admin_applied: '管理者承認済',
-    withdrawal: '申請取下',
+    withdrawal: '申請取消',
     apply_rejection: '不許可'
   }.freeze
 

@@ -50,7 +50,7 @@ module AttendancesHelper
       time_select("work_#{row}", 'start', default: { year: @select_date.year,
                                                      month: @select_date.month,
                                                      day: row,
-                                                     hour: weekend?(row) ? '00' : DEFAULT_WORK_START,
+                                                     hour: default_start_hour(row),
                                                      minute: '00' })
     end
   end
@@ -67,9 +67,19 @@ module AttendancesHelper
       time_select("work_#{row}", 'end', default: { year: @select_date.year,
                                                    month: @select_date.month,
                                                    day: row,
-                                                   hour: weekend?(row) ? '00' : DEFAULT_WORK_END,
+                                                   hour: default_end_hour(row),
                                                    minute: '00' })
     end
+  end
+
+  # デフォルトの出勤時間を取得する
+  def default_start_hour(row)
+    weekend?(row) ? '00' : DEFAULT_WORK_START
+  end
+
+  # デフォルトの退勤時間を取得する
+  def default_end_hour(row)
+    weekend?(row) ? '00' : DEFAULT_WORK_END
   end
 
   # 状態の初期選択
