@@ -23,6 +23,7 @@ $(function () {
     changeRowData(Number($(this).parent().attr('name').split('_')[2]))
     $('#save-button').submit()
   });
+  // TODO :休暇申請の通った日付は状態が変更できないようにする。
 });
 
 function changeRowData(row) {

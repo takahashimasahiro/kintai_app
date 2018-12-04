@@ -4,7 +4,6 @@
   line-height: 45px;
 }
 
-
 .day_of_week_0, .day_of_week_holiday {
   background-color: #f5c6cb;
 }
@@ -29,14 +28,8 @@
   flex-basis: 100%;
   line-height: 45px;
 }
-.search-rightend, {
+.search-rightend, .inputtime, .output {
   float: right;
-}
-
-.inputtime {
-  // float: right;
-  display: inline;
-  line-height: 65px;
 }
 .table {
   float: left;
@@ -45,9 +38,4 @@
 .btn-success {
   margin-left: 5px;
   margin-right: 5px;
-}
-
-.attend-save .attend-output {
-  float: right;
-  margin: 10px;
 }
