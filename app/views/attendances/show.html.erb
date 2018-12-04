@@ -1,13 +1,12 @@
 <h1>勤怠状況一覧</h1>
 <div class="search">
   <%# 管理者ならユーザー一覧を表示 %>
-  <% if @current_user.role == 'owner' %>
+  <% if @current_user.owner? %>
     <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
       <div class='search-user'>ユーザー
-        <%= select_tag('select_user', 
-                      options_for_select(@user_all ,
-                              class:'opt_user',
-                              selected: @selected_user),
+        <%= select_tag('select_user',options_for_select(@user_all ,
+                                                        class:'opt_user',
+                                                        selected: [@selected_user.name, @selected_user.id]),
                       :onchange => 'this.form.submit();',
                       class: 'form-control-sm') %>
       </div>
@@ -16,37 +15,33 @@
     <% end %>
   <% end %>
   <div class="search-year">
-    <div id="pulldown">
-      <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
-        <input type='hidden' name='select_user' value='<%= @selected_user[1] %>' >
-        <%= select_tag('select_year', 
-                      options_for_select(show_years_map ,
-                              class:'opt_year',
-                              selected: @select_date.year.to_i),
-                      :onchange => 'this.form.submit();',
-                      class: 'form-control-sm' )%>年
-        <%= select_tag('select_month',
-                      options_for_select((1..12),
-                              class:'opt_month',
-                              selected: @select_date.month.to_i),
-                      :onchange => 'this.form.submit();',
-                      class: 'form-control-sm')%>月
-      <% end %>
-    </div>
+    <%= form_with url: attendance_path(@current_user.id), method: :get,class: 'pulldown' do |form| %>
+      <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
+      <%= select_tag('select_year',options_for_select(show_years_map ,
+                                                      class:'opt_year',
+                                                      selected: @select_date.year.to_i),
+                    :onchange => 'this.form.submit();',
+                    class: 'form-control-sm' )%>年
+      <%= select_tag('select_month', options_for_select((1..12),
+                                                        class:'opt_month',
+                                                        selected: @select_date.month.to_i),
+                    :onchange => 'this.form.submit();',
+                    class: 'form-control-sm')%>月
+    <% end %>
   </div>
 </div>
-<%= form_with url: attendance_path(@current_user.id) ,
-              method: 'patch', local: true, class: 'save-button' do |f| %>
+<%= form_with url: attendance_path(@current_user.id),
+              method: 'patch', local: true, id: 'save-button' do |f| %>
   <div class='search-rightend'>
     <div class='inputtime'>
       <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
     </div>
   </div>
-  <input type='hidden' name='select_user' value='<%= @selected_user[1] %>' >
+  <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
   <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
   <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
   <input type='hidden' name='change_rows' value='' >
-  <%= render :partial => 'templates/attendance_table', :locals => {form: f} %>
+  <%= render :partial => 'attendances/attendance_table', :locals => {form: f} %>
 <% end %>
 

@@ -1,0 +1,20 @@
+<div class='table-user-list'>
+  <table class='table table-condensed table-bordered table-sm'>
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>状態</th>
+        <th>更新日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @state_of_all_user.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.status ? user_select_status(user.status.to_sym) : '未定' %></td>
+          <td><%= user.updated_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,75 +1,78 @@
 class AttendancesController < ApplicationController
-  def new
-  end
-  
+  before_action :authenticate_current_user
+  before_action :apply_count
+
   def show
-    @select_date = Time.now
-    if params[:select_year] && params[:select_month]
-      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
-    end
-
-    if @current_user.role == 'owner'
-      @user_all = User.all.order(:id).pluck(:name, :id)
-    end
+    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
     @lastday = @select_date.end_of_month.day
-    @selected_user =  User.where(id: params[:select_user] ? params[:select_user] : @current_user.id).pluck(:name, :id)[0]
-    @attendance_table = User.find(@selected_user[1]).attendance_times.where(:work_date => @select_date.all_month)
+    @selected_user = User.select_user(params[:select_user], @current_user)
+    @attendance_table = User.find(@selected_user.id).attendance_times.where(work_date: @select_date.all_month)
   end
-
 
   def update
-    @select_date = Time.now
-    if params[:select_year] && params[:select_month]
-      @select_date = @select_date.change(year: params[:select_year].to_i, month: params[:select_month].to_i,day:1)
-    end
-    @change_rows = params[:change_rows].split(',')
-    @change_rows.map do |i|
-      # 登録する日付を宣言
-      @registration_date = DateTime.new(
-        params[:"work_#{i}"]["start(1i)"].to_i,
-        params[:"work_#{i}"]["start(2i)"].to_i,
-        params[:"work_#{i}"]["start(3i)"].to_i)
+    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    row = params[:change_rows]
 
-      # 日付をもとにcreate or update 
-      @attend = if @current_user.role == 'owner'
-        AttendanceTime.find_or_initialize_by(user_id: params[:select_user] ,work_date: @registration_date)
-      else
-        AttendanceTime.find_or_initialize_by(user_id: @current_user.id ,work_date: @registration_date)
+    # 取得日
+    work_date = registration_date(row)
+
+    # ユーザー取得
+    @selected_user = User.select_user(params[:select_user], @current_user)
+
+    # transaction処理
+    AttendanceTime.transaction do
+      # ID,日付をもとにcreate or update
+      attend = AttendanceTime.find_or_initialize_by(
+        user_id: @selected_user.id,
+        work_date: work_date
+      )
+      attend.work_start = work_start_time(row)
+      attend.work_end = work_end_time(row)
+
+      # 有給休暇申請を行う
+      ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, work_date)
+
+      # 有休申請取消処理
+      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:"status_#{row}"])
+        ApplyVacation.new.apply_cancel(@selected_user, work_date)
       end
-      @attend.work_start = DateTime.new(
-        params[:"work_#{i}"]["start(1i)"].to_i,
-        params[:"work_#{i}"]["start(2i)"].to_i,
-        params[:"work_#{i}"]["start(3i)"].to_i,
-        params[:"work_#{i}"]["start(4i)"].to_i,
-        params[:"work_#{i}"]["start(5i)"].to_i,
-        0,"+09:00")
-      @attend.work_end = DateTime.new(
-        params[:"work_#{i}"]["end(1i)"].to_i,
-        params[:"work_#{i}"]["end(2i)"].to_i,
-        params[:"work_#{i}"]["end(3i)"].to_i,
-        params[:"work_#{i}"]["end(4i)"].to_i,
-        params[:"work_#{i}"]["end(5i)"].to_i,
-        0,"+09:00")
-      @attend.status = params[:"status_#{i}"]
-      @attend.save
-      # TODO statusにvacationが含まれる場合は有給休暇申請処理を行う
-      if is_full_vacation?(params[:"status_#{i}"])
-        # 全休
-        @vacation = @current_user.apply_vacations.new(get_days: 1)
-      elsif is_half_vacation?(params[:"status#{i}"])
-        # 半休
-        @vacation = @current_user.apply_vacations.new(get_days: 0.5)
-      end
+
+      attend.status = params[:"status_#{row}"]
+      attend.save!
     end
-    redirect_to attendance_path(@current_user.id), flash: {notice: '保存しました'}
+    redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
+  rescue SomeError
+    raise ActiveRecord::Rollback
   end
 
-  def is_full_vacation?(status)
-    status && status.index('vacation') == 0
-
+  def registration_date(row)
+    DateTime.new(
+      params[:"work_#{row}"][:"start(1i)"].to_i,
+      params[:"work_#{row}"][:"start(2i)"].to_i,
+      params[:"work_#{row}"][:"start(3i)"].to_i
+    )
   end
 
-  def is_half_vacation?(status)
-    status && status.index('vacation') != 0
+  def work_start_time(row)
+    DateTime.new(
+      params[:"work_#{row}"][:"start(1i)"].to_i,
+      params[:"work_#{row}"][:"start(2i)"].to_i,
+      params[:"work_#{row}"][:"start(3i)"].to_i,
+      params[:"work_#{row}"][:"start(4i)"].to_i,
+      params[:"work_#{row}"][:"start(5i)"].to_i,
+      0, '+09:00'
+    )
+  end
+
+  def work_end_time(row)
+    DateTime.new(
+      params[:"work_#{row}"][:"end(1i)"].to_i,
+      params[:"work_#{row}"][:"end(2i)"].to_i,
+      params[:"work_#{row}"][:"end(3i)"].to_i,
+      params[:"work_#{row}"][:"end(4i)"].to_i,
+      params[:"work_#{row}"][:"end(5i)"].to_i,
+      0, '+09:00'
+    )
   end
 end

@@ -1,3 +1,5 @@
+
+
 class CreateApplyVacations < ActiveRecord::Migration[5.2]
   def change
     create_table :apply_vacations do |t|

@@ -26,7 +26,7 @@
           </th>
           <th name='status_row_<%=row%>'>
             <%= select_tag("status_#{row}",
-                options_for_select(work_status,
+                options_for_select(all_status.invert,
                 :selected => selected_status(@attendance_row,row)),
                 class: 'form-control-sm')%>
           </th>

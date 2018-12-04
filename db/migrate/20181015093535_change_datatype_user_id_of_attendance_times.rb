@@ -1,3 +1,5 @@
+
+
 class ChangeDatatypeUserIdOfAttendanceTimes < ActiveRecord::Migration[5.2]
   def change
     # サロゲートキー対応

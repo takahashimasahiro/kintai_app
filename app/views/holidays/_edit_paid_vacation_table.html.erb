@@ -1,0 +1,27 @@
+<table class='table table-bordered table-striped table-light table-hover table-sm'>
+  <thead>
+    <tr>
+      <th>申請日</th>
+      <th>申請者</th>
+      <th>消化日数</th>
+      <th>許可</th>
+      <th>却下</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for row in @applying_vacation do %>
+    <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do %>
+    <tr>
+      <input type='hidden' name='get_date' value="<%=row.get_start_date%>">
+      <input type='hidden' name='user_id' value="<%=row.applicant_id%>">
+      <input type='hidden' name='button' value=''>
+      <th><%= row.get_start_date%></th>
+      <th><%= row.name %></th>
+      <th><%= row.get_days %></th>
+      <th><%= button_tag '許可', name:'approve', class:'btn btn-success' %></th>
+      <th><%= button_tag '却下', name:'dismiss', class:'btn btn-danger' %></th>
+    </tr>
+    <%end%>
+  <% end %>
+  </tbody>
+</table>

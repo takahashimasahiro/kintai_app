@@ -1,5 +1,4 @@
 @import '~bootstrap/dist/css/bootstrap';
-// TODO 色合いを直す
 
 html,
 body {
@@ -14,8 +13,12 @@ body {
   font-size: 15px;
 }
 
+h1 {
+  font-size: 30px;
+  line-height: 100px;
+}
+
 .wrapper-login {
-  top: 50px;
   left: 280px;
   display: table-cell;
   vertical-align: top;
@@ -127,4 +130,9 @@ a:hover{
 .wrapper{
   padding: 0px;
   display: block;
+}
+
+// エラー時の自動挿入タグ
+.field_with_errors {
+  display: inline;
 }

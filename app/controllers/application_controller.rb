@@ -1,29 +1,30 @@
-# BaseController
 class ApplicationController < ActionController::Base
   before_action :current_user
+
   def current_user
-    if logged_in?
-      @current_user ||= User.find(session[:id])
-    elsif @current_user.nil?
-      # TODO ログイン画面に返す
-    end
+    @current_user ||= User.find(session[:id]) if logged_in?
   end
 
+  # ログインしていない場合は中の画面を表示させない
   def authenticate_current_user
-    unless logged_in? 
+    unless logged_in?
       flash[:notice] = 'ログインが必要です'
       redirect_to('/')
     end
   end
 
+  # すでにログインしている場合はログイン画面を表示させない
   def forbid_current_user
-    if logged_in?
-      redirect_to attendance_path(session[:id])
-    end
+    redirect_to attendance_path(session[:id]) if logged_in?
   end
 
   # ログイン状態か判別
   def logged_in?
     session[:id]
+  end
+
+  # 有休申請数がいつくなのか数える
+  def apply_count
+    @apply_count = ApplyVacation.where(status: :applying).count if @current_user.owner?
   end
 end

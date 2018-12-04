@@ -1,3 +1,5 @@
+
+
 class CreateAttendanceTimes < ActiveRecord::Migration[5.2]
   def change
     # 勤怠時間テーブル

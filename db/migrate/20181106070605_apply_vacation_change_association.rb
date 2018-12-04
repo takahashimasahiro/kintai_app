@@ -1,3 +1,5 @@
+
+
 class ApplyVacationChangeAssociation < ActiveRecord::Migration[5.2]
   def up
     change_table :apply_vacations do |t|
