@@ -34,7 +34,8 @@ RSpec.describe AttendancesHelper, type: :module do
 
   describe 'show_years_map' do
     it 'normal process' do
-      expect(helper.show_years_map(date)).to eq (2008..2028).map { |y| y }
+      years = (2008..2028).map { |x| x }
+      expect(helper.show_years_map(date)).to eq years
     end
   end
 
