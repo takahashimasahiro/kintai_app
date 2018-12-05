@@ -10,21 +10,21 @@
                       :onchange => 'this.form.submit();',
                       class: 'form-control-sm') %>
       </div>
-      <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-      <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
     <% end %>
   <% end %>
   <div class="search-year">
     <%= form_with url: attendance_path(@current_user.id), method: :get,class: 'pulldown' do |form| %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-      <%= select_tag('select_year',options_for_select(show_years_map ,
+      <%= select_tag('select_year',options_for_select(show_years_map(@first_month) ,
                                                       class:'opt_year',
-                                                      selected: @select_date.year.to_i),
+                                                      selected: @first_month.year.to_i),
                     :onchange => 'this.form.submit();',
                     class: 'form-control-sm' )%>年
       <%= select_tag('select_month', options_for_select((1..12),
                                                         class:'opt_month',
-                                                        selected: @select_date.month.to_i),
+                                                        selected: @first_month.month.to_i),
                     :onchange => 'this.form.submit();',
                     class: 'form-control-sm')%>月
     <% end %>
@@ -37,8 +37,8 @@
       <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-      <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-      <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
       <input type='hidden' name='change_day' value='' >
       <input type='hidden' name='change_start_hour' value='' >
       <input type='hidden' name='change_start_minute' value='' >
@@ -55,8 +55,8 @@
     <div class='output'>
       <%= button_tag('CSV出力', name:'output', class: 'btn btn-success btn-output') %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-      <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-      <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
     </div>
   <% end %>
   <%= render :partial => 'attendances/attendance_table' %>

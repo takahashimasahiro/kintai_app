@@ -11,7 +11,7 @@
       <tr>
         <th><%= row.get_start_date %></th>
         <th><%= row.get_days %></th>
-        <th><%= select_status(row.status.to_sym) if row.status %></th>
+        <th><%= application_status[row.status.to_sym] if row.status %></th>
       </tr>
     <% end %>
   </tbody>

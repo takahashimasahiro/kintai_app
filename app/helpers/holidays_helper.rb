@@ -10,8 +10,4 @@ module HolidaysHelper
   def application_status
     APPLICATION_STATUS
   end
-
-  def select_status(status)
-    APPLICATION_STATUS[status]
-  end
 end

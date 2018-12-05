@@ -19,9 +19,9 @@ class AttendanceTime < ApplicationRecord
   # 月初を取得する
   def self.first_month(year, month)
     if year && month
-      Time.zone.now.change(year: year.to_i, month: month.to_i, day: 1)
+      Date.new(year.to_i, month.to_i, 1)
     else
-      Time.zone.now
+      Date.today
     end
   end
 

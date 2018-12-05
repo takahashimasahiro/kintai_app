@@ -20,86 +20,94 @@ module AttendancesHelper
     WORK_STATUS
   end
 
-  def work_status(status)
-    WORK_STATUS[status]
-  end
-
-  def create_day_of_week_classname(row)
-    holiday?(row) ? 'holiday' : @select_date.change(day: row).wday
+  def create_day_of_week_classname(date)
+    holiday?(date) ? 'holiday' : date.wday
   end
 
   # 年セレクトボックス
-  def show_years_map
-    (@select_date.year.to_i - 10..@select_date.year.to_i + 10).map { |y| y }
+  def show_years_map(date)
+    (date.year.to_i - 10..date.year.to_i + 10).map { |y| y }
   end
 
   # 選択した日付の勤怠状況を取得
-  def choice_attendanceTime(attendance_table, select_date, row)
-    attendance_table.select { |x| x.work_date == Date.new(select_date.year, select_date.month, row) }[0]
+  def choice_attendanceTime(attendance_table, date)
+    attendance_table.select { |x| x.work_date == date }[0]
   end
 
   # 勤務開始時間を表示する
-  def show_start_attendanceTime(attendance_row, row)
+  def show_start_attendanceTime(attendance_row, date)
     if attendance_row
-      time_select("work_#{row}", 'start', default: { year: attendance_row.work_date.year,
-                                                     month: attendance_row.work_date.month,
-                                                     day: row,
-                                                     hour: attendance_row.work_start.hour,
-                                                     minute: attendance_row.work_start.min })
+      # データが保存されていた場合それを入力
+      time_select("work_#{date.day}", 'start', default: { year: attendance_row.work_date.year,
+                                                          month: attendance_row.work_date.month,
+                                                          day: date.day,
+                                                          hour: attendance_row.work_start.hour,
+                                                          minute: attendance_row.work_start.min })
     else
-      time_select("work_#{row}", 'start', default: { year: @select_date.year,
-                                                     month: @select_date.month,
-                                                     day: row,
-                                                     hour: default_start_hour(row),
-                                                     minute: '00' })
+      # データがない場合は初期値を作成
+      time_select("work_#{date.day}", 'start', default: { year: date.year,
+                                                          month: date.month,
+                                                          day: date.day,
+                                                          hour: default_start_hour(date),
+                                                          minute: '00' })
     end
   end
 
   # 勤務終了時間を表示する
-  def show_end_attendanceTime(attendance_row, row)
+  def show_end_attendanceTime(attendance_row, date)
     if attendance_row
-      time_select("work_#{row}", 'end', default: { year: attendance_row.work_date.year,
-                                                   month: attendance_row.work_date.month,
-                                                   day: row,
-                                                   hour: attendance_row.work_end.hour,
-                                                   minute: attendance_row.work_end.min })
+      # データが保存されていた場合それを入力
+      time_select("work_#{date.day}", 'end', default: { year: attendance_row.work_date.year,
+                                                        month: attendance_row.work_date.month,
+                                                        day: date.day,
+                                                        hour: attendance_row.work_end.hour,
+                                                        minute: attendance_row.work_end.min })
     else
-      time_select("work_#{row}", 'end', default: { year: @select_date.year,
-                                                   month: @select_date.month,
-                                                   day: row,
-                                                   hour: default_end_hour(row),
-                                                   minute: '00' })
+      # データがない場合は初期値を作成
+      time_select("work_#{date.day}", 'end', default: { year: date.year,
+                                                        month: date.month,
+                                                        day: date.day,
+                                                        hour: default_end_hour(date),
+                                                        minute: '00' })
     end
   end
 
   # デフォルトの出勤時間を取得する
-  def default_start_hour(row)
-    weekend?(row) ? '00' : DEFAULT_WORK_START
+  def default_start_hour(date)
+    weekend?(date) ? '00' : DEFAULT_WORK_START
   end
 
   # デフォルトの退勤時間を取得する
-  def default_end_hour(row)
-    weekend?(row) ? '00' : DEFAULT_WORK_END
+  def default_end_hour(date)
+    weekend?(date) ? '00' : DEFAULT_WORK_END
   end
 
   # 状態の初期選択
-  def selected_status(attendance_row, row)
+  def selected_status(attendance_row, date)
     if attendance_row
       attendance_row.status
-    elsif weekend?(row)
-      [work_status(:holiday), :holiday]
+    elsif weekend?(date)
+      [all_status[:holiday], :holiday]
     else
-      [work_status(:work), :work]
+      [all_status[:work], :work]
     end
   end
 
   # 土日祝日か判別する
-  def weekend?(row)
-    @select_date.change(day: row).wday == 0 || @select_date.change(day: row).wday == 6 || holiday?(row)
+  def weekend?(date)
+    date.wday == 0 || date.wday == 6 || holiday?(date)
   end
 
   # 祝日か判別する
-  def holiday?(row)
-    HolidayJapan.check(Date.new(@select_date.year, @select_date.month, row))
+  def holiday?(date)
+    HolidayJapan.check(date)
+  end
+
+  def change_date(first_month, row)
+    first_month.change(day: row)
+  end
+
+  def is_include?(all_pass_days, row_date)
+    all_pass_days.select { |x| x == row_date }[0]
   end
 end

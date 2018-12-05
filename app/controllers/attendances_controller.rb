@@ -3,21 +3,27 @@ class AttendancesController < ApplicationController
   before_action :apply_count
 
   def show
-    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    # 月初取得
+    @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
-    @attendance_table = User.find(@selected_user.id).attendance_times.where(work_date: @select_date.all_month)
+    # 勤怠情報
+    @attendance_table = @selected_user.attendance_times.where(work_date: @first_month.all_month)
+    # 全ユーザー(管理者モード)
     @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
-    @lastday = @select_date.end_of_month.day
+    # 受理された休暇申請
+    @pass_days = @selected_user.applied_for_month(@first_month)
   end
 
   def update
     # 月初取得
-    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
     # 取得日
     work_date = registration_date
     # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
-
+    # 受理された休暇申請
+    @pass_days = @selected_user.applied_for_month(@first_month)
     AttendanceTime.transaction do
       attend = AttendanceTime.find_or_initialize_by(
         user_id: @selected_user.id,

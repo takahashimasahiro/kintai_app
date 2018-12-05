@@ -1,11 +1,11 @@
 module AttendanceToCsvHelper
   include AttendancesHelper
 
-  def absence?(row)
-    weekend?(row) ? :holiday : :absence
+  def absence?(date)
+    weekend?(date) ? :holiday : :absence
   end
 
-  def work_day?(row)
-    weekend?(row) ? :holiday : :work
+  def work_day?(date)
+    weekend?(date) ? :holiday : :work
   end
 end

@@ -27,4 +27,9 @@ RSpec.describe User, type: :model do
       expect(User.select_user(1, employee_user)).to eq employee_user
     end
   end
+
+  describe 'applied_for_month' do
+    it 'TODO' do
+    end
+  end
 end

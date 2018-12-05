@@ -22,16 +22,16 @@ RSpec.describe AttendanceTime, type: :model do
   end
 
   describe 'first_month' do
-    let(:time_now) { Time.zone.now }
+    let(:date_now) { Date.today }
     before do
-      allow(Time).to receive_message_chain(:zone, :now).with(no_args).with(no_args).and_return(time_now)
+      allow(Date).to receive(:today).with(no_args).and_return(date_now)
     end
 
     it 'success' do
-      expect(AttendanceTime.first_month(time_now.year, time_now.month)).to eq time_now.change(day: 1)
+      expect(AttendanceTime.first_month(date_now.year, date_now.month)).to eq date_now.change(day: 1)
     end
     it 'failed' do
-      expect(AttendanceTime.first_month(nil, nil)).to eq time_now
+      expect(AttendanceTime.first_month(nil, nil)).to eq date_now
     end
   end
 
