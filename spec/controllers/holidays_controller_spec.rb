@@ -38,7 +38,7 @@ RSpec.describe HolidaysController, type: :controller do
     end
 
     it '申請許可' do
-      params[:button] = 'apply_rejection'
+      params[:button] = 'admin_applied'
       expect(ApplyVacation).to receive(:find_by).with(applicant_id: params[:user_id], get_start_date: params[:get_date]).and_return(vacation)
       expect(vacation).to receive(:reduce_holiday_count).and_return(user)
       expect(vacation).to receive(:save!).and_return(true)
@@ -47,7 +47,7 @@ RSpec.describe HolidaysController, type: :controller do
     end
 
     it '申請却下' do
-      params[:button] = 'admin_applied'
+      params[:button] = 'apply_rejection'
       expect(ApplyVacation).to receive(:find_by).with(applicant_id: params[:user_id], get_start_date: params[:get_date]).and_return(vacation)
       expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(vacation, :absence).and_return([])
       expect(vacation).to receive(:save!).and_return(false)

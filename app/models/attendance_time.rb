@@ -30,7 +30,7 @@ class AttendanceTime < ApplicationRecord
     attend_data = AttendanceTime.find_by(user_id: vacation.applicant_id, work_date: vacation.get_start_date)
     attend_data.status = status
     attend_data.save!
-  rescue StandardError => e
-    raise e
+  rescue SomeError
+    raise ActiveRecord::Rollback
   end
 end

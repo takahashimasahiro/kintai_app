@@ -6,6 +6,8 @@ class AttendanceToCsvController < ApplicationController
     @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
     @selected_user = User.select_user(params[:select_user], @current_user)
     @all_attend_data = User.find(@selected_user.id).attendance_times.where(work_date: @first_month.all_month).order(:work_date)
+    # 受理された休暇申請
+    @pass_days = @selected_user.applied_for_month(@first_month)
     # ファイル名変更
     respond_to do |f|
       f.csv do

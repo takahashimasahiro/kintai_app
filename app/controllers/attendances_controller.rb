@@ -18,6 +18,8 @@ class AttendancesController < ApplicationController
   def update
     # 月初取得
     @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    # 入力ステータス
+    input_status = params[:change_status]
     # 取得日
     work_date = registration_date
     # ユーザー取得
@@ -29,20 +31,23 @@ class AttendancesController < ApplicationController
         user_id: @selected_user.id,
         work_date: work_date
       )
-      attend.work_start = work_start_time
-      attend.work_end = work_end_time
+      attend.work_start = work_start_time(input_status)
+      attend.work_end = work_end_time(input_status)
 
-      # 有給休暇申請を行う
-      ApplyVacation.new.apply_for_vacation(params[:change_status], @selected_user, work_date)
-      # 有休申請取消処理
-      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:change_status])
+      if AttendanceTime.vacation?(input_status)
+        # 有給休暇申請を行う
+        ApplyVacation.new.apply_for_vacation(input_status, @selected_user, work_date)
+      elsif AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(input_status)
+        # 有休申請取消処理
         ApplyVacation.new.apply_cancel(@selected_user, work_date)
       end
-      attend.status = params[:change_status]
+      # TODO 休日出勤の処理
+      attend.status = input_status
       attend.save!
+      redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
     end
-    redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
   rescue SomeError
+    # TODO エラーをキャッチして以上処理フローへ
     raise ActiveRecord::Rollback
   end
 
@@ -54,24 +59,25 @@ class AttendancesController < ApplicationController
     )
   end
 
-  def work_start_time
+  def work_start_time(status)
     DateTime.new(
       params[:select_year].to_i,
       params[:select_month].to_i,
       params[:change_day].to_i,
-      params[:change_start_hour].to_i,
-      params[:change_start_minute].to_i,
+      AttendanceTime.vacation?(status) ? 0 : params[:change_start_hour].to_i,
+      AttendanceTime.vacation?(status) ? 0 : params[:change_start_minute].to_i,
       0, '+09:00'
     )
   end
 
-  def work_end_time
+  def work_end_time(status)
+
     DateTime.new(
       params[:select_year].to_i,
       params[:select_month].to_i,
       params[:change_day].to_i,
-      params[:change_end_hour].to_i,
-      params[:change_end_mitute].to_i,
+      AttendanceTime.vacation?(status) ? 0 : params[:change_end_hour].to_i,
+      AttendanceTime.vacation?(status) ? 0 : params[:change_end_minute].to_i,
       0, '+09:00'
     )
   end

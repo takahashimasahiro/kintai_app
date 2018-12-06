@@ -8,5 +8,8 @@ RSpec.describe UserManagementsHelper, type: :module do
     it 'normal process' do
       expect(helper.all_role[:owner]).to eq '管理者'
     end
+    it 'no data' do
+      expect(helper.all_role[nil]).to eq nil
+    end
   end
 end

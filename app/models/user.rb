@@ -21,6 +21,6 @@ class User < ApplicationRecord
     apply_vacations.where(get_start_date: first_month.all_month,
                           status: :admin_applied)
                    .order(:get_start_date)
-                   .pluck(:get_start_date)
+                   .pluck(:get_start_date, :get_days)
   end
 end

@@ -6,6 +6,9 @@
         <th><%= label :page, '曜日'%></th>
         <th><%= label :page, '出勤時間'%></th>
         <th><%= label :page, '退勤時間'%></th>
+        <th><%= label :page, '稼働時間'%></th>
+        <th><%= label :page, '休憩時間'%></th>
+        <th><%= label :page, '残業時間'%></th>
         <th><%= label :page, '状態'%></th>
       </tr>
     </thead>
@@ -25,6 +28,15 @@
           </th>
           <th name='end_work_<%=row%>'>
             <%= show_end_attendanceTime(attendance_row, row_date) %>
+          </th>
+          <th name='working_time_<%=row%>'>
+            <%= convert_min(calculate_working_time(attendance_row, row_date)) %>
+          </th>
+          <th name='break_time_<%=row%>'>
+            <%= convert_min(calculate_break_time(attendance_row, row_date)) %>
+          </th>
+          <th name='over_time_<%=row%>'>
+            <%= convert_min(calculate_over_time(attendance_row))%>
           </th>
           <th name='status_row_<%=row%>'>
             <%= select_tag("status_#{row}",

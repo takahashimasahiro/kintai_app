@@ -144,7 +144,7 @@ RSpec.describe AttendancesHelper, type: :module do
   end
 
   describe 'is_include?' do
-    let(:days) { [Date.yesterday, Date.today, Date.tomorrow] }
+    let(:days) { [[Date.yesterday, 0.5], [Date.today, 1], [Date.tomorrow, 0.5]] }
     it 'normal process' do
       expect(helper.is_include?(days, Date.today)).not_to eq nil
     end
@@ -153,4 +153,21 @@ RSpec.describe AttendancesHelper, type: :module do
       expect(helper.is_include?(days, date)).to eq nil
     end
   end
+
+  describe 'calculate_working_time' do
+    
+  end
+  
+  describe 'calculate_break_time' do
+    
+  end
+
+  describe 'calculate_over_time' do
+    
+  end
+  
+  describe 'convert_min' do
+    
+  end
+  
 end

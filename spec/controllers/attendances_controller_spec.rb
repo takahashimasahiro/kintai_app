@@ -1,5 +1,6 @@
 require 'rails_helper'
-
+# TODO : Controllerのspecを充実させる
+# 異常処理も加える
 RSpec.describe AttendancesController, type: :controller do
   let(:user) { FactoryBot.create :user }
 

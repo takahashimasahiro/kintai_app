@@ -30,6 +30,6 @@ function changeRowData(row) {
   $('input[name=change_start_hour]')[0].value = $(`#work_${row}_start_4i`)[0].value
   $('input[name=change_start_minute]')[0].value = $(`#work_${row}_start_5i`)[0].value
   $('input[name=change_end_hour]')[0].value = $(`#work_${row}_end_4i`)[0].value
-  $('input[name=change_end_mitute]')[0].value = $(`#work_${row}_end_5i`)[0].value
+  $('input[name=change_end_minute]')[0].value = $(`#work_${row}_end_5i`)[0].value
   $('input[name=change_status]')[0].value = $(`#status_${row}`)[0].value
 }

@@ -103,11 +103,65 @@ module AttendancesHelper
     HolidayJapan.check(date)
   end
 
+  # 日付を変更する
   def change_date(first_month, row)
     first_month.change(day: row)
   end
 
+  # 日付が含まれているか判別する
   def is_include?(all_pass_days, row_date)
-    all_pass_days.select { |x| x == row_date }[0]
+    all_pass_days.select { |x| x[0] == row_date }[0]
+  end
+
+  # 実稼働時間を算出する
+  def calculate_working_time(attendance_row, row_date)
+    if attendance_row
+      # 退勤時間-出勤時間
+      hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+      # 8時間以上の場合は休憩で-1時間する
+      hour -= 1 if hour >= 9
+      ( hour * 60 ) + ( sec / 60)
+    else
+      weekend?(row_date) ? 0 : (8 * 60)
+    end
+  end
+
+  # 休憩時間を算出する
+  def calculate_break_time(attendance_row, row_date)
+    if attendance_row
+      hour = ((attendance_row.work_end-attendance_row.work_start)/3600).floor
+      if hour >=8
+        60
+      elsif hour >= 6
+        45
+      else
+        0
+      end
+    else
+      weekend?(row_date) ? 0 : 60
+    end
+  end
+
+  def calculate_over_time(attendance_row)
+    return 0 if attendance_row.nil?
+    # 退勤時間-出勤時間
+    hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+    if hour >= 9
+      hour -= 9
+      (sec / 60) + (hour * 60)
+    else
+      0
+    end
+  end
+
+  def convert_min(min_sum)
+    hour,min = min_sum.divmod(60)
+    if hour == 0
+      "#{min.to_i}分"
+    elsif min == 0
+      "#{hour.to_i}時間"
+    else
+      "#{hour.to_i}時間#{min.to_i}分"
+    end
   end
 end
