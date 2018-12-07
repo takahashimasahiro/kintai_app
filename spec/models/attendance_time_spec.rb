@@ -11,13 +11,31 @@ RSpec.describe AttendanceTime, type: :model do
     FactoryBot.create :attendance_time, user_id: user.id
   end
 
-  describe 'vacation?' do
-    it 'vacation' do
-      expect(AttendanceTime.vacation?('vacation')).to eq true
+  # TODO かく
+  describe 'update_attend' do
+    context 'is success' do
+      it 'work → vaction' do
+      end
+      it 'vacation → work' do
+      end
+      it 'vacation → aother vacation' do
+      end
+      xit 'holiday → holiday_work' do
+      end
+    end
+    context 'raise error' do
+      it 'update false' do
+      end
+    end
+  end
+  
+  describe 'include_vacation?' do
+    it 'is vacation' do
+      expect(AttendanceTime.new.include_vacation?('vacation')).to eq true
     end
 
     it 'not vacation' do
-      expect(AttendanceTime.vacation?('work')).to eq false
+      expect(AttendanceTime.new.include_vacation?('work')).to eq false
     end
   end
 

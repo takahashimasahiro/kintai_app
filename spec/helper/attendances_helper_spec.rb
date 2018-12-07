@@ -49,27 +49,44 @@ RSpec.describe AttendancesHelper, type: :module do
     end
   end
 
-  xdescribe 'show_start_attendanceTime' do
+  describe 'show_start_attendanceTime' do
     # TODO
     it 'has data' do
-      expect(helper).to receive(:time_select)
-      expect(helper.show_start_attendanceTime(attendance_time, Date.today)).to eq ''
+      ans_hash = helper.show_start_attendanceTime(attendance_time, Date.today)
+      expect(ans_hash[:year]).to eq attendance_time.work_date.year
+      expect(ans_hash[:month]).to eq attendance_time.work_date.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq attendance_time.work_start.hour
+      expect(ans_hash[:minute]).to eq attendance_time.work_start.min
     end
 
-    it 'not data' do
-      expect(helper).to receive(:time_select)
+    it 'no data' do
+      ans_hash = helper.show_start_attendanceTime(nil, Date.today)
+      expect(ans_hash[:year]).to eq Date.today.year
+      expect(ans_hash[:month]).to eq Date.today.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq '10'
+      expect(ans_hash[:minute]).to eq '00'
     end
   end
 
-  xdescribe 'show_end_attendanceTime' do
-    # TODO
+  describe 'show_end_attendanceTime' do
     it 'has data' do
-      expect(helper).to receive(:time_select)
-      expect(helper.show_start_attendanceTime(attendance_time, Date.today)).to eq ''
+      ans_hash = helper.show_end_attendanceTime(attendance_time, Date.today)
+      expect(ans_hash[:year]).to eq attendance_time.work_date.year
+      expect(ans_hash[:month]).to eq attendance_time.work_date.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq attendance_time.work_end.hour
+      expect(ans_hash[:minute]).to eq attendance_time.work_end.min
     end
 
     it 'not data' do
-      expect(helper).to receive(:time_select)
+      ans_hash = helper.show_end_attendanceTime(nil, Date.today)
+      expect(ans_hash[:year]).to eq Date.today.year
+      expect(ans_hash[:month]).to eq Date.today.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq '19'
+      expect(ans_hash[:minute]).to eq '00'
     end
   end
 

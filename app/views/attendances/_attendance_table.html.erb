@@ -24,10 +24,12 @@
             <%= date_of_week(row_date.wday) %>
           </th>
           <th name='start_work_<%=row%>'>
-            <%= show_start_attendanceTime(attendance_row, row_date) %>
+            <%= time_select("work_#{row_date.day}", 'start',
+                            default: show_start_attendanceTime(attendance_row, row_date)) %>
           </th>
           <th name='end_work_<%=row%>'>
-            <%= show_end_attendanceTime(attendance_row, row_date) %>
+            <%= time_select("work_#{row_date.day}", 'end',
+                            default: show_end_attendanceTime(attendance_row, row_date)) %>
           </th>
           <th name='working_time_<%=row%>'>
             <%= convert_min(calculate_working_time(attendance_row, row_date)) %>

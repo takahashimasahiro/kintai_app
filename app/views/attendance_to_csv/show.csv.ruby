@@ -34,8 +34,10 @@ CSV.generate do |csv|
     sum_orver_time += calculate_over_time(select_attend)
     sum_work_time += calculate_working_time(select_attend, row_date)
   end
-  csv << %w[ユーザー名 権限 出勤日数 稼働時間 休憩時間 残業時間 有休取得数 残有休数]
+  csv << %w[月別合計 ユーザー名 権限 出勤日数 稼働時間 休憩時間 残業時間 有休取得数 残有休数]
+  # TODO 休日出勤 欠勤 休日 数を表示
   csv << [
+    '',
     @selected_user.name,
     all_role[@selected_user.role.to_sym],
     @all_attend_data.count - @pass_days.count,

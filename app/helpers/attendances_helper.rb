@@ -38,18 +38,22 @@ module AttendancesHelper
   def show_start_attendanceTime(attendance_row, date)
     if attendance_row
       # データが保存されていた場合それを入力
-      time_select("work_#{date.day}", 'start', default: { year: attendance_row.work_date.year,
-                                                          month: attendance_row.work_date.month,
-                                                          day: date.day,
-                                                          hour: attendance_row.work_start.hour,
-                                                          minute: attendance_row.work_start.min })
+      {
+        year: attendance_row.work_date.year,
+        month: attendance_row.work_date.month,
+        day: date.day,
+        hour: attendance_row.work_start.hour,
+        minute: attendance_row.work_start.min
+      }
     else
       # データがない場合は初期値を作成
-      time_select("work_#{date.day}", 'start', default: { year: date.year,
-                                                          month: date.month,
-                                                          day: date.day,
-                                                          hour: default_start_hour(date),
-                                                          minute: '00' })
+      {
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        hour: default_start_hour(date),
+        minute: '00'
+      }
     end
   end
 
@@ -57,18 +61,22 @@ module AttendancesHelper
   def show_end_attendanceTime(attendance_row, date)
     if attendance_row
       # データが保存されていた場合それを入力
-      time_select("work_#{date.day}", 'end', default: { year: attendance_row.work_date.year,
-                                                        month: attendance_row.work_date.month,
-                                                        day: date.day,
-                                                        hour: attendance_row.work_end.hour,
-                                                        minute: attendance_row.work_end.min })
+      {
+        year: attendance_row.work_date.year,
+        month: attendance_row.work_date.month,
+        day: date.day,
+        hour: attendance_row.work_end.hour,
+        minute: attendance_row.work_end.min
+      }
     else
       # データがない場合は初期値を作成
-      time_select("work_#{date.day}", 'end', default: { year: date.year,
-                                                        month: date.month,
-                                                        day: date.day,
-                                                        hour: default_end_hour(date),
-                                                        minute: '00' })
+      {
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        hour: default_end_hour(date),
+        minute: '00'
+      }
     end
   end
 
@@ -114,6 +122,7 @@ module AttendancesHelper
   end
 
   # 実稼働時間を算出する
+  # return (min)
   def calculate_working_time(attendance_row, row_date)
     if attendance_row
       # 退勤時間-出勤時間
@@ -127,6 +136,7 @@ module AttendancesHelper
   end
 
   # 休憩時間を算出する
+  # return (min)
   def calculate_break_time(attendance_row, row_date)
     if attendance_row
       hour = ((attendance_row.work_end-attendance_row.work_start)/3600).floor
@@ -142,6 +152,8 @@ module AttendancesHelper
     end
   end
 
+  # 残業時間を算出する
+  # return (min)
   def calculate_over_time(attendance_row)
     return 0 if attendance_row.nil?
     # 退勤時間-出勤時間
@@ -154,6 +166,8 @@ module AttendancesHelper
     end
   end
 
+  # 分合計を時間+分にする
+  # 表示しやすい形に変更する
   def convert_min(min_sum)
     hour,min = min_sum.divmod(60)
     if hour == 0
