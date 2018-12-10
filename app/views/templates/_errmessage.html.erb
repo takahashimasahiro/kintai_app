@@ -1,9 +1,9 @@
-<% if @user && @user.errors.messages.length !=0 %>
-  <% @user.errors.full_messages.each do |message|  %>
-    <div class='error_message'>
-      <%= message %>
-    </div>
-  <% end %>
+<% if @user && @user.errors.messages.map{ |err| err[1] != [] }.include?(true) %>
+  <div class='error_message'>
+    <% @user.errors.full_messages.each do |message|  %>
+    <%= message %>
+    <% end %>
+  </div>
 <% elsif @error_message %>
   <div class='error_message'>
     <%= @error_message %>

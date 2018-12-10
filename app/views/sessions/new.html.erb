@@ -2,7 +2,7 @@
   <div class="main bg-dark text-light">
     <div class="login-form">
       <h1>ログイン</h1>
-      <%= form_with model: @user, url: login_path, method: :post, local: true do |form| %>
+      <%= form_with model: @user, url: sessions_path , method: :get, local: true do |form| %>
         <%= render :partial => "templates/input", :locals => {f: form}%>
         <%= form.submit "ログイン" , class: "btn btn-default" %>
       <% end %>

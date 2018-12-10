@@ -50,7 +50,6 @@ RSpec.describe AttendancesHelper, type: :module do
   end
 
   describe 'show_start_attendanceTime' do
-    # TODO
     it 'has data' do
       ans_hash = helper.show_start_attendanceTime(attendance_time, Date.today)
       expect(ans_hash[:year]).to eq attendance_time.work_date.year
