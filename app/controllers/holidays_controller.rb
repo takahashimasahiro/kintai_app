@@ -26,7 +26,8 @@ class HolidaysController < ApplicationController
     end
     vacation_data.save!
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
-  rescue StandardError
+  rescue StandardError => e
+    @error_message = e.message
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: '失敗しました' }
   end
 end

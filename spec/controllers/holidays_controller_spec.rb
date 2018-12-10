@@ -36,7 +36,6 @@ RSpec.describe HolidaysController, type: :controller do
         button: nil
       }
     end
-
     it '申請許可' do
       params[:button] = 'admin_applied'
       expect(ApplyVacation).to receive(:find_by).with(applicant_id: params[:user_id], get_start_date: params[:get_date]).and_return(vacation)

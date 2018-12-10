@@ -3,24 +3,47 @@ require 'rails_helper'
 RSpec.describe AttendanceTime, type: :model do
   let(:user) { User.find(1) }
   let(:apply_vacation) { ApplyVacation.find_by(applicant_id: user.id) }
-  let(:attendance_time) { AttendanceTime.find_by(user_id: user.id) }
-
+  let(:attendance_time) { AttendanceTime.find_by(user_id: user.id) }  
   before do
     FactoryBot.create :user
     FactoryBot.create :apply_vacation, applicant_id: user.id
     FactoryBot.create :attendance_time, user_id: user.id
   end
 
-  # TODO かく
   describe 'update_attend' do
     context 'is success' do
       it 'work → vaction' do
+        expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)
+                                                      .with(no_args).with('vacation', user, Date.today)
+                                                      .and_return([])
+        expect(attendance_time.update_attend(user, 'vacation')).to eq true
+        expect(attendance_time.work_start.hour).to eq 0
+        expect(attendance_time.work_start.min).to eq 0
+        expect(attendance_time.work_end.hour).to eq 0
+        expect(attendance_time.work_end.min).to eq 0
       end
       it 'vacation → work' do
+        attendance_time.status = 'vacation'
+        attendance_time.save
+        expect(ApplyVacation).to receive_message_chain(:new, :apply_cancel)
+                                                      .with(no_args).with(user, Date.today)
+                                                      .and_return([])
+        expect(attendance_time.update_attend(user, 'work')).to eq true
       end
       it 'vacation → aother vacation' do
+        attendance_time.status = 'vacation'
+        attendance_time.save
+
       end
-      xit 'holiday → holiday_work' do
+      # TODO 実装後テストを書く
+      xcontext 'holiday → holiday_work' do
+        it 'time chagne at holiday' do
+          expect(attendance_time.update_attend(user, 'holiday')).to eq true
+        end
+
+        it 'status change to holiday_work' do
+          expect(attendance_time.update_attend(user, 'holiday_work')).to eq true
+        end
       end
     end
     context 'raise error' do

@@ -11,12 +11,17 @@ class SessionsController < ApplicationController
   end
 
   def index
-    @user = User.find_by(email: params[:user][:email])
-    if @user&.authenticate(params[:user][:password])
-      session[:id] = @user.id
-      redirect_to attendance_path(@user.id), flash: { notice: 'ログインしました' }
-    else
-      @error_message = 'メールアドレスもしくはパスワードが間違っています'
+    begin
+      @user = User.find_by(email: params[:user][:email])
+      if @user&.authenticate(params[:user][:password])
+        session[:id] = @user.id
+        redirect_to attendance_path(@user.id), flash: { notice: 'ログインしました' }
+      else
+        @error_message = 'メールアドレスもしくはパスワードが間違っています'
+        render :new
+      end
+    rescue => e
+      @error_message = e.message
       render :new
     end
   end

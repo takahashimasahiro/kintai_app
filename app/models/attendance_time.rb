@@ -16,10 +16,9 @@ class AttendanceTime < ApplicationRecord
     transaction do
       # 有休申請するときは時間をリセットする
       if !include_vacation?(self.status) && include_vacation?(input_status)
-        work_start.hour = 0
-        work_start.min = 0
-        work_end.hour = 0
-        work_end.min = 0
+        self.work_start = self.work_start.change(hour: 0, min: 0)
+        self.work_end = self.work_end.change(hour: 0, min: 0)
+        p self
       end
       if include_vacation?(input_status)
         # 有給休暇申請を行う
@@ -28,17 +27,17 @@ class AttendanceTime < ApplicationRecord
         # 有休申請取消処理
         ApplyVacation.new.apply_cancel(selected_user, work_date)
       end
-      # TODO 曜日が土日祝日の時、休日出勤にする
+      # TODO 曜日が土日祝日で出退勤時間を入力された時、休日出勤にする
       self.status = input_status
-      save!
+      self.save!
     end
   rescue SomeError
     raise ActiveRecord::Rollback
   end
 
   # 休暇申請か判別する
-  def include_vacation?(status)
-    status.present? && status.include?('vacation')
+  def include_vacation?(input_status)
+    input_status.present? && input_status.include?('vacation')
   end
 
   # 月初を取得する

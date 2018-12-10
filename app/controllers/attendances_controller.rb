@@ -31,9 +31,9 @@ class AttendancesController < ApplicationController
     else
       redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
     end
-  rescue SomeError
-    # TODO エラーをキャッチして以上処理フローへ
-    raise ActiveRecord::Rollback
+  rescue SomeError => e
+    @error_message = e.message
+    redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
   end
 
 private
