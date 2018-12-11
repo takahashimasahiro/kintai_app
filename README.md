@@ -10,6 +10,14 @@ $ bin/webpack
 
 $ bundle exec rails s
 
+# doc file
+
+$ yardoc
+
+$ yard server
+
+open http://localhost:8808
+
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
