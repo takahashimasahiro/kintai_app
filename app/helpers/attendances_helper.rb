@@ -122,13 +122,13 @@ module AttendancesHelper
   end
 
   # 実稼働時間を算出する
-  # return (min)
+  # @return [Integer] (min)
   def calculate_working_time(attendance_row, row_date)
     if attendance_row
       # 退勤時間-出勤時間
       hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
       # 8時間以上の場合は休憩で-1時間する
-      hour -= 1 if hour >= 9
+      hour -= 1 if hour >= 8
       ( hour * 60 ) + ( sec / 60)
     else
       weekend?(row_date) ? 0 : (8 * 60)
@@ -136,7 +136,7 @@ module AttendancesHelper
   end
 
   # 休憩時間を算出する
-  # return (min)
+  # @return [Integer] (min)
   def calculate_break_time(attendance_row, row_date)
     if attendance_row
       hour = ((attendance_row.work_end-attendance_row.work_start)/3600).floor

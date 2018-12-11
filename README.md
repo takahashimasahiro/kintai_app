@@ -12,7 +12,7 @@ $ bundle exec rails s
 
 # doc file
 
-$ yardoc
+$ yardoc 'necessary files'
 
 $ yard server
 

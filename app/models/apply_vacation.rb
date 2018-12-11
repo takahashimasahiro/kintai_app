@@ -23,40 +23,46 @@ class ApplyVacation < ApplicationRecord
       end
       user.save!
     end
-  rescue SomeError
+  rescue
     raise ActiveRecord::Rollback
   end
 
   # 申請状況ステータスを変更する
+  # @params [Symbol] 入力ステータス
   def change_vacation_status(status)
     ApplyVacation.transaction do
       self.status = status
-      save!
+      self.save!
     end
-  rescue SomeError
+  rescue
     raise ActiveRecord::Rollback
   end
 
   # 休暇申請をする
+  # @param [String] 入力ステータス
+  # @param [User] 申請ユーザー
+  # @param [Date] 登録日付
   def apply_for_vacation(status, user, date)
-  ApplyVacation.transaction do
+    ApplyVacation.transaction do
       vacation = user.apply_vacations.find_or_create_by!(get_start_date: date)
       vacation.get_days = status.start_with?('vacation') ? 1 : 0.5
       vacation.status = :applying
       vacation.save!
     end
-  rescue SomeError
+  rescue
     raise ActiveRecord::Rollback
   end
 
   # 休暇申請を取り消す
+  # @param [User] 申請ユーザー
+  # @param [Date] 取消日付
   def apply_cancel(user, date)
     ApplyVacation.transaction do
       vacation = user.apply_vacations.find_by(get_start_date: date, status: :applying)
       vacation.status = :withdrawal
       vacation.save!
     end
-  rescue SomeError
+  rescue
     raise ActiveRecord::Rollback
   end
 end
