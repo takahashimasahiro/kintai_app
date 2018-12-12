@@ -20,7 +20,7 @@
       <th><%= @vacation_count %></th>
       <th><%= @attendance_table.select{ |data| data.status == 'holiday_work'}.count %></th>
       <th><%= @attendance_table.select{ |data| data.status == 'absence'}.count %></th>
-      <th><%= @attendance_table.select{ |data| data.status == 'holiday'}.count%></th>
+      <th><%= month_holiday_count(@first_month) %></th>
     </tr>
   </tbody>
 </table>

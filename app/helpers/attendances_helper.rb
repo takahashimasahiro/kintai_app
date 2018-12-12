@@ -123,6 +123,11 @@ module AttendancesHelper
     HolidayJapan.check(date)
   end
 
+  # 休日数を算出する
+  def month_holiday_count(first_month)
+    first_month.all_month.select{|x| weekend?(x) }.count
+  end
+
   # 日付を変更する
   def change_date(first_month, row)
     first_month.change(day: row)

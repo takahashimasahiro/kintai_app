@@ -177,6 +177,7 @@ RSpec.describe AttendancesHelper, type: :module do
     end
   end
 
+  # TODO かく
   describe 'calculate_working_time' do
     
   end
@@ -190,6 +191,10 @@ RSpec.describe AttendancesHelper, type: :module do
   end
   
   describe 'convert_min' do
+    
+  end
+  
+  describe 'month_holiday_count' do
     
   end
   

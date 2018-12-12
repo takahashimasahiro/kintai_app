@@ -44,6 +44,6 @@ CSV.generate do |csv|
     @vacation_count, #有休取得数
     @all_attend_data.select{ |data| data.status == 'holiday_work'}.count, #休日出勤
     absence_count, #欠勤
-    @all_attend_data.select{ |data| data.status == 'holiday'}.count, #休日
+    month_holiday_count(@first_month), #休日
     @selected_user.paid_holiday_count] #残有休数
 end
