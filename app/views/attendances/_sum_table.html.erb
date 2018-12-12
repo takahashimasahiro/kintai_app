@@ -1,0 +1,26 @@
+<div class='table'>
+<table class='table table-condensed table-bordered table-sm'>
+</div>
+  <thead class='thead-light'>
+    <tr class='text-center'>
+      <th><%= label :page, '出勤日数'%></th>
+      <th><%= label :page, '稼働時間合計'%></th>
+      <th><%= label :page, '休憩時間合計'%></th>
+      <th><%= label :page, '有休取得数'%></th>
+      <th><%= label :page, '休日出勤数'%></th>
+      <th><%= label :page, '欠勤数'%></th>
+      <th><%= label :page, '休日数'%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class='text-center'>
+      <th><%= @attendance_table.select{ |data| data.status == 'work'}.count %></th>
+      <th><%= convert_min(@attendance_table.map{|x| x.work_end - x.work_start }.inject(:+) / 60) %></th>
+      <th><%= convert_min(@attendance_table.map{|x| calculate_break_time(x, x.work_date) }.inject(:+))%></th>
+      <th><%= @vacation_count %></th>
+      <th><%= @attendance_table.select{ |data| data.status == 'holiday_work'}.count %></th>
+      <th><%= @attendance_table.select{ |data| data.status == 'absence'}.count %></th>
+      <th><%= @attendance_table.select{ |data| data.status == 'holiday'}.count%></th>
+    </tr>
+  </tbody>
+</table>

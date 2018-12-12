@@ -8,7 +8,6 @@
         <th><%= label :page, '退勤時間'%></th>
         <th><%= label :page, '稼働時間'%></th>
         <th><%= label :page, '休憩時間'%></th>
-        <th><%= label :page, '残業時間'%></th>
         <th><%= label :page, '状態'%></th>
       </tr>
     </thead>
@@ -18,7 +17,8 @@
       <% row_date = change_date(@first_month, row) %>
       <%# 日付を指定して勤怠状況を検索する %>
       <% attendance_row = choice_attendanceTime(@attendance_table , row_date) %>
-        <tr name='row_<%=row%>' class='text-center day_of_week_<%= create_day_of_week_classname(row_date) %>'>
+        <%# ステータスをみて、有休申請してる時は色を変える %>
+        <tr name='row_<%=row%>' class='text-center day_of_week_<%= create_day_of_week_classname(row_date, selected_status(attendance_row, row_date)) %>'>
           <th name='date_<%=row%>'><%=row%></th>
           <th name='row_of_week_<%=row_date.wday%>'>
             <%= date_of_week(row_date.wday) %>
@@ -36,9 +36,6 @@
           </th>
           <th name='break_time_<%=row%>'>
             <%= convert_min(calculate_break_time(attendance_row, row_date)) %>
-          </th>
-          <th name='over_time_<%=row%>'>
-            <%= convert_min(calculate_over_time(attendance_row))%>
           </th>
           <th name='status_row_<%=row%>'>
             <%= select_tag("status_#{row}",

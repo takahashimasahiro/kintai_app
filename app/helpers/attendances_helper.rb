@@ -9,8 +9,10 @@ module AttendancesHelper
     'absence':      '欠勤',
     'holiday':      '休日'
   }.freeze
-  DEFAULT_WORK_START = '10'.freeze # 出勤時間
-  DEFAULT_WORK_END = '19'.freeze # 退勤時間
+
+  # TODO デフォルト値の設定
+  DEFAULT_WORK_START = 0.freeze # 出勤時間(hour)
+  DEFAULT_WORK_END = 0.freeze # 退勤時間(hour)
 
   def date_of_week(count)
     DATE_OF_WEEK[count]
@@ -20,8 +22,18 @@ module AttendancesHelper
     WORK_STATUS
   end
 
-  def create_day_of_week_classname(date)
-    holiday?(date) ? 'holiday' : date.wday
+  # 日付、ステータス別で各行の背景色を変える
+  # @param  [Date]
+  # @param  [String, Symbol]
+  # @return [String]
+  def create_day_of_week_classname(date, select_status)
+    if holiday?(date)
+      'holiday'
+    elsif select_status[1].to_s.include?('vacation')
+      'vacation'
+    else
+      date.wday.to_s
+    end
   end
 
   # 年セレクトボックス
@@ -52,7 +64,7 @@ module AttendancesHelper
         month: date.month,
         day: date.day,
         hour: default_start_hour(date),
-        minute: '00'
+        minute: 0
       }
     end
   end
@@ -75,25 +87,25 @@ module AttendancesHelper
         month: date.month,
         day: date.day,
         hour: default_end_hour(date),
-        minute: '00'
+        minute: 0
       }
     end
   end
 
   # デフォルトの出勤時間を取得する
   def default_start_hour(date)
-    weekend?(date) ? '00' : DEFAULT_WORK_START
+    weekend?(date) ? 0 : DEFAULT_WORK_START
   end
 
   # デフォルトの退勤時間を取得する
   def default_end_hour(date)
-    weekend?(date) ? '00' : DEFAULT_WORK_END
+    weekend?(date) ? 0 : DEFAULT_WORK_END
   end
 
   # 状態の初期選択
   def selected_status(attendance_row, date)
     if attendance_row
-      attendance_row.status
+      [all_status[attendance_row.status.to_sym] , attendance_row.status.to_sym]
     elsif weekend?(date)
       [all_status[:holiday], :holiday]
     else
@@ -131,24 +143,27 @@ module AttendancesHelper
       hour -= 1 if hour >= 8
       ( hour * 60 ) + ( sec / 60)
     else
-      weekend?(row_date) ? 0 : (8 * 60)
+      weekend?(row_date) ? 0 : ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
     end
   end
 
   # 休憩時間を算出する
   # @return [Integer] (min)
   def calculate_break_time(attendance_row, row_date)
-    if attendance_row
-      hour = ((attendance_row.work_end-attendance_row.work_start)/3600).floor
-      if hour >=8
-        60
-      elsif hour >= 6
-        45
-      else
-        0
-      end
+    return 0 if weekend?(row_date)
+
+    hour = if attendance_row
+      ((attendance_row.work_end-attendance_row.work_start)/3600).floor
     else
-      weekend?(row_date) ? 0 : 60
+      ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
+    end
+
+    if hour >=8
+      60
+    elsif hour >= 6
+      45
+    else
+      0
     end
   end
 

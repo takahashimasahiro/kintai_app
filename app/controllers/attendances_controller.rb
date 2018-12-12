@@ -8,11 +8,13 @@ class AttendancesController < ApplicationController
     # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
     # 勤怠情報
-    @attendance_table = @selected_user.attendance_times.where(work_date: @first_month.all_month)
+    @attendance_table = @selected_user.attendance_times.where(work_date: @first_month.all_month).order(:work_date)
     # 全ユーザー(管理者モード)
     @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
     # 受理された休暇申請
     @pass_days = @selected_user.applied_for_month(@first_month)
+    # 有休申請数
+    @vacation_count = @selected_user.vacation_count_for_month(@first_month) || 0
   end
 
   def update

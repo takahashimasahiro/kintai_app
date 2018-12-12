@@ -28,4 +28,15 @@ class User < ApplicationRecord
                    .order(:get_start_date)
                    .pluck(:get_start_date, :get_days)
   end
+
+  #ユーザーが申請した休暇申請の総計を取得
+  # @param  [Date] 取得する年月の月初の日付
+  # @return [numeric] 
+  def vacation_count_for_month(first_month)
+    attendance_times.where(work_date: first_month.all_month)
+                    .where('status LIKE ?', "%vacation%")
+                    .pluck(:status)
+                    .map{|x| x.eql?('vacation') ? 1 : 0.5}.inject(:+)
+  end
+  
 end

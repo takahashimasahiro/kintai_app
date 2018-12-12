@@ -59,6 +59,7 @@
       <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
     </div>
   <% end %>
+  <%= render :partial => 'attendances/sum_table'%>
   <%= render :partial => 'attendances/attendance_table' %>
 <% end %>
 

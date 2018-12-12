@@ -44,4 +44,11 @@ RSpec.describe User, type: :model do
       expect(owner_user.applied_for_month(Date.today.change(day: 1)).count).to eq 0
     end
   end
+
+  # TODO かく
+  describe 'vacation_count_for_month' do
+    it 'get count' do
+    end
+  end
+  
 end
