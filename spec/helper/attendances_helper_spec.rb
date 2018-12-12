@@ -21,14 +21,21 @@ RSpec.describe AttendancesHelper, type: :module do
   end
 
   describe 'create_day_of_week_classname' do
+    let(:select_status){ ['出勤', :work]}
     it 'is holiday' do
       expect(helper).to receive(:holiday?).with(date).and_return(true)
-      expect(helper.create_day_of_week_classname(date)).to eq 'holiday'
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq 'holiday'
+    end
+
+    it 'is vacation' do
+      select_status = ['有給休暇', :vacation]
+      expect(helper).to receive(:holiday?).with(date).and_return(false)
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq 'vacation'
     end
 
     it 'is not holiday' do
       expect(helper).to receive(:holiday?).with(date).and_return(false)
-      expect(helper.create_day_of_week_classname(date)).to eq Date.new(2018, 5, 2).wday
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq Date.new(2018, 5, 2).wday.to_s
     end
   end
 
@@ -64,8 +71,8 @@ RSpec.describe AttendancesHelper, type: :module do
       expect(ans_hash[:year]).to eq Date.today.year
       expect(ans_hash[:month]).to eq Date.today.month
       expect(ans_hash[:day]).to eq Date.today.day
-      expect(ans_hash[:hour]).to eq '10'
-      expect(ans_hash[:minute]).to eq '00'
+      expect(ans_hash[:hour]).to eq 0
+      expect(ans_hash[:minute]).to eq 0
     end
   end
 
@@ -84,38 +91,38 @@ RSpec.describe AttendancesHelper, type: :module do
       expect(ans_hash[:year]).to eq Date.today.year
       expect(ans_hash[:month]).to eq Date.today.month
       expect(ans_hash[:day]).to eq Date.today.day
-      expect(ans_hash[:hour]).to eq '19'
-      expect(ans_hash[:minute]).to eq '00'
+      expect(ans_hash[:hour]).to eq 0
+      expect(ans_hash[:minute]).to eq 0
     end
   end
 
   describe 'default_start_hour' do
     it 'is weekday' do
       expect(helper).to receive(:weekend?).with(date).and_return(false)
-      expect(helper.default_start_hour(date)).to eq '10'
+      expect(helper.default_start_hour(date)).to eq 0
     end
 
     it 'is holiday' do
       expect(helper).to receive(:weekend?).with(date).and_return(true)
-      expect(helper.default_start_hour(date)).to eq '00'
+      expect(helper.default_start_hour(date)).to eq 0
     end
   end
 
   describe 'default_end_hour' do
     it 'is weekday' do
       expect(helper).to receive(:weekend?).with(date).and_return(false)
-      expect(helper.default_end_hour(date)).to eq '19'
+      expect(helper.default_end_hour(date)).to eq 0
     end
 
     it 'is holiday' do
       expect(helper).to receive(:weekend?).with(date).and_return(true)
-      expect(helper.default_end_hour(date)).to eq '00'
+      expect(helper.default_end_hour(date)).to eq 0
     end
   end
 
   describe 'selected_status' do
     it 'has data' do
-      expect(helper.selected_status(attendance_time, date)).to eq 'work'
+      expect(helper.selected_status(attendance_time, date)).to eq ['出勤', :work]
     end
 
     it 'no data and holiday' do
