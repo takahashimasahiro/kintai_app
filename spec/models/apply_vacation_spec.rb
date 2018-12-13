@@ -12,38 +12,70 @@ RSpec.describe ApplyVacation, type: :model do
   end
 
   describe 'reduce_holiday_count' do
-    it 'success' do
-      user.paid_holiday_count = 0
-      user.save
-      expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(apply_vacation, :absence).and_return([])
-      expect(apply_vacation.reduce_holiday_count).to eq true
-    end
+    context 'processing success' do
+      it 'normal process' do
+        user.paid_holiday_count = 0
+        user.save
+        expect(apply_vacation.reduce_holiday_count).to eq true
+      end
 
-    it 'no count' do
-      expect(apply_vacation).to receive(:change_vacation_status).with(:admin_applied)
-      expect(apply_vacation.reduce_holiday_count).to eq true
+      it 'no count' do
+        expect(apply_vacation.reduce_holiday_count).to eq true
+      end
+    end
+    context 'raise error' do
+      it 'is rollback' do
+        expect(User).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
+        expect{apply_vacation.reduce_holiday_count}.to raise_error ActiveRecord::Rollback
+      end
     end
   end
 
   describe 'change_vacation_status' do
-    it 'success' do
-      expect(apply_vacation.change_vacation_status(:admin_applied)).to eq true
-      expect(apply_vacation.status).to eq 'admin_applied'
+    context 'processing success' do
+      it 'normal process' do
+        expect(apply_vacation.change_vacation_status(:admin_applied)).to eq true
+        expect(apply_vacation.status).to eq 'admin_applied'
+      end
     end
+    context 'raise error' do
+      it 'is rollback' do
+        expect(apply_vacation).to receive(:save!).and_raise(ActiveRecord::RecordNotSaved)
+        expect{apply_vacation.change_vacation_status(:admin_applied)}.to raise_error ActiveRecord::Rollback
+      end
+    end
+    
   end
 
   describe 'apply_for_vacation' do
-    it 'success' do
-      expect(apply_vacation.apply_for_vacation('vacation', user, Date.today)).to eq true
-      expect(apply_vacation.status).to eq 'applying'
+    context 'processing success' do
+      it 'normal process' do
+        expect(apply_vacation.apply_for_vacation('vacation', user, Date.today)).to eq true
+        expect(apply_vacation.status).to eq 'applying'
+      end
+    end
+    context 'raise error' do
+      it 'is rollback' do
+        expect(ApplyVacation).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
+        expect{apply_vacation.apply_for_vacation('vacation', user, Date.today)}.to raise_error ActiveRecord::Rollback
+      end
     end
   end
 
   describe 'apply_cancel' do
-    it 'success' do
-      expect(apply_vacation.apply_cancel(user, Date.today)).to eq true
-      vacation = ApplyVacation.find_by(applicant_id: user.id, get_start_date: Date.today.strftime('%Y-%m-%d'))
-      expect(vacation.status).to eq 'withdrawal'
+    context 'processing success' do
+      it 'normal process' do
+        expect(apply_vacation.apply_cancel(user, Date.today)).to eq true
+        vacation = ApplyVacation.find_by(applicant_id: user.id, get_start_date: Date.today.strftime('%Y-%m-%d'))
+        expect(vacation.status).to eq 'withdrawal'
+      end
+    end
+    
+    context 'raise error' do
+      it 'is rollback' do
+        expect(ApplyVacation).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
+        expect{apply_vacation.apply_cancel(user, Date.today)}.to raise_error ActiveRecord::Rollback
+      end
     end
   end
 end

@@ -1,0 +1,201 @@
+require 'rails_helper'
+
+RSpec.describe AttendancesHelper, type: :module do
+  let(:test_class) { Struct.new(:attendances_helper) { include AttendancesHelper } }
+  let(:helper) { test_class.new }
+  let(:date) { Date.new(2018, 5, 2) } # 水曜日,平日
+  let(:user) { FactoryBot.create :user }
+  let(:attendance_time) { FactoryBot.create :attendance_time, user_id: user.id }
+
+  describe 'date_of_week' do
+    it 'normal process' do
+      expect(helper.date_of_week(0)).to eq '日'
+    end
+  end
+
+  describe 'all_status' do
+    it 'normal process' do
+      expect(helper.all_status.length).to eq 7
+      expect(helper.all_status[:work]).to eq '出勤'
+    end
+  end
+
+  describe 'create_day_of_week_classname' do
+    let(:select_status){ ['出勤', :work]}
+    it 'is holiday' do
+      expect(helper).to receive(:holiday?).with(date).and_return(true)
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq 'holiday'
+    end
+
+    it 'is vacation' do
+      select_status = ['有給休暇', :vacation]
+      expect(helper).to receive(:holiday?).with(date).and_return(false)
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq 'vacation'
+    end
+
+    it 'is not holiday' do
+      expect(helper).to receive(:holiday?).with(date).and_return(false)
+      expect(helper.create_day_of_week_classname(date, select_status)).to eq Date.new(2018, 5, 2).wday.to_s
+    end
+  end
+
+  describe 'show_years_map' do
+    it 'normal process' do
+      years = (2008..2028).map { |x| x }
+      expect(helper.show_years_map(date)).to eq years
+    end
+  end
+
+  describe 'choice_attendanceTime' do
+    it 'normal process' do
+      expect(helper.choice_attendanceTime([attendance_time], Date.today)).to eq attendance_time
+    end
+
+    it 'no data' do
+      expect(helper.choice_attendanceTime([attendance_time], Date.tomorrow)).to be_nil
+    end
+  end
+
+  describe 'show_start_attendanceTime' do
+    it 'has data' do
+      ans_hash = helper.show_start_attendanceTime(attendance_time, Date.today)
+      expect(ans_hash[:year]).to eq attendance_time.work_date.year
+      expect(ans_hash[:month]).to eq attendance_time.work_date.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq attendance_time.work_start.hour
+      expect(ans_hash[:minute]).to eq attendance_time.work_start.min
+    end
+
+    it 'no data' do
+      ans_hash = helper.show_start_attendanceTime(nil, Date.today)
+      expect(ans_hash[:year]).to eq Date.today.year
+      expect(ans_hash[:month]).to eq Date.today.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq 0
+      expect(ans_hash[:minute]).to eq 0
+    end
+  end
+
+  describe 'show_end_attendanceTime' do
+    it 'has data' do
+      ans_hash = helper.show_end_attendanceTime(attendance_time, Date.today)
+      expect(ans_hash[:year]).to eq attendance_time.work_date.year
+      expect(ans_hash[:month]).to eq attendance_time.work_date.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq attendance_time.work_end.hour
+      expect(ans_hash[:minute]).to eq attendance_time.work_end.min
+    end
+
+    it 'not data' do
+      ans_hash = helper.show_end_attendanceTime(nil, Date.today)
+      expect(ans_hash[:year]).to eq Date.today.year
+      expect(ans_hash[:month]).to eq Date.today.month
+      expect(ans_hash[:day]).to eq Date.today.day
+      expect(ans_hash[:hour]).to eq 0
+      expect(ans_hash[:minute]).to eq 0
+    end
+  end
+
+  describe 'default_start_hour' do
+    it 'is weekday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(false)
+      expect(helper.default_start_hour(date)).to eq 0
+    end
+
+    it 'is holiday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(true)
+      expect(helper.default_start_hour(date)).to eq 0
+    end
+  end
+
+  describe 'default_end_hour' do
+    it 'is weekday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(false)
+      expect(helper.default_end_hour(date)).to eq 0
+    end
+
+    it 'is holiday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(true)
+      expect(helper.default_end_hour(date)).to eq 0
+    end
+  end
+
+  describe 'selected_status' do
+    it 'has data' do
+      expect(helper.selected_status(attendance_time, date)).to eq ['出勤', :work]
+    end
+
+    it 'no data and holiday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(true)
+      expect(helper.selected_status(nil, date)).to eq ['休日', :holiday]
+    end
+
+    it 'no data and weekday' do
+      expect(helper).to receive(:weekend?).with(date).and_return(false)
+      expect(helper.selected_status(nil, date)).to eq ['出勤', :work]
+    end
+  end
+
+  describe 'weekend?' do
+    it 'is saturday' do
+      expect(helper.weekend?(Date.new(2018, 4, 28))).to eq true
+    end
+    it 'is sunday' do
+      expect(helper.weekend?(Date.new(2018, 5, 6))).to eq true
+    end
+    it 'is holiday' do
+      expect(helper.weekend?(Date.new(2018, 5, 4))).to eq true
+    end
+    it 'is weekday' do
+      expect(helper.weekend?(Date.new(2018, 5, 2))).to eq false
+    end
+  end
+
+  describe 'holiday?' do
+    it 'is holiday' do
+      expect(helper.holiday?(Date.new(2018, 5, 4))).to eq true
+    end
+    it 'is weekday' do
+      expect(helper.holiday?(Date.new(2018, 5, 2))).to eq false
+    end
+  end
+
+  describe 'change_date' do
+    it 'normal process' do
+      expect(helper.change_date(date, 5)).to eq Date.new(2018, 5, 5)
+    end
+  end
+
+  describe 'is_include?' do
+    let(:days) { [[Date.yesterday, 0.5], [Date.today, 1], [Date.tomorrow, 0.5]] }
+    it 'normal process' do
+      expect(helper.is_include?(days, Date.today)).not_to eq nil
+    end
+
+    it 'no data' do
+      expect(helper.is_include?(days, date)).to eq nil
+    end
+  end
+
+  # TODO かく
+  describe 'calculate_working_time' do
+    
+  end
+  
+  describe 'calculate_break_time' do
+    
+  end
+
+  describe 'calculate_over_time' do
+    
+  end
+  
+  describe 'convert_min' do
+    
+  end
+  
+  describe 'month_holiday_count' do
+    
+  end
+  
+end

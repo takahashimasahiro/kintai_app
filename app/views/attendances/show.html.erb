@@ -10,38 +10,57 @@
                       :onchange => 'this.form.submit();',
                       class: 'form-control-sm') %>
       </div>
-      <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-      <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
     <% end %>
   <% end %>
   <div class="search-year">
     <%= form_with url: attendance_path(@current_user.id), method: :get,class: 'pulldown' do |form| %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-      <%= select_tag('select_year',options_for_select(show_years_map ,
+      <%= select_tag('select_year',options_for_select(show_years_map(@first_month) ,
                                                       class:'opt_year',
-                                                      selected: @select_date.year.to_i),
+                                                      selected: @first_month.year.to_i),
                     :onchange => 'this.form.submit();',
                     class: 'form-control-sm' )%>年
       <%= select_tag('select_month', options_for_select((1..12),
                                                         class:'opt_month',
-                                                        selected: @select_date.month.to_i),
+                                                        selected: @first_month.month.to_i),
                     :onchange => 'this.form.submit();',
                     class: 'form-control-sm')%>月
     <% end %>
   </div>
 </div>
-<%= form_with url: attendance_path(@current_user.id),
-              method: 'patch', local: true, id: 'save-button' do |f| %>
-  <div class='search-rightend'>
-    <div class='inputtime'>
+<div class='search-rightend'>
+  <div class='inputtime'>
+    <%= form_with url: attendance_path(@current_user.id),
+              method: 'patch', local: true, id: 'save-button', class: 'attend-save' do |f| %>
       <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
-    </div>
+      <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
+      <input type='hidden' name='change_day' value='' >
+      <input type='hidden' name='change_start_hour' value='' >
+      <input type='hidden' name='change_start_minute' value='' >
+      <input type='hidden' name='change_end_hour' value='' >
+      <input type='hidden' name='change_end_minute' value='' >
+      <input type='hidden' name='change_status' value='' >
+    <% end %>
   </div>
-  <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
-  <input type='hidden' name='select_year' value='<%= @select_date.year.to_i %>'>
-  <input type='hidden' name='select_month' value='<%= @select_date.month.to_i %>'>
-  <input type='hidden' name='change_rows' value='' >
-  <%= render :partial => 'attendances/attendance_table', :locals => {form: f} %>
+</div>
+<%= form_with url: attendance_to_csv_path(id: @current_user.id, format: :csv),
+              method: 'get', local: true, class: 'attend-output' do |f| %>
+  <% if @current_user.owner? %>
+    <%# CSVを出力する処理 %>
+    <div class='output'>
+      <%= button_tag('CSV出力', name:'output', class: 'btn btn-success btn-output') %>
+      <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
+    </div>
+  <% end %>
+  <%= render :partial => 'attendances/sum_table'%>
+  <%= render :partial => 'attendances/attendance_table' %>
 <% end %>
+
 

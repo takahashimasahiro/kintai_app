@@ -8,11 +8,11 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 
-  describe 'POST #login' do
+  describe 'GET #index' do
     let(:email) { user.email }
     let(:password) { user.password }
     it 'returns http success' do
-      post :login
+      get :index
       expect(response).to have_http_status(:success)
     end
   end

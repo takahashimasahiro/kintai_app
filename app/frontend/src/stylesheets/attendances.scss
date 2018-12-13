@@ -4,17 +4,20 @@
   line-height: 45px;
 }
 
-
 .day_of_week_0, .day_of_week_holiday {
-  background-color: #f5c6cb;
+  background-color: #eccccf;
 }
 .day_of_week_1, .day_of_week_2,
 .day_of_week_3, .day_of_week_4, .day_of_week_5{
   background-color: rgb(235, 235, 235);
 }
-.day_of_week_6{
-  background-color: #bee5eb;
+.day_of_week_6 {
+  background-color: #b2f3f5;
 }
+.day_of_week_vacation {
+  background-color: #b5f7b8;
+}
+
 .search{
   margin-top: 50px;
 }
@@ -29,16 +32,10 @@
   flex-basis: 100%;
   line-height: 45px;
 }
-.search-rightend, {
+.search-rightend, .inputtime, .output {
   float: right;
 }
-
-.inputtime{
-  float: right;
-  display: inline;
-  line-height: 65px;
-}
-.table .save-button {
+.table {
   float: left;
   margin: 10px;
 }

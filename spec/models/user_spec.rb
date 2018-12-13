@@ -27,4 +27,28 @@ RSpec.describe User, type: :model do
       expect(User.select_user(1, employee_user)).to eq employee_user
     end
   end
+
+  describe 'applied_for_month' do
+    let(:apply_vacation){ ApplyVacation.find_by(applicant_id: owner_user.id)}
+    before do
+      FactoryBot.create :apply_vacation, applicant_id: owner_user.id
+    end
+
+    it 'get data' do
+      apply_vacation.status = :admin_applied
+      apply_vacation.save
+      expect(owner_user.applied_for_month(Date.today.change(day: 1)).count).to eq 1
+    end
+
+    it 'no data' do
+      expect(owner_user.applied_for_month(Date.today.change(day: 1)).count).to eq 0
+    end
+  end
+
+  # TODO かく
+  describe 'vacation_count_for_month' do
+    it 'get count' do
+    end
+  end
+  
 end

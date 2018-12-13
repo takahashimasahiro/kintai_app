@@ -9,7 +9,7 @@
 <div class='item'>
   <%= form.label :page, '役割' %>
   <%= select_tag('role',
-                options_for_select(all_role,
+                options_for_select(all_role.invert,
                                   :selected => user.role),
                 class: 'form-control-sm')%>
 </div>

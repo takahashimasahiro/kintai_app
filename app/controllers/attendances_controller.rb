@@ -3,75 +3,69 @@ class AttendancesController < ApplicationController
   before_action :apply_count
 
   def show
-    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
-    @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
-    @lastday = @select_date.end_of_month.day
+    # 月初取得
+    @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
+    # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
-    @attendance_table = User.find(@selected_user.id).attendance_times.where(work_date: @select_date.all_month)
+    # 勤怠情報
+    @attendance_table = @selected_user.attendance_times.where(work_date: @first_month.all_month).order(:work_date)
+    # 全ユーザー(管理者モード)
+    @user_all = User.all.order(:id).pluck(:name, :id) if @current_user.owner?
+    # 受理された休暇申請
+    @pass_days = @selected_user.applied_for_month(@first_month)
+    # 有休申請数
+    @vacation_count = @selected_user.vacation_count_for_month(@first_month) || 0
   end
 
   def update
-    @select_date = AttendanceTime.first_month(params[:select_year], params[:select_month])
-    row = params[:change_rows]
-
-    # 取得日
-    work_date = registration_date(row)
-
+    # 月初取得
+    @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
     # ユーザー取得
     @selected_user = User.select_user(params[:select_user], @current_user)
-
-    # transaction処理
-    AttendanceTime.transaction do
-      # ID,日付をもとにcreate or update
-      attend = AttendanceTime.find_or_initialize_by(
-        user_id: @selected_user.id,
-        work_date: work_date
-      )
-      attend.work_start = work_start_time(row)
-      attend.work_end = work_end_time(row)
-
-      # 有給休暇申請を行う
-      ApplyVacation.new.apply_for_vacation(params[:"status_#{row}"], @selected_user, work_date)
-
-      # 有休申請取消処理
-      if AttendanceTime.vacation?(attend.status) && !AttendanceTime.vacation?(params[:"status_#{row}"])
-        ApplyVacation.new.apply_cancel(@selected_user, work_date)
-      end
-
-      attend.status = params[:"status_#{row}"]
-      attend.save!
+    # 受理された休暇申請
+    @pass_days = @selected_user.applied_for_month(@first_month)
+    attend = AttendanceTime.find_or_initialize_by(user_id: @selected_user.id, work_date: registration_date)
+    attend.work_start = work_start_time
+    attend.work_end = work_end_time
+    # 勤怠入力
+    if attend.update_attend(@selected_user, params[:change_status])
+      redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
+    else
+      redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
     end
-    redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
-  rescue SomeError
-    raise ActiveRecord::Rollback
+  rescue => e
+    @error_message = e.message
+    redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
   end
 
-  def registration_date(row)
+private
+
+  def registration_date
     DateTime.new(
-      params[:"work_#{row}"][:"start(1i)"].to_i,
-      params[:"work_#{row}"][:"start(2i)"].to_i,
-      params[:"work_#{row}"][:"start(3i)"].to_i
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i
     )
   end
 
-  def work_start_time(row)
+  def work_start_time
     DateTime.new(
-      params[:"work_#{row}"][:"start(1i)"].to_i,
-      params[:"work_#{row}"][:"start(2i)"].to_i,
-      params[:"work_#{row}"][:"start(3i)"].to_i,
-      params[:"work_#{row}"][:"start(4i)"].to_i,
-      params[:"work_#{row}"][:"start(5i)"].to_i,
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i,
+      params[:change_start_hour].to_i,
+      params[:change_start_minute].to_i,
       0, '+09:00'
     )
   end
 
-  def work_end_time(row)
+  def work_end_time
     DateTime.new(
-      params[:"work_#{row}"][:"end(1i)"].to_i,
-      params[:"work_#{row}"][:"end(2i)"].to_i,
-      params[:"work_#{row}"][:"end(3i)"].to_i,
-      params[:"work_#{row}"][:"end(4i)"].to_i,
-      params[:"work_#{row}"][:"end(5i)"].to_i,
+      params[:select_year].to_i,
+      params[:select_month].to_i,
+      params[:change_day].to_i,
+      params[:change_end_hour].to_i,
+      params[:change_end_minute].to_i,
       0, '+09:00'
     )
   end
