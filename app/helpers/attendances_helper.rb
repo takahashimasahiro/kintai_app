@@ -141,6 +141,8 @@ module AttendancesHelper
   # 実稼働時間を算出する
   # @return [Integer] (min)
   def calculate_working_time(attendance_row, row_date)
+    # TODO 午前9時が日付変更時刻になっているので、修正
+    # 両方-9hすれば直る？
     if attendance_row
       # 退勤時間-出勤時間
       hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)

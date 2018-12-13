@@ -51,7 +51,6 @@
 <%= form_with url: attendance_to_csv_path(id: @current_user.id, format: :csv),
               method: 'get', local: true, class: 'attend-output' do |f| %>
   <% if @current_user.owner? %>
-    <%# CSVを出力する処理 %>
     <div class='output'>
       <%= button_tag('CSV出力', name:'output', class: 'btn btn-success btn-output') %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
