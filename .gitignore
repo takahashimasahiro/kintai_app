@@ -38,3 +38,10 @@ yarn-debug.log*
 /vendor/bundle
 
 .rspec
+
+/doc/*
+!/doc/.keep
+
+/.yardoc/*
+!/.yardoc/.keep
+

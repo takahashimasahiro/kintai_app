@@ -6,8 +6,7 @@ import $ from 'jquery';
 
 $(function () {
   $('button[name=dismiss]').on('click', function () {
-    if (confirm('削除しますか？')) {
-      
+    if (confirm('却下しますか？')) {
       $('input[name=button]')[0].value = 'apply_rejection'
       $(this).submit()
     } else {

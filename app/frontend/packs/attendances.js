@@ -7,26 +7,29 @@ import $ from 'jquery';
 const today = new Date();
 const thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
 const getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
-let changeRow = []
+
 $(function () {
   $('button[name=syukkin]').on('click', () => {
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
-    addChangeRow(today.getDate())
+    changeRowData(today.getDate())
   });
   $('button[name=taikin]').on('click', () => {
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
-    addChangeRow(today.getDate())
+    changeRowData(today.getDate())
   });
   $('th').children('select').on('change', function () {
-    addChangeRow(Number($(this).parent().attr('name').split('_')[2]))
+    changeRowData(Number($(this).parent().attr('name').split('_')[2]))
     $('#save-button').submit()
   });
 });
 
-function addChangeRow(row) {
-  changeRow.push(row)
-  changeRow = changeRow.filter((x, i, self) => self.indexOf(x) === i).sort()
-  $('input[name=change_rows]')[0].value = changeRow
+function changeRowData(row) {
+  $('input[name=change_day]')[0].value = row
+  $('input[name=change_start_hour]')[0].value = $(`#work_${row}_start_4i`)[0].value
+  $('input[name=change_start_minute]')[0].value = $(`#work_${row}_start_5i`)[0].value
+  $('input[name=change_end_hour]')[0].value = $(`#work_${row}_end_4i`)[0].value
+  $('input[name=change_end_minute]')[0].value = $(`#work_${row}_end_5i`)[0].value
+  $('input[name=change_status]')[0].value = $(`#status_${row}`)[0].value
 }

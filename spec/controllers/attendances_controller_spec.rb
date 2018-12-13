@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# TODO 異常処理も加える
 RSpec.describe AttendancesController, type: :controller do
   let(:user) { FactoryBot.create :user }
 
@@ -19,20 +19,15 @@ RSpec.describe AttendancesController, type: :controller do
     let(:params)  do
       {
         id: user.id,
+        select_year: '2018',
+        select_month: '11',
         change_rows: '1',
-        "status_#{user.id}": 'work',
-        "work_#{user.id}": {
-          "start(1i)": '2018',
-          "start(2i)": '11',
-          "start(3i)": '1',
-          "start(4i)": '10',
-          "start(5i)": '0',
-          "end(1i)": '2018',
-          "end(2i)": '11',
-          "end(3i)": '1',
-          "end(4i)": '19',
-          "end(5i)": '0'
-        }
+        change_day: '1',
+        change_start_hour: '10',
+        change_start_minute: '00',
+        change_end_hour: '19',
+        change_end_mitute: '00',
+        change_status: 'work'
       }
     end
 
@@ -40,7 +35,7 @@ RSpec.describe AttendancesController, type: :controller do
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
       expect(AttendanceTime.all.size).to eq 1
-      attend_time = AttendanceTime.find_by(user_id: user.id, work_date: Date.new(2018,11,1))
+      attend_time = AttendanceTime.find_by(user_id: user.id, work_date: Date.new(2018, 11, 1))
       expect(attend_time.status).to eq 'work'
     end
   end

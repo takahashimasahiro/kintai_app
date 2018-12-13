@@ -8,8 +8,4 @@ module UserManagementsHelper
   def all_role
     ROLE
   end
-
-  def select_role(role)
-    ROLE[role]
-  end
 end

@@ -9,8 +9,10 @@ module AttendancesHelper
     'absence':      '欠勤',
     'holiday':      '休日'
   }.freeze
-  DEFAULT_WORK_START = '10'.freeze # 出勤時間
-  DEFAULT_WORK_END = '19'.freeze # 退勤時間
+
+  # TODO デフォルト値の設定
+  DEFAULT_WORK_START = 0.freeze # 出勤時間(hour)
+  DEFAULT_WORK_END = 0.freeze # 退勤時間(hour)
 
   def date_of_week(count)
     DATE_OF_WEEK[count]
@@ -20,76 +22,180 @@ module AttendancesHelper
     WORK_STATUS
   end
 
-  def work_status(status)
-    WORK_STATUS[status]
-  end
-
-  def create_day_of_week_classname(row)
-    holiday?(row) ? 'holiday' : @select_date.change(day: row).wday
+  # 日付、ステータス別で各行の背景色を変える
+  # @param  [Date]
+  # @param  [String, Symbol]
+  # @return [String]
+  def create_day_of_week_classname(date, select_status)
+    if holiday?(date)
+      'holiday'
+    elsif select_status[1].to_s.include?('vacation')
+      'vacation'
+    else
+      date.wday.to_s
+    end
   end
 
   # 年セレクトボックス
-  def show_years_map
-    (@select_date.year.to_i - 10..@select_date.year.to_i + 10).map { |y| y }
+  def show_years_map(date)
+    (date.year.to_i - 10..date.year.to_i + 10).map { |y| y }
   end
 
   # 選択した日付の勤怠状況を取得
-  def choice_attendanceTime(attendance_table, select_date, row)
-    attendance_table.select { |x| x.work_date == Date.new(select_date.year, select_date.month, row) }[0]
+  def choice_attendanceTime(attendance_table, date)
+    attendance_table.select { |x| x.work_date == date }[0]
   end
 
   # 勤務開始時間を表示する
-  def show_start_attendanceTime(attendance_row, row)
+  def show_start_attendanceTime(attendance_row, date)
     if attendance_row
-      time_select("work_#{row}", 'start', default: { year: attendance_row.work_date.year,
-                                                     month: attendance_row.work_date.month,
-                                                     day: row,
-                                                     hour: attendance_row.work_start.hour,
-                                                     minute: attendance_row.work_start.min })
+      # データが保存されていた場合それを入力
+      {
+        year: attendance_row.work_date.year,
+        month: attendance_row.work_date.month,
+        day: date.day,
+        hour: attendance_row.work_start.hour,
+        minute: attendance_row.work_start.min
+      }
     else
-      time_select("work_#{row}", 'start', default: { year: @select_date.year,
-                                                     month: @select_date.month,
-                                                     day: row,
-                                                     hour: weekend?(row) ? '00' : DEFAULT_WORK_START,
-                                                     minute: '00' })
+      # データがない場合は初期値を作成
+      {
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        hour: default_start_hour(date),
+        minute: 0
+      }
     end
   end
 
   # 勤務終了時間を表示する
-  def show_end_attendanceTime(attendance_row, row)
+  def show_end_attendanceTime(attendance_row, date)
     if attendance_row
-      time_select("work_#{row}", 'end', default: { year: attendance_row.work_date.year,
-                                                   month: attendance_row.work_date.month,
-                                                   day: row,
-                                                   hour: attendance_row.work_end.hour,
-                                                   minute: attendance_row.work_end.min })
+      # データが保存されていた場合それを入力
+      {
+        year: attendance_row.work_date.year,
+        month: attendance_row.work_date.month,
+        day: date.day,
+        hour: attendance_row.work_end.hour,
+        minute: attendance_row.work_end.min
+      }
     else
-      time_select("work_#{row}", 'end', default: { year: @select_date.year,
-                                                   month: @select_date.month,
-                                                   day: row,
-                                                   hour: weekend?(row) ? '00' : DEFAULT_WORK_END,
-                                                   minute: '00' })
+      # データがない場合は初期値を作成
+      {
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        hour: default_end_hour(date),
+        minute: 0
+      }
     end
   end
 
+  # デフォルトの出勤時間を取得する
+  def default_start_hour(date)
+    weekend?(date) ? 0 : DEFAULT_WORK_START
+  end
+
+  # デフォルトの退勤時間を取得する
+  def default_end_hour(date)
+    weekend?(date) ? 0 : DEFAULT_WORK_END
+  end
+
   # 状態の初期選択
-  def selected_status(attendance_row, row)
+  def selected_status(attendance_row, date)
     if attendance_row
-      attendance_row.status
-    elsif weekend?(row)
-      [work_status(:holiday), :holiday]
+      [all_status[attendance_row.status.to_sym] , attendance_row.status.to_sym]
+    elsif weekend?(date)
+      [all_status[:holiday], :holiday]
     else
-      [work_status(:work), :work]
+      [all_status[:work], :work]
     end
   end
 
   # 土日祝日か判別する
-  def weekend?(row)
-    @select_date.change(day: row).wday == 0 || @select_date.change(day: row).wday == 6 || holiday?(row)
+  def weekend?(date)
+    date.wday == 0 || date.wday == 6 || holiday?(date)
   end
 
   # 祝日か判別する
-  def holiday?(row)
-    HolidayJapan.check(Date.new(@select_date.year, @select_date.month, row))
+  def holiday?(date)
+    HolidayJapan.check(date)
+  end
+
+  # 休日数を算出する
+  def month_holiday_count(first_month)
+    first_month.all_month.select{|x| weekend?(x) }.count
+  end
+
+  # 日付を変更する
+  def change_date(first_month, row)
+    first_month.change(day: row)
+  end
+
+  # 日付が含まれているか判別する
+  def is_include?(all_pass_days, row_date)
+    all_pass_days.select { |x| x[0] == row_date }[0]
+  end
+
+  # 実稼働時間を算出する
+  # @return [Integer] (min)
+  def calculate_working_time(attendance_row, row_date)
+    if attendance_row
+      # 退勤時間-出勤時間
+      hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+      # 8時間以上の場合は休憩で-1時間する
+      hour -= 1 if hour >= 8
+      ( hour * 60 ) + ( sec / 60)
+    else
+      weekend?(row_date) ? 0 : ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
+    end
+  end
+
+  # 休憩時間を算出する
+  # @return [Integer] (min)
+  def calculate_break_time(attendance_row, row_date)
+    return 0 if weekend?(row_date)
+
+    hour = if attendance_row
+      ((attendance_row.work_end-attendance_row.work_start)/3600).floor
+    else
+      ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
+    end
+
+    if hour >=8
+      60
+    elsif hour >= 6
+      45
+    else
+      0
+    end
+  end
+
+  # 残業時間を算出する
+  # return (min)
+  def calculate_over_time(attendance_row)
+    return 0 if attendance_row.nil?
+    # 退勤時間-出勤時間
+    hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+    if hour >= 9
+      hour -= 9
+      (sec / 60) + (hour * 60)
+    else
+      0
+    end
+  end
+
+  # 分合計を時間+分にする
+  # 表示しやすい形に変更する
+  def convert_min(min_sum)
+    hour,min = min_sum.divmod(60)
+    if hour == 0
+      "#{min.to_i}分"
+    elsif min == 0
+      "#{hour.to_i}時間"
+    else
+      "#{hour.to_i}時間#{min.to_i}分"
+    end
   end
 end

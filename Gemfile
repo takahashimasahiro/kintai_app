@@ -56,6 +56,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'yard'
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
