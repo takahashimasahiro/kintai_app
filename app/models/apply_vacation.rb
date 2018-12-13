@@ -14,7 +14,7 @@ class ApplyVacation < ApplicationRecord
   def reduce_holiday_count
     User.transaction do
       user = User.find(applicant_id)
-      # TODO この処理がいるかどうか検討
+      # TODO: この処理がいるかどうか検討
       if user.paid_holiday_count >= get_days
         user.paid_holiday_count -= get_days
         change_vacation_status(:admin_applied)
@@ -25,7 +25,7 @@ class ApplyVacation < ApplicationRecord
       end
       user.save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 
@@ -34,9 +34,9 @@ class ApplyVacation < ApplicationRecord
   def change_vacation_status(status)
     ApplyVacation.transaction do
       self.status = status
-      self.save!
+      save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 
@@ -51,7 +51,7 @@ class ApplyVacation < ApplicationRecord
       vacation.status = :applying
       vacation.save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 
@@ -64,7 +64,7 @@ class ApplyVacation < ApplicationRecord
       vacation.status = :withdrawal
       vacation.save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 end

@@ -33,12 +33,12 @@ class AttendancesController < ApplicationController
     else
       redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
     end
-  rescue => e
+  rescue StandardError => e
     @error_message = e.message
     redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
   end
 
-private
+  private
 
   def registration_date
     DateTime.new(

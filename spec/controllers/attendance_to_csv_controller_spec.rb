@@ -22,7 +22,7 @@ RSpec.describe AttendanceToCsvController, type: :controller do
 
   describe 'GET #show' do
     it 'returns http success' do
-      get :show,format: :csv, params: params
+      get :show, format: :csv, params: params
       expect(response).to have_http_status(:success)
     end
   end
