@@ -2,7 +2,7 @@ require 'rails_helper'
 # TODO: specのDIY
 RSpec.describe AttendancesController, type: :controller do
   let(:user) { FactoryBot.create :user }
-  let(:attendance_time){ FactoryBot.create :attendance_time , user_id: user.id }
+  let(:attendance_time) { FactoryBot.create :attendance_time, user_id: user.id }
   before do
     session[:id] = 1
   end
@@ -29,7 +29,7 @@ RSpec.describe AttendancesController, type: :controller do
         change_status: 'work'
       }
     end
-    let(:work_date){ Date.new(2018,11,1) }
+    let(:work_date) { Date.new(2018, 11, 1) }
 
     it 'returns http success' do
       patch :update, params: params, as: :json
@@ -38,13 +38,12 @@ RSpec.describe AttendancesController, type: :controller do
       attend_time = AttendanceTime.find_by(user_id: user.id, work_date: work_date)
       expect(attend_time.status).to eq 'work'
       expect(flash[:notice]).to eq '保存しました'
-
     end
 
     it 'returns http failed' do
       expect(AttendanceTime).to receive(:find_or_initialize_by)
-                                .with(user_id: user.id, work_date: work_date)
-                                .and_return(attendance_time)
+        .with(user_id: user.id, work_date: work_date)
+        .and_return(attendance_time)
       expect(attendance_time).to receive(:update_attend).with(user, params[:change_status]).and_return(false)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
@@ -53,11 +52,11 @@ RSpec.describe AttendancesController, type: :controller do
 
     it 'is some error' do
       expect(AttendanceTime).to receive(:find_or_initialize_by)
-                                .with(user_id: user.id, work_date: work_date)
-                                .and_return(attendance_time)
+        .with(user_id: user.id, work_date: work_date)
+        .and_return(attendance_time)
       expect(attendance_time).to receive(:update_attend)
-                                .with(user, params[:change_status])
-                                .and_raise(ActiveRecord::RecordNotSaved)
+        .with(user, params[:change_status])
+        .and_raise(ActiveRecord::RecordNotSaved)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
       expect(flash[:notice]).to eq '保存に失敗しました'

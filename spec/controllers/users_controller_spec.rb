@@ -59,8 +59,8 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'PATCh #update' do
-    let(:new_name){'user_new_name'}
-    let(:new_password){'new_password'}
+    let(:new_name) { 'user_new_name' }
+    let(:new_password) { 'new_password' }
     let(:params) do
       {
         id: user.id,
@@ -77,7 +77,7 @@ RSpec.describe UsersController, type: :controller do
     before do
       session[:id] = 1
     end
-    
+
     it 'returns http success' do
       patch :update, params: params
       expect(response).to redirect_to edit_user_path(user.id)

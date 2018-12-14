@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let(:user){FactoryBot.create :user}
+  let(:user) { FactoryBot.create :user }
   describe 'GET #new' do
     it 'returns http success' do
       get :new
@@ -13,7 +13,7 @@ RSpec.describe SessionsController, type: :controller do
     let(:params) do
       {
         user: {
-          email: user.email ,
+          email: user.email,
           password: user.password
         }
       }
@@ -37,5 +37,4 @@ RSpec.describe SessionsController, type: :controller do
       expect(response).to redirect_to '/'
     end
   end
-  
 end

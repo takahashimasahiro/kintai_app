@@ -163,11 +163,12 @@ module AttendancesHelper
   # @return [Integer] (min)
   def calculate_break_time(attend, row_date)
     hour = if attend
-              dif = (attend.work_end - attend.work_start)
-              ((dif < 0 ? dif + (24 * 3600) : dif) / 3600).floor
-            else
-              return 0 if weekend?(row_date)
-              ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
+             dif = (attend.work_end - attend.work_start)
+             ((dif < 0 ? dif + (24 * 3600) : dif) / 3600).floor
+           else
+             return 0 if weekend?(row_date)
+
+             ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
             end
 
     if hour >= 8
@@ -208,5 +209,4 @@ module AttendancesHelper
       "#{hour.to_i}時間#{min.to_i}分"
     end
   end
-
 end

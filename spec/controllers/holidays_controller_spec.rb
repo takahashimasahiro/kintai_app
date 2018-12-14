@@ -9,7 +9,7 @@ RSpec.describe HolidaysController, type: :controller do
     session[:id] = '1'
   end
 
-  describe'GET #show' do
+  describe 'GET #show' do
     it 'returns http success' do
       get :show, params: { id: user.id }
       expect(response).to have_http_status(:success)
@@ -57,8 +57,8 @@ RSpec.describe HolidaysController, type: :controller do
     context 'is error' do
       it 'faild save' do
         expect(ApplyVacation).to receive(:find_by)
-                                        .with(applicant_id: params[:user_id], get_start_date: params[:get_date])
-                                        .and_return(vacation)
+          .with(applicant_id: params[:user_id], get_start_date: params[:get_date])
+          .and_return(vacation)
         expect(vacation).to receive(:save!).with(no_args).and_raise(ActiveRecord::RecordNotSaved)
         patch :update, params: params
         expect(response).to redirect_to edit_holiday_path(user.id)
