@@ -209,11 +209,4 @@ module AttendancesHelper
     end
   end
 
-  # TODO: 出勤時刻と退勤時刻の両方が入力されているかチェックする
-  # @param  [AttendanceTime]
-  # @return [boolean] true:両方ある,false:1つ以上ない
-  def finished_work?(attend)
-    raise SomeError if attend.work_date == Date.today
-    !(attend.work_start == DateTime.new(2000,1,1,15,0,0) || attend.work_end == DateTime.new(2000,1,1,15,0,0 ))
-  end
 end

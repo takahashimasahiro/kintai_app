@@ -16,9 +16,7 @@
     <tr class='text-center'>
       <% if @attendance_table.count != 0 %>
         <th><%= @attendance_table.select{ |data| data.status == 'work'}.count %></th>
-        <%# TODO デフォルト値(00:00)でないなら計算する %>
         <th><%= convert_min(@attendance_table.map{|x| calculate_working_time(x, x.work_date)}.inject(:+)) %></th>
-        <%# (x.work_end - x.work_start) if finished_work?(x) %>
         <th><%= convert_min(@attendance_table.map{|x| calculate_break_time(x, x.work_date) }.inject(:+))%></th>
         <th><%= @vacation_count %></th>
         <th><%= @attendance_table.select{ |data| data.status == 'holiday_work'}.count %></th>
