@@ -1,4 +1,3 @@
-# TODO: docをかく
 class AttendanceTime < ApplicationRecord
   belongs_to :user
 
