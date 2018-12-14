@@ -11,8 +11,8 @@ RSpec.describe UserManagementsController, type: :controller do
   describe 'GET #index' do
     it 'returns http success' do
       expect(User).to receive_message_chain(:all, :order)
-        .with(no_args).with(:id)
-        .and_return([])
+                                            .with(no_args).with(:id)
+                                            .and_return([])
       get :index
       expect(response).to have_http_status(:success)
     end

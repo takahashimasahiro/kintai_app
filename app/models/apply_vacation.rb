@@ -15,14 +15,15 @@ class ApplyVacation < ApplicationRecord
     User.transaction do
       user = User.find(applicant_id)
       # TODO: この処理がいるかどうか検討
-      if user.paid_holiday_count >= get_days
+      # 有休の前借りも考慮して、一旦残有休数が0以下になっても良い形にする
+      # if user.paid_holiday_count >= get_days
         user.paid_holiday_count -= get_days
         change_vacation_status(:admin_applied)
-      else
-        # 残有休数が0以下になる時は欠勤にする
-        AttendanceTime.new.change_attend_status(self, :absence)
-        change_vacation_status(:apply_rejection)
-      end
+      # else
+      #   # 残有休数が0以下になる時は欠勤にする
+      #   AttendanceTime.new.change_attend_status(self, :absence)
+      #   change_vacation_status(:apply_rejection)
+      # end
       user.save!
     end
   rescue StandardError
