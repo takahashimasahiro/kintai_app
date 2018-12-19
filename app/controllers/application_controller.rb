@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   # ログインしていない場合は中の画面を表示させない
   def authenticate_current_user
     unless logged_in?
-      flash[:notice] = 'ログインが必要です'
+      flash[:notice] = I18n.t('messages.need_login')
       redirect_to('/')
     end
   end

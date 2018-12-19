@@ -25,3 +25,8 @@ en:
         authorizer_id: authorized user identification
         status: status
         applicant_id: applicant identification
+en:
+  messages:
+    need_login: 'You have not logged in yet'
+    save_success: '保存しました'
+    save_failed: '保存に失敗しました'

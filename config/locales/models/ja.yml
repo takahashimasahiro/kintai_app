@@ -25,4 +25,15 @@ ja:
         authorizer_id: 承認者ユーザーID
         status: 状態
         applicant_id: 申請者ユーザーID
+ja:
+  messages:
+    need_login: 'ログインが必要です'
+    login_success: 'ログインしました'
+    login_failed: 'メールアドレスもしくはパスワードが間違っています'
+    save_success: '保存しました'
+    save_failed: '保存に失敗しました'
+    create: '作成しました'
+    edit: '編集しました'
+    delete: '削除しました'
+    user_edit_failed: 'パスワードが異なっています'
 

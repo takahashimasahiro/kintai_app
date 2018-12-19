@@ -19,7 +19,7 @@ class UserManagementsController < ApplicationController
       password: params[:page][:password]
     )
     if @user.save
-      redirect_to user_managements_path, flash: { notice: '作成しました' }
+      redirect_to user_managements_path, flash: { notice: I18n.t('messages.create') }
     else
       render new_user_management_path
     end
@@ -41,7 +41,7 @@ class UserManagementsController < ApplicationController
     end
 
     if @user.save
-      redirect_to user_managements_path, flash: { notice: '編集しました' }
+      redirect_to user_managements_path, flash: { notice: I18n.t('messages.edit') }
     else
       render :edit
     end
@@ -50,7 +50,7 @@ class UserManagementsController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_managements_path, flash: { notice: '削除しました' }
+    redirect_to user_managements_path, flash: { I18n.t('messages.delete')}
   end
 
   private
