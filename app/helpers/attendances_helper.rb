@@ -1,3 +1,4 @@
+# TODO: docをかく
 module AttendancesHelper
   DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
   WORK_STATUS = {
@@ -10,9 +11,9 @@ module AttendancesHelper
     'holiday':      '休日'
   }.freeze
 
-  # TODO デフォルト値の設定
-  DEFAULT_WORK_START = 0.freeze # 出勤時間(hour)
-  DEFAULT_WORK_END = 0.freeze # 退勤時間(hour)
+  # TODO: デフォルト値の設定を考える
+  DEFAULT_WORK_START = 0 # 出勤時間(hour)
+  DEFAULT_WORK_END = 0 # 退勤時間(hour)
 
   def date_of_week(count)
     DATE_OF_WEEK[count]
@@ -105,7 +106,7 @@ module AttendancesHelper
   # 状態の初期選択
   def selected_status(attendance_row, date)
     if attendance_row
-      [all_status[attendance_row.status.to_sym] , attendance_row.status.to_sym]
+      [all_status[attendance_row.status.to_sym], attendance_row.status.to_sym]
     elsif weekend?(date)
       [all_status[:holiday], :holiday]
     else
@@ -125,7 +126,7 @@ module AttendancesHelper
 
   # 休日数を算出する
   def month_holiday_count(first_month)
-    first_month.all_month.select{|x| weekend?(x) }.count
+    first_month.all_month.select { |x| weekend?(x) }.count
   end
 
   # 日付を変更する
@@ -141,31 +142,36 @@ module AttendancesHelper
   # 実稼働時間を算出する
   # @return [Integer] (min)
   def calculate_working_time(attendance_row, row_date)
-    # TODO 午前9時が日付変更時刻になっているので、修正
-    # 両方-9hすれば直る？
     if attendance_row
       # 退勤時間-出勤時間
-      hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+      hour, sec = if attendance_row.work_end < attendance_row.work_start
+                    ((attendance_row.work_end + (24 * 3600)) - attendance_row.work_start).divmod(3600)
+                  else
+                    (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+                  end
       # 8時間以上の場合は休憩で-1時間する
       hour -= 1 if hour >= 8
-      ( hour * 60 ) + ( sec / 60)
+      ((hour * 60) + (sec / 60)).to_i
     else
       weekend?(row_date) ? 0 : ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
     end
   end
 
   # 休憩時間を算出する
+  # @param [AttendanceTime] 勤怠情報
+  # @param [Date] 日付
   # @return [Integer] (min)
-  def calculate_break_time(attendance_row, row_date)
-    return 0 if weekend?(row_date)
+  def calculate_break_time(attend, row_date)
+    hour = if attend
+             dif = (attend.work_end - attend.work_start)
+             ((dif < 0 ? dif + (24 * 3600) : dif) / 3600).floor
+           else
+             return 0 if weekend?(row_date)
 
-    hour = if attendance_row
-      ((attendance_row.work_end-attendance_row.work_start)/3600).floor
-    else
-      ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
-    end
+             ((DEFAULT_WORK_END - DEFAULT_WORK_START) * 60)
+            end
 
-    if hour >=8
+    if hour >= 8
       60
     elsif hour >= 6
       45
@@ -175,23 +181,26 @@ module AttendancesHelper
   end
 
   # 残業時間を算出する
-  # return (min)
+  # @param  [AttendanceTime] 勤怠情報
+  # @return [Integer] (min)
   def calculate_over_time(attendance_row)
     return 0 if attendance_row.nil?
+
     # 退勤時間-出勤時間
-    hour,sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
+    hour, sec = (attendance_row.work_end - attendance_row.work_start).divmod(3600)
     if hour >= 9
       hour -= 9
-      (sec / 60) + (hour * 60)
+      ((sec / 60) + (hour * 60)).to_i
     else
       0
     end
   end
 
-  # 分合計を時間+分にする
   # 表示しやすい形に変更する
+  # @param [Integer] min
+  # @return [String] hh時間mm分
   def convert_min(min_sum)
-    hour,min = min_sum.divmod(60)
+    hour, min = min_sum.divmod(60)
     if hour == 0
       "#{min.to_i}分"
     elsif min == 0

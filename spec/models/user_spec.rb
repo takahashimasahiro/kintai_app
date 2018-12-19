@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'applied_for_month' do
-    let(:apply_vacation){ ApplyVacation.find_by(applicant_id: owner_user.id)}
+    let(:apply_vacation) { ApplyVacation.find_by(applicant_id: owner_user.id) }
     before do
       FactoryBot.create :apply_vacation, applicant_id: owner_user.id
     end
@@ -45,10 +45,20 @@ RSpec.describe User, type: :model do
     end
   end
 
-  # TODO かく
   describe 'vacation_count_for_month' do
+    let(:attendance_time) { AttendanceTime.find_by(user_id: owner_user.id) }
+    before do
+      FactoryBot.create :attendance_time, user_id: owner_user.id
+    end
+
     it 'get count' do
+      attendance_time.status = 'vacation'
+      attendance_time.save
+      expect(owner_user.vacation_count_for_month(Date.today.change(day: 1))).to eq 1
+    end
+
+    it 'no vacation' do
+      expect(owner_user.vacation_count_for_month(Date.today.change(day: 1))).to eq nil
     end
   end
-  
 end

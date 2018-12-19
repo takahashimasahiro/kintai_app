@@ -59,23 +59,42 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'PATCh #update' do
+    let(:new_name) { 'user_new_name' }
+    let(:new_password) { 'new_password' }
     let(:params) do
       {
         id: user.id,
         page: {
-          name: 'user_new_name'
+          name: new_name
         },
         user: {
           old_password: user.password,
-          new_password1: 'new_password',
-          new_password2: 'new_password'
+          new_password1: new_password,
+          new_password2: new_password
         }
       }
     end
-    it 'returns http success' do
+    before do
       session[:id] = 1
+    end
+
+    it 'returns http success' do
       patch :update, params: params
       expect(response).to redirect_to edit_user_path(user.id)
+    end
+    context 'update faild' do
+      it 'save faild' do
+        expect(User).to receive(:find).with(session[:id]).and_return(user)
+        expect(user).to receive(:save).and_return(false)
+        patch :update, params: params
+        expect(response).to render_template :edit
+      end
+
+      it 'wrong password' do
+        params[:user][:new_password2] = new_password.reverse
+        patch :update, params: params
+        expect(response).to render_template :edit
+      end
     end
   end
 end
