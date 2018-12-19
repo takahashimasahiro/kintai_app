@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AttendanceTime, type: :model do
   let(:user) { User.find(1) }
   let(:apply_vacation) { ApplyVacation.find_by(applicant_id: user.id) }
-  let(:attendance_time) { AttendanceTime.find_by(user_id: user.id) }  
+  let(:attendance_time) { AttendanceTime.find_by(user_id: user.id) }
   before do
     FactoryBot.create :user
     FactoryBot.create :apply_vacation, applicant_id: user.id
@@ -14,8 +14,8 @@ RSpec.describe AttendanceTime, type: :model do
     context 'is success' do
       it 'work → vaction' do
         expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)
-                                                      .with(no_args).with('vacation', user, Date.today)
-                                                      .and_return([])
+          .with(no_args).with('vacation', user, Date.today)
+          .and_return([])
         expect(attendance_time.update_attend(user, 'vacation')).to eq true
         expect(attendance_time.work_start.hour).to eq 0
         expect(attendance_time.work_start.min).to eq 0
@@ -26,27 +26,26 @@ RSpec.describe AttendanceTime, type: :model do
         attendance_time.status = 'vacation'
         attendance_time.save
         expect(ApplyVacation).to receive_message_chain(:new, :apply_cancel)
-                                                      .with(no_args).with(user, Date.today)
-                                                      .and_return([])
+          .with(no_args).with(user, Date.today)
+          .and_return([])
         expect(attendance_time.update_attend(user, 'work')).to eq true
       end
       it 'vacation → aother vacation' do
         attendance_time.status = 'vacation'
         attendance_time.save
-
       end
     end
     context 'raise error' do
       it 'update false' do
         expect(attendance_time).to receive(:save!).and_raise(ActiveRecord::RecordNotSaved)
         expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)
-                                                      .with(no_args).with('vacation', user, Date.today)
-                                                      .and_return([])
-        expect{attendance_time.update_attend(user, 'vacation')}.to raise_error(ActiveRecord::Rollback)
+          .with(no_args).with('vacation', user, Date.today)
+          .and_return([])
+        expect { attendance_time.update_attend(user, 'vacation') }.to raise_error(ActiveRecord::Rollback)
       end
     end
   end
-  
+
   describe 'include_vacation?' do
     it 'is vacation' do
       expect(AttendanceTime.new.include_vacation?('vacation')).to eq true
@@ -83,7 +82,7 @@ RSpec.describe AttendanceTime, type: :model do
     context 'raise error' do
       it 'is RollBack' do
         expect(AttendanceTime).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
-        expect{attendance_time.change_attend_status(apply_vacation, :vacation)}.to raise_error(ActiveRecord::Rollback)
+        expect { attendance_time.change_attend_status(apply_vacation, :vacation) }.to raise_error(ActiveRecord::Rollback)
       end
     end
   end

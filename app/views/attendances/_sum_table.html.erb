@@ -12,18 +12,17 @@
       <th><%= label :page, '休日数'%></th>
     </tr>
   </thead>
-  <% if @attendance_table.count != 0 %>
-    <tbody>
-      <tr class='text-center'>
+  <tbody>
+    <tr class='text-center'>
+      <% if @attendance_table.count != 0 %>
         <th><%= @attendance_table.select{ |data| data.status == 'work'}.count %></th>
-        <%# TODO デフォルト値(00:00)でないなら計算する %>
-        <th><%= convert_min(@attendance_table.map{|x| x.work_end - x.work_start }.inject(:+) / 60) %></th>
+        <th><%= convert_min(@attendance_table.map{|x| calculate_working_time(x, x.work_date)}.inject(:+)) %></th>
         <th><%= convert_min(@attendance_table.map{|x| calculate_break_time(x, x.work_date) }.inject(:+))%></th>
         <th><%= @vacation_count %></th>
         <th><%= @attendance_table.select{ |data| data.status == 'holiday_work'}.count %></th>
         <th><%= @attendance_table.select{ |data| data.status == 'absence'}.count %></th>
         <th><%= month_holiday_count(@first_month) %></th>
-      </tr>
-    </tbody>
-  <% end %>
+      <% end %>
+    </tr>
+  </tbody>
 </table>

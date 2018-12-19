@@ -26,7 +26,7 @@ RSpec.describe ApplyVacation, type: :model do
     context 'raise error' do
       it 'is rollback' do
         expect(User).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
-        expect{apply_vacation.reduce_holiday_count}.to raise_error ActiveRecord::Rollback
+        expect { apply_vacation.reduce_holiday_count }.to raise_error ActiveRecord::Rollback
       end
     end
   end
@@ -41,10 +41,9 @@ RSpec.describe ApplyVacation, type: :model do
     context 'raise error' do
       it 'is rollback' do
         expect(apply_vacation).to receive(:save!).and_raise(ActiveRecord::RecordNotSaved)
-        expect{apply_vacation.change_vacation_status(:admin_applied)}.to raise_error ActiveRecord::Rollback
+        expect { apply_vacation.change_vacation_status(:admin_applied) }.to raise_error ActiveRecord::Rollback
       end
     end
-    
   end
 
   describe 'apply_for_vacation' do
@@ -57,7 +56,7 @@ RSpec.describe ApplyVacation, type: :model do
     context 'raise error' do
       it 'is rollback' do
         expect(ApplyVacation).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
-        expect{apply_vacation.apply_for_vacation('vacation', user, Date.today)}.to raise_error ActiveRecord::Rollback
+        expect { apply_vacation.apply_for_vacation('vacation', user, Date.today) }.to raise_error ActiveRecord::Rollback
       end
     end
   end
@@ -70,11 +69,11 @@ RSpec.describe ApplyVacation, type: :model do
         expect(vacation.status).to eq 'withdrawal'
       end
     end
-    
+
     context 'raise error' do
       it 'is rollback' do
         expect(ApplyVacation).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
-        expect{apply_vacation.apply_cancel(user, Date.today)}.to raise_error ActiveRecord::Rollback
+        expect { apply_vacation.apply_cancel(user, Date.today) }.to raise_error ActiveRecord::Rollback
       end
     end
   end

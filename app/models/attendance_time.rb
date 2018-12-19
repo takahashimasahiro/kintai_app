@@ -1,4 +1,3 @@
-# TODO docをかく
 class AttendanceTime < ApplicationRecord
   belongs_to :user
 
@@ -17,24 +16,23 @@ class AttendanceTime < ApplicationRecord
   # @param [String] 入力ステータス
   def update_attend(selected_user, input_status)
     transaction do
-
       # 有休申請するときは時間をリセットする
-      if !include_vacation?(self.status) && include_vacation?(input_status)
-        self.work_start = self.work_start.change(hour: 0, min: 0)
-        self.work_end = self.work_end.change(hour: 0, min: 0)
+      if !include_vacation?(status) && include_vacation?(input_status)
+        self.work_start = work_start.change(hour: 0, min: 0)
+        self.work_end = work_end.change(hour: 0, min: 0)
       end
 
       if include_vacation?(input_status)
         # 有給休暇申請を行う
         ApplyVacation.new.apply_for_vacation(input_status, selected_user, work_date)
-      elsif include_vacation?(self.status) && !include_vacation?(input_status)
+      elsif include_vacation?(status) && !include_vacation?(input_status)
         # 有休申請取消処理
         ApplyVacation.new.apply_cancel(selected_user, work_date)
       end
       self.status = input_status
-      self.save!
+      save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 
@@ -45,8 +43,10 @@ class AttendanceTime < ApplicationRecord
     input_status.present? && input_status.include?('vacation')
   end
 
-  # 月初を取得する
-  # 引数が正しくない場合は今月の月初を返す
+  # 月初を、引数がない場合は今月の月初を返す
+  # @param  [String] 年
+  # @param  [String] 月
+  # @return [Date] 月初
   def self.first_month(year, month)
     if year && month
       Date.new(year.to_i, month.to_i, 1)
@@ -64,7 +64,7 @@ class AttendanceTime < ApplicationRecord
       attend_data.status = status
       attend_data.save!
     end
-  rescue
+  rescue StandardError
     raise ActiveRecord::Rollback
   end
 end
