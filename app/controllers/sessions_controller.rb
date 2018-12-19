@@ -14,9 +14,9 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:user][:email])
     if @user&.authenticate(params[:user][:password])
       session[:id] = @user.id
-      redirect_to attendance_path(@user.id), flash: { notice: I18n.t('messages.login_success') }
+      redirect_to attendance_path(@user.id), flash: { notice: t(:login_success, scope: :messages) }
     else
-      @error_message = I18n.t('messages.login_failed')
+      @error_message = t(:login_failed, scope: :messages)
       render :new
     end
   rescue StandardError => e

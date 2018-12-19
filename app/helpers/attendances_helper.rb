@@ -1,13 +1,13 @@
 # TODO: docをかく
 module AttendancesHelper
   WORK_STATUS = {
-    'work':         '出勤',
-    'vacation':     '有給休暇',
-    'am_vacation':  '午前休暇',
-    'pm_vacation':  '午後休暇',
-    'holiday_work': '休日出勤',
-    'absence':      '欠勤',
-    'holiday':      '休日'
+    work:         I18n.t(:work_status, scope: :attend)[0],
+    vacation:     I18n.t(:work_status, scope: :attend)[1],
+    am_vacation:  I18n.t(:work_status, scope: :attend)[2],
+    pm_vacation:  I18n.t(:work_status, scope: :attend)[3],
+    holiday_work: I18n.t(:work_status, scope: :attend)[4],
+    absence:      I18n.t(:work_status, scope: :attend)[5],
+    holiday:      I18n.t(:work_status, scope: :attend)[6]
   }.freeze
 
   # TODO: デフォルト値の設定を考える
@@ -195,6 +195,7 @@ module AttendancesHelper
   # @param [Integer] min
   # @return [String] hh時間mm分
   def convert_min(min_sum)
+    # TODO: I18n対応
     hour, min = min_sum.divmod(60)
     if hour == 0
       "#{min.to_i}分"

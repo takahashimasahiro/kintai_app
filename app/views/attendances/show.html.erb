@@ -3,7 +3,7 @@
   <%# 管理者ならユーザー一覧を表示 %>
   <% if @current_user.owner? %>
     <%= form_with url: attendance_path(@current_user.id), method: :get do |form| %>
-      <div class='search-user'>ユーザー
+      <div class='search-user'><%= I18n.t(:user, scope: [:activerecord, :models]) %>
         <%= select_tag('select_user',options_for_select(@user_all ,
                                                         class:'opt_user',
                                                         selected: [@selected_user.name, @selected_user.id]),
@@ -34,6 +34,7 @@
   <div class='inputtime'>
     <%= form_with url: attendance_path(@current_user.id),
               method: 'patch', local: true, id: 'save-button', class: 'attend-save' do |f| %>
+      <%# TODO: i18n%>
       <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
@@ -52,6 +53,7 @@
               method: 'get', local: true, class: 'attend-output' do |f| %>
   <% if @current_user.owner? %>
     <div class='output'>
+      <%# TODO: i18n%>
       <%= button_tag('CSV出力', name:'output', class: 'btn btn-success btn-output') %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
       <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>

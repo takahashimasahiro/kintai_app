@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user.role = :employee
     if @user.save
       session[:id] = @user.id
-      redirect_to attendance_path(@user.id), flash: { notise: I18n.t('messages.login_success') }
+      redirect_to attendance_path(@user.id), flash: { notise: t(:login_success, scope: :messages) }
     else
       render :new
     end
@@ -49,12 +49,12 @@ class UsersController < ApplicationController
       @user.name = params[:page][:name]
       @user.password = params[:user][:new_password1]
       if @user.save
-        redirect_to edit_user_path(@current_user.id), flash: { notice: I18n.t('messages.save_success') }
+        redirect_to edit_user_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
       else
         render :edit
       end
     else
-      @error_message = I18n.t('messages.user_edit_failed')
+      @error_message = t(:user_edit_failed, scope: :messages)
       render :edit
     end
   end
