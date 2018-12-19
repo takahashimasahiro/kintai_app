@@ -2,6 +2,8 @@ en:
   activerecord:
     models:
       user: user
+      attendance_time: attendance information
+      apply_vacation: vacation application information
 en:
   activerecord:
     attributes:
@@ -9,3 +11,17 @@ en:
         name: name
         email: mail-address
         password: password
+        role: role
+        paid_holiday_count: remaining paid number
+      attendance_time:
+        user_id: user identification
+        work_date: workday
+        work_start: attendance time
+        work_end: time to leave work
+        status: status
+      apply_vacation:
+        get_start_date: application date
+        get_days: days
+        authorizer_id: authorized user identification
+        status: status
+        applicant_id: applicant identification
