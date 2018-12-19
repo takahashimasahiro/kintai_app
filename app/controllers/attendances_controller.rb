@@ -49,24 +49,22 @@ class AttendancesController < ApplicationController
   end
 
   def work_start_time
-    DateTime.new(
+    Time.new(
       params[:select_year].to_i,
       params[:select_month].to_i,
       params[:change_day].to_i,
       params[:change_start_hour].to_i,
       params[:change_start_minute].to_i,
-      0, '+09:00'
-    )
+      0)
   end
 
   def work_end_time
-    DateTime.new(
+    Time.new(
       params[:select_year].to_i,
       params[:select_month].to_i,
       params[:change_day].to_i,
       params[:change_end_hour].to_i,
       params[:change_end_minute].to_i,
-      0, '+09:00'
-    )
+      0)
   end
 end
