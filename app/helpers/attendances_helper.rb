@@ -1,6 +1,5 @@
 # TODO: docをかく
 module AttendancesHelper
-  DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
   WORK_STATUS = {
     'work':         '出勤',
     'vacation':     '有給休暇',
@@ -14,10 +13,6 @@ module AttendancesHelper
   # TODO: デフォルト値の設定を考える
   DEFAULT_WORK_START = 0 # 出勤時間(hour)
   DEFAULT_WORK_END = 0 # 退勤時間(hour)
-
-  def date_of_week(count)
-    DATE_OF_WEEK[count]
-  end
 
   def all_status
     WORK_STATUS

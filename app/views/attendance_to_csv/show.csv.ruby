@@ -10,7 +10,7 @@ CSV.generate do |csv|
     if select_attend.nil?
       csv << [
         row_date.strftime('%Y/%m/%d'),
-        date_of_week(row_date.wday),
+        I18n.t('date.abbr_day_names')[row_date.wday],
         '00:00',
         '00:00',
         convert_min(0),
@@ -22,7 +22,7 @@ CSV.generate do |csv|
     end
     csv << [
       row_date.strftime('%Y/%m/%d'),
-      date_of_week(row_date.wday),
+      I18n.t('date.abbr_day_names')[row_date.wday],
       select_attend.work_start.strftime('%H:%M'),
       select_attend.work_end.strftime('%H:%M'),
       convert_min(calculate_working_time(select_attend, row_date)),

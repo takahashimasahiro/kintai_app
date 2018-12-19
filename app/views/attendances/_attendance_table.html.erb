@@ -21,7 +21,7 @@
         <tr name='row_<%=row%>' class='text-center day_of_week_<%= create_day_of_week_classname(row_date, selected_status(attendance_row, row_date)) %>'>
           <th name='date_<%=row%>'><%=row%></th>
           <th name='row_of_week_<%=row_date.wday%>'>
-            <%= date_of_week(row_date.wday) %>
+            <%= t('date.abbr_day_names')[row_date.wday] %>
           </th>
           <th name='start_work_<%=row%>'>
             <%= time_select("work_#{row_date.day}", 'start',

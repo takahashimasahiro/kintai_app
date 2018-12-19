@@ -8,12 +8,6 @@ RSpec.describe AttendancesHelper, type: :module do
   let(:user) { FactoryBot.create :user }
   let(:attendance_time) { FactoryBot.create :attendance_time, user_id: user.id }
 
-  describe 'date_of_week' do
-    it 'normal process' do
-      expect(helper.date_of_week(0)).to eq '日'
-    end
-  end
-
   describe 'all_status' do
     it 'normal process' do
       expect(helper.all_status.length).to eq 7
