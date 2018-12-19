@@ -50,7 +50,7 @@ class UserManagementsController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_managements_path, flash: { I18n.t('messages.delete')}
+    redirect_to user_managements_path, flash: { notice: I18n.t('messages.delete') }
   end
 
   private

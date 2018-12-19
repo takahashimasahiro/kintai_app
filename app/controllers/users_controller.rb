@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user.role = :employee
     if @user.save
       session[:id] = @user.id
-      redirect_to attendance_path(@user.id), flash: { notise: I18n.t('messages.login_success')}
+      redirect_to attendance_path(@user.id), flash: { notise: I18n.t('messages.login_success') }
     else
       render :new
     end

@@ -62,7 +62,7 @@ RSpec.describe HolidaysController, type: :controller do
         expect(vacation).to receive(:save!).with(no_args).and_raise(ActiveRecord::RecordNotSaved)
         patch :update, params: params
         expect(response).to redirect_to edit_holiday_path(user.id)
-        expect(flash[:notice]).to eq '失敗しました'
+        expect(flash[:notice]).to eq I18n.t('messages.save_failed')
       end
     end
   end
