@@ -1,6 +1,6 @@
 require 'csv'
 CSV.generate do |csv|
-  csv << %w[日付 曜日 出勤時刻 退勤時刻 稼働時間 休憩時間 状態]
+  csv << t(:csv_header, scope: :table_header)
   sum_break_time = 0
   sum_work_time = 0
   absence_count = 0
@@ -33,8 +33,7 @@ CSV.generate do |csv|
     sum_work_time += calculate_working_time(select_attend, row_date)
     absence_count += 1 if select_attend.status.to_sym == :absence
   end
-  # TODO: i18n
-  csv << %w[月別合計 ユーザー名 権限 出勤日数 稼働時間合計 休憩時間合計 有休取得数 休日出勤 欠勤 休日 残有休数]
+  csv << t(:csv_sum_header, scope: :table_header)
   csv << [
     '',
     @selected_user.name, # ユーザー名
