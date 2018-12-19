@@ -1,6 +1,28 @@
 ja:
   activerecord:
+    models:
+      user: ユーザー
+      attendance_time: 勤怠情報
+      apply_vacation: 休暇申請
+ja:
+  activerecord:
     attributes:
-      event:
-        Email: メールアドレス
-        Password: パスワード
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        role: 役割
+        paid_holiday_count: 残有給数
+      attendance_time:
+        user_id: ユーザーID
+        work_date: 出勤日
+        work_start: 出勤時間
+        work_end: 退勤時間
+        status: 状態
+      apply_vacation:
+        get_start_date: 申請日
+        get_days: 日数
+        authorizer_id: 承認者ユーザーID
+        status: 状態
+        applicant_id: 申請者ユーザーID
+
