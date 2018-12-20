@@ -195,14 +195,13 @@ module AttendancesHelper
   # @param [Integer] min
   # @return [String] hh時間mm分
   def convert_min(min_sum)
-    # TODO: I18n対応
     hour, min = min_sum.divmod(60)
     if hour == 0
-      "#{min.to_i}分"
+      I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
     elsif min == 0
-      "#{hour.to_i}時間"
+      I18n.t(:other, scope: %i[time hours], count: hour)
     else
-      "#{hour.to_i}時間#{min.to_i}分"
+      I18n.t(:other, scope: %i[time hours], count: hour) + I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
     end
   end
 end

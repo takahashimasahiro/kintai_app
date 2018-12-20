@@ -11,7 +11,6 @@ module UsersHelper
   }.freeze
 
   def user_select_status(status)
-    # TODO: i18n
-    WORK_STATUS[status] || '未定'
+    WORK_STATUS[status] || I18n.t(:undecided, scope: :attend)
   end
 end

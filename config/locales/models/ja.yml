@@ -5,10 +5,14 @@ ja:
       attendance_time: 勤怠情報
       apply_vacation: 休暇申請
     attributes:
+      save: 保存
       user:
         name: 名前
         email: メールアドレス
         password: パスワード
+        old_password: 古いパスワード
+        new_password: 新しいパスワード
+        new_password_again: 新しいパスワードをもう一度
         role: 役割
         paid_holiday_count: 残有給数
         role_status:
@@ -38,6 +42,9 @@ ja:
     delete: 削除しました
     user_edit_failed: パスワードが異なっています
   attend:
+    undecided: 未定
+    work_end: 退勤
+    output: CSV出力
     work_status:
       - 出勤
       - 有給休暇
@@ -99,6 +106,15 @@ ja:
       - 稼働時間
       - 休憩時間
       - 状態
+    user_list:
+      - 名前
+      - 状態
+      - 更新日時
+    user_management:
+      - ID
+      - 氏名
+      - 権限
+      - 削除
   holiday:
     approve: 許可
     dismiss: 却下
@@ -109,3 +125,23 @@ ja:
       - 許可
       - 却下
       - 申請状況
+  session:
+    login: ログイン
+    sign_up: 新規登録
+    sign_up_here: 新規登録はこちら
+    create: 新規作成
+    edit: 編集
+    new: 作成
+  screen_name:
+    user_setting: ユーザー設定
+    working_user_list: 出勤者リスト確認画面
+    user_management: ユーザー管理
+    user_edit: ユーザー編集
+    paid_holiday_confirmation: 有給休暇確認
+    apply_for_leave: 有休休暇申請
+    attendance_list: 勤怠状況一覧
+  time:
+    hours:
+      one: 1時間
+      other: "%{count}時間"
+

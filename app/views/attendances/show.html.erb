@@ -1,4 +1,4 @@
-<h1>勤怠状況一覧</h1>
+<h1><%= I18n.t(:attendance_list, scope: :screen_name)%></h1>
 <div class="search">
   <%# 管理者ならユーザー一覧を表示 %>
   <% if @current_user.owner? %>
@@ -21,12 +21,14 @@
                                                       class:'opt_year',
                                                       selected: @first_month.year.to_i),
                     :onchange => 'this.form.submit();',
-                    class: 'form-control-sm' )%>年
+                    class: 'form-control-sm' )%>
+                    <%= I18n.t(:year, scope: [:datetime, :prompts]) %>
       <%= select_tag('select_month', options_for_select((1..12),
                                                         class:'opt_month',
                                                         selected: @first_month.month.to_i),
                     :onchange => 'this.form.submit();',
-                    class: 'form-control-sm')%>月
+                    class: 'form-control-sm')%>
+                    <%= I18n.t(:month, scope: [:datetime, :prompts]) %>
     <% end %>
   </div>
 </div>
@@ -34,9 +36,8 @@
   <div class='inputtime'>
     <%= form_with url: attendance_path(@current_user.id),
               method: 'patch', local: true, id: 'save-button', class: 'attend-save' do |f| %>
-      <%# TODO: i18n%>
-      <%= button_tag('出勤', name: 'syukkin', class: 'btn btn-success') %>
-      <%= button_tag('退勤', name: 'taikin', class: 'btn btn-success')%>
+      <%= button_tag(I18n.t(:work_status, scope: :attend)[0], name: 'syukkin', class: 'btn btn-success') %>
+      <%= button_tag(I18n.t(:work_end, scope: :attend), name: 'taikin', class: 'btn btn-success')%>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
       <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
       <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
@@ -53,8 +54,7 @@
               method: 'get', local: true, class: 'attend-output' do |f| %>
   <% if @current_user.owner? %>
     <div class='output'>
-      <%# TODO: i18n%>
-      <%= button_tag('CSV出力', name:'output', class: 'btn btn-success btn-output') %>
+      <%= button_tag(I18n.t(:output, scope: :attend), name:'output', class: 'btn btn-success btn-output') %>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
       <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
       <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>

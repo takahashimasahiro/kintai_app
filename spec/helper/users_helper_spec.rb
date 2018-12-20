@@ -9,7 +9,7 @@ RSpec.describe UsersHelper, type: :module do
       expect(helper.user_select_status(:work)).to eq '出勤'
     end
     it 'no data' do
-      expect(helper.user_select_status(nil)).to eq '未定'
+      expect(helper.user_select_status(nil)).to eq I18n.t(:undecided, scope: :attend)
     end
   end
 end

@@ -1,25 +1,25 @@
 <div class='container'>
   <div class='edit'>
-    <h1>ユーザー設定</h1>
+    <h1><%= I18n.t(:user_setting, scope: :screen_name)%></h1>
     <%= form_with model: @user, url: user_path(@current_user.id) , method: :put, local: true do |form| %>
     <div class='edit item'>
-      <%= form.label :page, '名前' %>
+      <%= form.label :page, I18n.t(:name, scope: %i[activerecord attributes user]) %>
       <%= text_field :page, :name, value: @user.name %>
     </div>
     <div class='esit item'>
-      <%= form.label :page , '古いパスワード' %>
+      <%= form.label :page , I18n.t(:old_password, scope: %i[activerecord attributes user]) %>
       <%= form.password_field :old_password %>
     </div>
     <div class='edit item'>
-      <%= form.label :page , '新しいパスワード' %>
+      <%= form.label :page , I18n.t(:new_password, scope: %i[activerecord attributes user]) %>
       <%= form.password_field :new_password1 %>
     </div>
     <div class='edit item'>
-      <%= form.label :page , '新しいパスワードをもう一度' %>
+      <%= form.label :page , I18n.t(:new_password_again, scope: %i[activerecord attributes user]) %>
       <%= form.password_field :new_password2 %>
     </div>
     <%= render :partial => "templates/errmessage"%>
-      <%= form.submit '保存', class: 'btn btn-success'%>
+      <%= form.submit I18n.t(:save, scope: %i[activerecord attributes]), class: 'btn btn-success'%>
     <% end %>
   </div>
 </div>
