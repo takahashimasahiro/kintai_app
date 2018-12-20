@@ -27,11 +27,11 @@ module AttendancesHelper
   # @param  [Date]
   # @param  [String, Symbol]
   # @return [String]
-  def create_day_of_week_classname(date, select_status)
+  def create_day_of_week_classname(date, select_status, pass_days)
     if holiday?(date)
       'holiday'
     elsif select_status[1].to_s.include?('vacation')
-      'vacation'
+      pass_days.select { |x| x[0] == date }[0] ? 'approved' : 'not_approved'
     else
       date.wday.to_s
     end
