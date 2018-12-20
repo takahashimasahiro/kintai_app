@@ -31,7 +31,7 @@ module AttendancesHelper
     if holiday?(date)
       'holiday'
     elsif select_status[1].to_s.include?('vacation')
-      pass_days.select{|x| x[0] == date}[0] ? 'approved' : 'not_approved'
+      pass_days.select { |x| x[0] == date }[0] ? 'approved' : 'not_approved'
     else
       date.wday.to_s
     end
