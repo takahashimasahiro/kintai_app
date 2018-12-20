@@ -8,12 +8,6 @@ RSpec.describe AttendancesHelper, type: :module do
   let(:user) { FactoryBot.create :user }
   let(:attendance_time) { FactoryBot.create :attendance_time, user_id: user.id }
 
-  describe 'date_of_week' do
-    it 'normal process' do
-      expect(helper.date_of_week(0)).to eq '日'
-    end
-  end
-
   describe 'all_status' do
     it 'normal process' do
       expect(helper.all_status.length).to eq 7
@@ -23,20 +17,30 @@ RSpec.describe AttendancesHelper, type: :module do
 
   describe 'create_day_of_week_classname' do
     let(:select_status) { ['出勤', :work] }
-    it 'is holiday' do
-      expect(helper).to receive(:holiday?).with(work_date).and_return(true)
-      expect(helper.create_day_of_week_classname(work_date, select_status)).to eq 'holiday'
+    context 'not work' do
+      it 'is holiday' do
+        expect(helper).to receive(:holiday?).with(work_date).and_return(true)
+        expect(helper.create_day_of_week_classname(work_date, select_status, nil)).to eq 'holiday'
+      end
+
+      context 'paid_holiday' do
+        it 'approved' do
+          select_status = ['有給休暇', :vacation]
+          expect(helper).to receive(:holiday?).with(work_date).and_return(false)
+          expect(helper.create_day_of_week_classname(work_date, select_status, [[work_date]])).to eq 'approved'
+        end
+
+        it 'not_approved' do
+          select_status = ['有給休暇', :vacation]
+          expect(helper).to receive(:holiday?).with(work_date).and_return(false)
+          expect(helper.create_day_of_week_classname(work_date, select_status, [[holiday_date]])).to eq 'not_approved'
+        end
+      end
     end
 
-    it 'is vacation' do
-      select_status = ['有給休暇', :vacation]
+    it 'work date' do
       expect(helper).to receive(:holiday?).with(work_date).and_return(false)
-      expect(helper.create_day_of_week_classname(work_date, select_status)).to eq 'vacation'
-    end
-
-    it 'is not holiday' do
-      expect(helper).to receive(:holiday?).with(work_date).and_return(false)
-      expect(helper.create_day_of_week_classname(work_date, select_status)).to eq work_date.wday.to_s
+      expect(helper.create_day_of_week_classname(work_date, select_status, nil)).to eq work_date.wday.to_s
     end
   end
 

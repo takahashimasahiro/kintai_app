@@ -25,9 +25,9 @@ class HolidaysController < ApplicationController
       AttendanceTime.new.change_attend_status(vacation_data, :absence)
     end
     vacation_data.save!
-    redirect_to edit_holiday_path(@current_user.id), flash: { notice: '保存しました' }
+    redirect_to edit_holiday_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
   rescue StandardError => e
     @error_message = e.message
-    redirect_to edit_holiday_path(@current_user.id), flash: { notice: '失敗しました' }
+    redirect_to edit_holiday_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
   end
 end

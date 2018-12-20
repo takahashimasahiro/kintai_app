@@ -1,11 +1,11 @@
 <table class='table table-bordered table-striped table-light table-hover table-sm'>
   <thead>
     <tr>
-      <th>申請日</th>
-      <th>申請者</th>
-      <th>消化日数</th>
-      <th>許可</th>
-      <th>却下</th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[0]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[1]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[2]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[3]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[4]%></th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +18,8 @@
       <th><%= row.get_start_date%></th>
       <th><%= row.name %></th>
       <th><%= row.get_days %></th>
-      <th><%= button_tag '許可', name:'approve', class:'btn btn-success' %></th>
-      <th><%= button_tag '却下', name:'dismiss', class:'btn btn-danger' %></th>
+      <th><%= button_tag I18n.t(:approve, scope: :holiday), name:'approve', class:'btn btn-success' %></th>
+      <th><%= button_tag I18n.t(:dismiss, scope: :holiday), name:'dismiss', class:'btn btn-danger' %></th>
     </tr>
     <%end%>
   <% end %>
