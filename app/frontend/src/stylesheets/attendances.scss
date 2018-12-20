@@ -14,9 +14,13 @@
 .day_of_week_6 {
   background-color: #b2f3f5;
 }
-.day_of_week_vacation {
+.day_of_week_approved {
   background-color: #b5f7b8;
 }
+.day_of_week_not_approved {
+  background-color: #dfe680;
+}
+
 
 .search{
   margin-top: 50px;
@@ -38,6 +42,10 @@
 .table {
   float: left;
   margin: 10px;
+}
+
+.table .table {
+  background-color: #f8f9fa;
 }
 .btn-success {
   margin-left: 5px;
