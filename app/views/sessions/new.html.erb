@@ -1,15 +1,15 @@
 <div class="container">
   <div class="main bg-dark text-light">
     <div class="login-form">
-      <h1>ログイン</h1>
+      <h1><%= I18n.t(:login, scope: :session)%></h1></h1>
       <%= form_with model: @user, url: sessions_path , method: :get, local: true do |form| %>
         <%= render :partial => "templates/input", :locals => {f: form}%>
-        <%= form.submit "ログイン" , class: "btn btn-default" %>
+        <%= form.submit I18n.t(:login, scope: :session) , class: "btn btn-default" %>
       <% end %>
     </div>
       <%= form_with url: new_user_path,method: :get, local: true do |form| %>
-        <p>新規登録はこちら</p>
-        <%= form.submit "新規登録" , class: "btn btn-default" %>
+        <p><%= I18n.t(:sign_up_here, scope: :session)%></p>
+        <%= form.submit I18n.t(:sign_up, scope: :session) , class: "btn btn-default" %>
       <% end %>
   </div>
 </div>

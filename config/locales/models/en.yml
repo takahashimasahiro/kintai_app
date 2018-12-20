@@ -4,8 +4,6 @@ en:
       user: user
       attendance_time: attendance information
       apply_vacation: vacation application information
-en:
-  activerecord:
     attributes:
       user:
         name: name
@@ -13,6 +11,10 @@ en:
         password: password
         role: role
         paid_holiday_count: remaining paid number
+        role_status:
+          - 管理者
+          - 社員
+          - アルバイト
       attendance_time:
         user_id: user identification
         work_date: workday
@@ -25,3 +27,55 @@ en:
         authorizer_id: authorized user identification
         status: status
         applicant_id: applicant identification
+  messages:
+    need_login: You have not logged in yet
+    login_success: ログインしました
+    login_failed: メールアドレスもしくはパスワードが間違っています
+    save_success: 保存しました
+    save_failed: 保存に失敗しました
+    create: 作成しました
+    edit: 編集しました
+    delete: 削除しました
+    user_edit_failed: パスワードが異なっています
+  attend:
+    work_status:
+      - 出勤
+      - 有給休暇
+      - 午前休暇
+      - 午後休暇
+      - 休日出勤
+      - 欠勤
+      - 休日
+  apply:
+    apply_status:
+      - 申請中
+      - 上長承認済
+      - 管理者承認済
+      - 申請取消
+      - 不許可
+  table_header:
+    profile: プロフィール
+    menu:
+      - 勤怠状況一覧
+      - 出勤者リスト
+      - 有給休暇申請
+      - 有給申請確認
+      - ユーザー設定
+      - ユーザー管理
+      - ログアウト
+    sum:
+      - 出勤日数
+      - 稼働時間合計
+      - 休憩時間合計
+      - 有休取得数
+      - 休日出勤数
+      - 欠勤数
+      - 休日数
+    attendance:
+      - 日付
+      - 曜日
+      - 出勤時間
+      - 退勤時間
+      - 稼働時間
+      - 休憩時間
+      - 状態

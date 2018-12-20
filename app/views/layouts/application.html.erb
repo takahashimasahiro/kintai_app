@@ -15,32 +15,34 @@
         <div class="col-sm-3 sidebar open bg-dark">
           <div class="row sidebar-header header-cover text-light" >
             <ul class="col-md-7 user-profile">
-              <li class="profile-profile"><%= 'プロフィール' %></li>
+              <li class="profile-profile"><%= I18n.t(:profile, scope: [:table_header] ) %></li>
               <li class="profile-username"><%= @current_user.name %></li>
               <li class="profile-email"><%= @current_user.email %></li>
-              <li class="profile-holidaycount">残有休数: <%= @current_user.paid_holiday_count %></li>
+              <li class="profile-holidaycount">
+                <%= I18n.t(:paid_holiday_count, scope: [:activerecord, :attributes, :user]) + ': ' + @current_user.paid_holiday_count.to_s %>
+              </li>
             </ul>
           </div>
           <div class="list-group">
-            <%= link_to '勤怠状況一覧', attendance_path(@current_user.id),class: 'list-group-item list-group-item-action list-group-item-light' %>
-            <%= link_to '出勤者リスト', users_path, class: 'list-group-item list-group-item-action list-group-item-light'%>
+            <%= link_to I18n.t(:menu, scope: :table_header)[0], attendance_path(@current_user.id),class: 'list-group-item list-group-item-action list-group-item-light' %>
+            <%= link_to I18n.t(:menu, scope: :table_header)[1], users_path, class: 'list-group-item list-group-item-action list-group-item-light'%>
             <% if @current_user.owner? %>
               <%= link_to edit_holiday_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' do %>
-                有給休暇申請
+                <%= I18n.t(:menu, scope: :table_header)[2]%>
                 <% if @apply_count != 0 %>
                   <span class="badge badge-primary badge-pill"><%= @apply_count %></span>
                 <% end %>
               <%end%>
             <%end%>
             <%= link_to holiday_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' do %>
-              有給申請確認
+              <%= I18n.t(:menu, scope: :table_header)[3] %>
               <span class="badge badge-primary badge-pill"></span>
             <% end %>
-            <%= link_to 'ユーザー設定', edit_user_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' %>
+            <%= link_to I18n.t(:menu, scope: :table_header)[4], edit_user_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' %>
             <% if @current_user.owner? %>
-              <%= link_to 'ユーザー管理',user_managements_path , method: 'get', class: 'list-group-item list-group-item-action list-group-item-light'%>
+              <%= link_to I18n.t(:menu, scope: :table_header)[5],user_managements_path , method: 'get', class: 'list-group-item list-group-item-action list-group-item-light'%>
             <% end %>
-            <%= link_to 'ログアウト', session_path(@current_user.id), method: 'delete', class: 'list-group-item list-group-item-action list-group-item-light'%>
+            <%= link_to I18n.t(:menu, scope: :table_header)[6], session_path(@current_user.id), method: 'delete', class: 'list-group-item list-group-item-action list-group-item-light'%>
           </div>
         </div>
         <%= render partial: "templates/flash",locals: {class_name: "flash-login"} %>

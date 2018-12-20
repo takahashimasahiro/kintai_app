@@ -1,23 +1,18 @@
 # TODO: docをかく
 module AttendancesHelper
-  DATE_OF_WEEK = %w[日 月 火 水 木 金 土].map(&:freeze).freeze
   WORK_STATUS = {
-    'work':         '出勤',
-    'vacation':     '有給休暇',
-    'am_vacation':  '午前休暇',
-    'pm_vacation':  '午後休暇',
-    'holiday_work': '休日出勤',
-    'absence':      '欠勤',
-    'holiday':      '休日'
+    work:         I18n.t(:work_status, scope: :attend)[0],
+    vacation:     I18n.t(:work_status, scope: :attend)[1],
+    am_vacation:  I18n.t(:work_status, scope: :attend)[2],
+    pm_vacation:  I18n.t(:work_status, scope: :attend)[3],
+    holiday_work: I18n.t(:work_status, scope: :attend)[4],
+    absence:      I18n.t(:work_status, scope: :attend)[5],
+    holiday:      I18n.t(:work_status, scope: :attend)[6]
   }.freeze
 
   # TODO: デフォルト値の設定を考える
   DEFAULT_WORK_START = 0 # 出勤時間(hour)
   DEFAULT_WORK_END = 0 # 退勤時間(hour)
-
-  def date_of_week(count)
-    DATE_OF_WEEK[count]
-  end
 
   def all_status
     WORK_STATUS
@@ -202,11 +197,11 @@ module AttendancesHelper
   def convert_min(min_sum)
     hour, min = min_sum.divmod(60)
     if hour == 0
-      "#{min.to_i}分"
+      I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
     elsif min == 0
-      "#{hour.to_i}時間"
+      I18n.t(:other, scope: %i[time hours], count: hour)
     else
-      "#{hour.to_i}時間#{min.to_i}分"
+      I18n.t(:other, scope: %i[time hours], count: hour) + I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
     end
   end
 end

@@ -1,10 +1,10 @@
 module HolidaysHelper
   APPLICATION_STATUS = {
-    applying: '申請中',
-    boss_applied: '上長承認済',
-    admin_applied: '管理者承認済',
-    withdrawal: '申請取消',
-    apply_rejection: '不許可'
+    applying:        I18n.t(:apply_status, scope: :apply)[0],
+    boss_applied:    I18n.t(:apply_status, scope: :apply)[1],
+    admin_applied:   I18n.t(:apply_status, scope: :apply)[2],
+    withdrawal:      I18n.t(:apply_status, scope: :apply)[3],
+    apply_rejection: I18n.t(:apply_status, scope: :apply)[4]
   }.freeze
 
   def application_status

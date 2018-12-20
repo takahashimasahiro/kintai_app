@@ -29,13 +29,13 @@ class AttendancesController < ApplicationController
     attend.work_end = work_end_time
     # 勤怠入力
     if attend.update_attend(@selected_user, params[:change_status])
-      redirect_to attendance_path(@current_user.id), flash: { notice: '保存しました' }
+      redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
     else
-      redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
+      redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
     end
   rescue StandardError => e
     @error_message = e.message
-    redirect_to attendance_path(@current_user.id), flash: { notice: '保存に失敗しました' }
+    redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
   end
 
   private
@@ -55,7 +55,8 @@ class AttendancesController < ApplicationController
       params[:change_day].to_i,
       params[:change_start_hour].to_i,
       params[:change_start_minute].to_i,
-      0)
+      0
+    )
   end
 
   def work_end_time
@@ -65,6 +66,7 @@ class AttendancesController < ApplicationController
       params[:change_day].to_i,
       params[:change_end_hour].to_i,
       params[:change_end_minute].to_i,
-      0)
+      0
+    )
   end
 end
