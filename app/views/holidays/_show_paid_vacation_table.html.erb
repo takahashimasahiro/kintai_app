@@ -4,6 +4,7 @@
       <th><%= I18n.t(:table_header, scope: :holiday)[0]%></th>
       <th><%= I18n.t(:table_header, scope: :holiday)[2]%></th>
       <th><%= I18n.t(:table_header, scope: :holiday)[5]%></th>
+      <th>申請理由</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
         <th><%= row.get_start_date %></th>
         <th><%= row.get_days %></th>
         <th><%= application_status[row.status.to_sym] if row.status %></th>
+        <th></th>
       </tr>
     <% end %>
   </tbody>
