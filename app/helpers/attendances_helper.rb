@@ -24,8 +24,11 @@ module AttendancesHelper
   # @return [String]
   def create_day_of_week_classname(date, select_status, pass_days)
     if holiday?(date)
+      # TODO: statusを確認してholidayならこの処理に入れる
+      # 管理者のみの制約が必要では？
       'holiday'
     elsif select_status[1].to_s.include?('vacation')
+      # TODO: holiday?(date) == true でもstatusがholiday_workならこの処理に入れたい
       pass_days.select { |x| x[0] == date }[0] ? 'approved' : 'not_approved'
     else
       date.wday.to_s
