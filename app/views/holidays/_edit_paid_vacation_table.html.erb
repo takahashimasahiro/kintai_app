@@ -12,21 +12,21 @@
   </thead>
   <tbody>
   <% for row in @applying_vacation do %>
-    <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do %>
     <tr>
+    <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do %>
       <input type='hidden' name='get_date' value="<%=row.get_start_date%>">
       <input type='hidden' name='user_id' value="<%=row.applicant_id%>">
       <input type='hidden' name='button' value=''>
       <th><%= row.get_start_date%></th>
       <th><%= row.name %></th>
       <th><%= row.get_days %></th>
-      <%# TODO: %>
-      <th></th>
+      <th><%= row.applied_reason %></th>
       <th><%= button_tag I18n.t(:approve, scope: :holiday), name:'approve', class:'btn btn-success' %></th>
       <th><%= button_tag I18n.t(:dismiss, scope: :holiday), name:'dismiss', class:'btn btn-danger' %></th>
-      <th></th>
-    </tr>
+      <%# TODO: %>
+      <th><%= text_field_tag 'comment', row.owner_comment %></th>
     <%end%>
+    </tr>
   <% end %>
   </tbody>
 </table>

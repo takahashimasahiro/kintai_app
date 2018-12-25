@@ -17,6 +17,7 @@ class HolidaysController < ApplicationController
   def update
     vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
     vacation_data.status = params[:button]
+    vacation_data.owner_comment = params[:comment]
     if params[:button] == 'admin_applied'
       # 許可
       vacation_data.reduce_holiday_count
@@ -29,5 +30,13 @@ class HolidaysController < ApplicationController
   rescue StandardError => e
     @error_message = e.message
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
+  end
+
+  # TODO: applucant_reasonの更新を行う
+  def add_reason
+    redirect_to holiday_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
+  rescue StandardError => e
+    @error_message = e.message
+    redirect_to holiday_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
   end
 end

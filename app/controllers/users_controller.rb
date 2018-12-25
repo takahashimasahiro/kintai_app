@@ -12,10 +12,13 @@ class UsersController < ApplicationController
       users.id = attendance_times.user_id
       and attendance_times.work_date = '#{Date.today}'"
     ).select(
-      'users.name,
+      'users.id,
+      users.name,
       attendance_times.status,
       attendance_times.updated_at'
     )
+    # 休暇理由を取得
+    @vacation_reason = ApplyVacation.where(get_start_date: Date.today).pluck(:applicant_id, :applied_reason)
   end
 
   def new

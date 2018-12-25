@@ -41,6 +41,8 @@
             <%= link_to I18n.t(:menu, scope: :table_header)[4], edit_user_path(@current_user.id), class: 'list-group-item list-group-item-action list-group-item-light' %>
             <% if @current_user.owner? %>
               <%= link_to I18n.t(:menu, scope: :table_header)[5],user_managements_path , method: 'get', class: 'list-group-item list-group-item-action list-group-item-light'%>
+              <%# TODO: 管理者の操作ログを表示する画面を追加する %>
+              <%= link_to '操作ログ', attendance_path(@current_user.id), method: 'get', class: 'list-group-item list-group-item-action list-group-item-light' %>
             <% end %>
             <%= link_to I18n.t(:menu, scope: :table_header)[6], session_path(@current_user.id), method: 'delete', class: 'list-group-item list-group-item-action list-group-item-light'%>
           </div>
