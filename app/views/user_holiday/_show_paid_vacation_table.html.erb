@@ -17,7 +17,9 @@
         <th><%= row.get_start_date %></th>
         <th><%= row.get_days %></th>
         <th><%= application_status[row.status.to_sym] if row.status %></th>
-        <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();" %></th>
+        <%# application_status[row.status.to_sym] が applying の時のみ 編集可能にする。%>
+        <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
+                  readonly: !row.status.to_sym.eql?(:applying) %></th>
         <th><%= row.owner_comment %></th>
         <% end %>
       </tr>
