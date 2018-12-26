@@ -17,7 +17,8 @@ class HolidaysController < ApplicationController
   def update
     vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
     vacation_data.status = params[:button]
-    raise StandardError if !vacation_data.status
+    raise StandardError unless vacation_data.status
+
     vacation_data.owner_comment = params[:comment]
     if params[:button] == 'admin_applied'
       # 許可

@@ -9,8 +9,6 @@ RSpec.describe HolidaysController, type: :controller do
     session[:id] = '1'
   end
 
-
-
   describe '#edit' do
     it 'returns http success' do
       get :edit, params: { id: :id }
@@ -50,6 +48,8 @@ RSpec.describe HolidaysController, type: :controller do
 
     context 'is error' do
       it 'faild save' do
+        params[:button] = 'apply_rejection'
+        expect(AttendanceTime).to receive_message_chain(:new, :change_attend_status).with(no_args).with(vacation, :absence).and_return([])
         expect(ApplyVacation).to receive(:find_by)
           .with(applicant_id: params[:user_id], get_start_date: params[:get_date])
           .and_return(vacation)
