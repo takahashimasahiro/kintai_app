@@ -29,6 +29,7 @@ class AttendanceTime < ApplicationRecord
         # 有休申請取消処理
         ApplyVacation.new.apply_cancel(selected_user, work_date)
       end
+      # TODO: 休日出勤の処理(代休関係の処理)
       self.status = input_status
       save!
     end

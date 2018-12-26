@@ -2,9 +2,9 @@ class HolidaysController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
 
-  def show
-    @my_vacations = @current_user.apply_vacations.all.order(:get_start_date)
-  end
+  # def show
+  #   @my_vacations = @current_user.apply_vacations.all.order(:get_start_date)
+  # end
 
   def edit
     # 有休申請者一覧を表示
@@ -30,13 +30,5 @@ class HolidaysController < ApplicationController
   rescue StandardError => e
     @error_message = e.message
     redirect_to edit_holiday_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
-  end
-
-  # TODO: applucant_reasonの更新を行う
-  def add_reason
-    redirect_to holiday_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
-  rescue StandardError => e
-    @error_message = e.message
-    redirect_to holiday_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }
   end
 end

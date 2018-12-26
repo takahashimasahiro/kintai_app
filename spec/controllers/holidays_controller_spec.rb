@@ -9,13 +9,7 @@ RSpec.describe HolidaysController, type: :controller do
     session[:id] = '1'
   end
 
-  describe 'GET #show' do
-    it 'returns http success' do
-      get :show, params: { id: user.id }
-      expect(response).to have_http_status(:success)
-      expect(ApplyVacation.all.size).to eq 1
-    end
-  end
+
 
   describe '#edit' do
     it 'returns http success' do

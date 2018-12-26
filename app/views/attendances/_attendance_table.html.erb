@@ -39,6 +39,7 @@
           </th>
           <th name='status_row_<%=row%>'>
           <%# TODO: changeイベント挿入 vacationならモーダル表示して理由を入力させる。 %>
+          <%# TODO: 平日休日で表示するstatusを変える(平日に休出を出すのはよくない)%>
             <%= select_tag("status_#{row}",
                 options_for_select(all_status.invert,
                 selected: selected_status(attendance_row, row_date)),

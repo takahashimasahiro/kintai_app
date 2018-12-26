@@ -12,7 +12,8 @@
     <% @my_vacations.each do |row| %>
       <tr>
         <%# TODO: 送信先controllerをどうするか %>
-        <%= form_with url: 'reason(row.applicant_id)',method: 'patch', local: true do %>
+        <%= form_with url: user_holiday_path(@current_user.id),method: 'patch', local: true do %>
+        <input type='hidden' name='date' value='<%= row.get_start_date%>'>
         <th><%= row.get_start_date %></th>
         <th><%= row.get_days %></th>
         <th><%= application_status[row.status.to_sym] if row.status %></th>

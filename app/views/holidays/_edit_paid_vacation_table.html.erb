@@ -23,7 +23,7 @@
       <th><%= row.applied_reason %></th>
       <th><%= button_tag I18n.t(:approve, scope: :holiday), name:'approve', class:'btn btn-success' %></th>
       <th><%= button_tag I18n.t(:dismiss, scope: :holiday), name:'dismiss', class:'btn btn-danger' %></th>
-      <%# TODO: %>
+      <%# TODO: エンター押すと approve　処理が走る　%>
       <th><%= text_field_tag 'comment', row.owner_comment %></th>
     <%end%>
     </tr>
