@@ -207,4 +207,41 @@ module AttendancesHelper
       I18n.t(:other, scope: %i[time hours], count: hour) + I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
     end
   end
+
+  # 日付から平日休日を判別し、表示させる状態を返却する
+  def days_statuses(date)
+    statuses = []
+    if holiday?(date)
+      all_status.each_pair do |key, val|
+        if key == :holiday_work || key == :holiday
+          statuses +=[key,value]
+        end
+      end
+    else
+      all_status.each_pair do |key, val|
+        if key == :work || key == :vacation || key == :am_vacation || key == :pm_vacation || key == :absence
+          statuses +=[key,value]
+        end
+      end
+    end
+    statuses
+  end
+
+  # 平日休日で表示するstatusを変える(平日に休出を出すのはよくない)
+  def statuses_by_holiday(date)
+    if holiday?(date) || weekend?(date)
+      {
+        holiday: all_status[:holiday],
+        holiday_work: all_status[:holiday_work]
+      }.invert
+    else
+      {
+        work: all_status[:work],
+        vacation: all_status[:vacation],
+        am_vacation: all_status[:am_vacation],
+        pm_vacation: all_status[:pm_vacation],
+        absence: all_status[:absence]
+      }.invert
+    end
+  end
 end

@@ -14,7 +14,6 @@ class ApplyVacation < ApplicationRecord
   def reduce_holiday_count
     User.transaction do
       user = User.find(applicant_id)
-      # TODO: この処理がいるかどうか検討
       # 有休の前借りも考慮して、一旦残有休数が0以下になっても良い形にする
       # if user.paid_holiday_count >= get_days
       user.paid_holiday_count -= get_days
@@ -45,11 +44,13 @@ class ApplyVacation < ApplicationRecord
   # @param [String] 入力ステータス
   # @param [User] 申請ユーザー
   # @param [Date] 登録日付
-  def apply_for_vacation(status, user, date)
+  # @param [String] 申請理由
+  def apply_for_vacation(status, user, date, user_reason)
     ApplyVacation.transaction do
       vacation = user.apply_vacations.find_or_create_by!(get_start_date: date)
       vacation.get_days = status.start_with?('vacation') ? 1 : 0.5
       vacation.status = :applying
+      vacation.applied_reason = user_reason
       vacation.save!
     end
   rescue StandardError

@@ -26,12 +26,27 @@ $(function () {
   $('th').children('select').on('change', function () {
     var selectRow = Number($(this).parent().attr('name').split('_')[2])
     changeRowData(selectRow)
-    $('#save-button').submit()
-    // TODO: statusがvacationになった時理由を入力させるダイアログを表示
-    // if ($(`select[name=status_${selectRow}]`)[0].value.indexOf('vacation') !=-1 ) {
-    // }else{
-    // }
+    if ($(`select[name=status_${selectRow}]`)[0].value.indexOf('vacation') !=-1 ) {
+      $('#modalDialog').fadeIn(0);
+      $('#modalDialog').draggable();
+    }else{
+      $('#save-button').submit()
+    }
   });
+
+  // TODO: statusがvacationになった時理由を入力させるダイアログを表示
+  $('#applyButton').on('click', ()=> {
+    $('input[name=vacation_reason]')[0].value = $('#apply_reason')[0].value
+    $('#save-button').submit()
+  });
+  $('#closeButton').on('click', () =>{
+    // TODO: statusの変更
+    $('#modalDialog').fadeOut(0);
+  })
+  $('#cancelButton').on('click', () =>{
+    // TODO: statusの変更
+    $('#modalDialog').fadeOut(0);
+  })
 });
 
 // 休暇理由を入力してsave

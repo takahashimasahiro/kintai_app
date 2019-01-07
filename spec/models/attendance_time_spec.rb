@@ -11,12 +11,13 @@ RSpec.describe AttendanceTime, type: :model do
   end
 
   describe 'update_attend' do
+    let(:reason){ '体調不良のため' } #申請理由
     context 'is success' do
       it 'work → vaction' do
         expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)
-          .with(no_args).with('vacation', user, Date.today)
+          .with(no_args).with('vacation', user, Date.today, reason)
           .and_return([])
-        expect(attendance_time.update_attend(user, 'vacation')).to eq true
+        expect(attendance_time.update_attend(user, 'vacation', reason)).to eq true
         expect(attendance_time.work_start.hour).to eq 0
         expect(attendance_time.work_start.min).to eq 0
         expect(attendance_time.work_end.hour).to eq 0
@@ -28,7 +29,7 @@ RSpec.describe AttendanceTime, type: :model do
         expect(ApplyVacation).to receive_message_chain(:new, :apply_cancel)
           .with(no_args).with(user, Date.today)
           .and_return([])
-        expect(attendance_time.update_attend(user, 'work')).to eq true
+        expect(attendance_time.update_attend(user, 'work', reason)).to eq true
       end
       it 'vacation → aother vacation' do
         attendance_time.status = 'vacation'
@@ -39,9 +40,9 @@ RSpec.describe AttendanceTime, type: :model do
       it 'update false' do
         expect(attendance_time).to receive(:save!).and_raise(ActiveRecord::RecordNotSaved)
         expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)
-          .with(no_args).with('vacation', user, Date.today)
+          .with(no_args).with('vacation', user, Date.today, reason)
           .and_return([])
-        expect { attendance_time.update_attend(user, 'vacation') }.to raise_error(ActiveRecord::Rollback)
+        expect { attendance_time.update_attend(user, 'vacation', reason) }.to raise_error(ActiveRecord::Rollback)
       end
     end
   end

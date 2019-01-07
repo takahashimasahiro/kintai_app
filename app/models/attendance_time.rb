@@ -14,7 +14,7 @@ class AttendanceTime < ApplicationRecord
   # 勤怠入力する
   # @param [User] 勤怠登録するユーザー
   # @param [String] 入力ステータス
-  def update_attend(selected_user, input_status)
+  def update_attend(selected_user, input_status, reason)
     transaction do
       # 有休申請するときは時間をリセットする
       if !include_vacation?(status) && include_vacation?(input_status)
@@ -24,7 +24,7 @@ class AttendanceTime < ApplicationRecord
 
       if include_vacation?(input_status)
         # 有給休暇申請を行う
-        ApplyVacation.new.apply_for_vacation(input_status, selected_user, work_date)
+        ApplyVacation.new.apply_for_vacation(input_status, selected_user, work_date, reason)
       elsif include_vacation?(status) && !include_vacation?(input_status)
         # 有休申請取消処理
         ApplyVacation.new.apply_cancel(selected_user, work_date)

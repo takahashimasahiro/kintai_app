@@ -27,6 +27,7 @@ RSpec.describe AttendancesController, type: :controller do
         change_end_hour: '19',
         change_end_mitute: '00',
         change_status: 'work'
+        vacation_reason: ''
       }
     end
     let(:work_date) { Date.new(2018, 11, 1) }
@@ -44,7 +45,9 @@ RSpec.describe AttendancesController, type: :controller do
       expect(AttendanceTime).to receive(:find_or_initialize_by)
         .with(user_id: user.id, work_date: work_date)
         .and_return(attendance_time)
-      expect(attendance_time).to receive(:update_attend).with(user, params[:change_status]).and_return(false)
+      expect(attendance_time).to receive(:update_attend)
+        .with(user, params[:change_status], params[:vacation_reason:])
+        .and_return(false)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
       expect(flash[:notice]).to eq '保存に失敗しました'
@@ -55,7 +58,7 @@ RSpec.describe AttendancesController, type: :controller do
         .with(user_id: user.id, work_date: work_date)
         .and_return(attendance_time)
       expect(attendance_time).to receive(:update_attend)
-        .with(user, params[:change_status])
+        .with(user, params[:change_status], params[:vacation_reason:])
         .and_raise(ActiveRecord::RecordNotSaved)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)

@@ -11,16 +11,14 @@
   <tbody>
     <% @my_vacations.each do |row| %>
       <tr>
-        <%# TODO: 送信先controllerをどうするか %>
         <%= form_with url: user_holiday_path(@current_user.id),method: 'patch', local: true do %>
-        <input type='hidden' name='date' value='<%= row.get_start_date%>'>
-        <th><%= row.get_start_date %></th>
-        <th><%= row.get_days %></th>
-        <th><%= application_status[row.status.to_sym] if row.status %></th>
-        <%# application_status[row.status.to_sym] が applying の時のみ 編集可能にする。%>
-        <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
-                  readonly: !row.status.to_sym.eql?(:applying) %></th>
-        <th><%= row.owner_comment %></th>
+          <input type='hidden' name='date' value='<%= row.get_start_date%>'>
+          <th><%= row.get_start_date %></th>
+          <th><%= row.get_days %></th>
+          <th><%= application_status[row.status.to_sym] if row.status %></th>
+          <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
+                                  readonly: !row.status.to_sym.eql?(:applying) %></th>
+          <th><%= row.owner_comment %></th>
         <% end %>
       </tr>
     <% end %>
