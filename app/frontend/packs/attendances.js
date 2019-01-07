@@ -8,6 +8,7 @@ import $ from 'jquery';
 const today = new Date();
 const thisHour = () => { return (`00${today.getHours()}`).slice(-2) }
 const getMinutes = () => { return (`00${today.getMinutes()}`).slice(-2) }
+var selectRow
 
 $(function () {
   // 出勤ボタン押下
@@ -24,7 +25,7 @@ $(function () {
   });
   // selectタグの値変更
   $('th').children('select').on('change', function () {
-    var selectRow = Number($(this).parent().attr('name').split('_')[2])
+    selectRow = Number($(this).parent().attr('name').split('_')[2])
     changeRowData(selectRow)
     if ($(`select[name=status_${selectRow}]`)[0].value.indexOf('vacation') !=-1 ) {
       $('#modalDialog').fadeIn(0);
@@ -34,30 +35,20 @@ $(function () {
     }
   });
 
-  // TODO: statusがvacationになった時理由を入力させるダイアログを表示
+  // statusがvacationになった時理由を入力させるダイアログを表示
   $('#applyButton').on('click', ()=> {
     $('input[name=vacation_reason]')[0].value = $('#apply_reason')[0].value
     $('#save-button').submit()
   });
   $('#closeButton').on('click', () =>{
-    // TODO: statusの変更
+    $(`#status_${selectRow}`)[0].options[0].selected = true
     $('#modalDialog').fadeOut(0);
   })
   $('#cancelButton').on('click', () =>{
-    // TODO: statusの変更
+    $(`#status_${selectRow}`)[0].options[0].selected = true
     $('#modalDialog').fadeOut(0);
   })
 });
-
-// 休暇理由を入力してsave
-function applyForLeave(reason){
-  if (reason != ""){
-    $('input[name=vacation_reason]')[0].value = reason
-  }
-  var selectRow = Number($(this).parent().attr('name').split('_')[2])
-  changeRowData(selectRow)
-  $('#save-button').submit()
-}
 
 function changeRowData(row) {
   $('input[name=change_day]')[0].value = row
