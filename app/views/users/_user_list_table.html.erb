@@ -5,6 +5,7 @@
         <th><%= I18n.t(:user_list, scope: :table_header)[0]%></th>
         <th><%= I18n.t(:user_list, scope: :table_header)[1]%></th>
         <th><%= I18n.t(:user_list, scope: :table_header)[2]%></th>
+        <th>メモ(休暇理由など)</th>
       </tr>
     </thead>
     <tbody>
@@ -13,6 +14,9 @@
           <td><%= user.name %></td>
           <td><%= user.status ? user_select_status(user.status.to_sym) :  I18n.t(:undecided, scope: :attend) %></td>
           <td><%= user.updated_at %></td>
+          <%# TODO: 休暇申請理由などのメモが表示されるようにしたい%>
+          <% reason =  @vacation_reason.select{|x| x[0] if x[0] == user.id }[0] %>
+          <td><%= reason[1] if reason %></td>
         </tr>
       <% end %>
     </tbody>

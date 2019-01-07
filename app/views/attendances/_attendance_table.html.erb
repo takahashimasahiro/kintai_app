@@ -38,11 +38,33 @@
             <%= convert_min(calculate_break_time(attendance_row, row_date)) %>
           </th>
           <th name='status_row_<%=row%>'>
+          <%# vacationならモーダル表示して理由を入力させる。 %>
             <%= select_tag("status_#{row}",
-                options_for_select(all_status.invert,
+                options_for_select(statuses_by_holiday(row_date),
                 selected: selected_status(attendance_row, row_date)),
                 disabled: is_include?(@pass_days, row_date),
                 class: 'form-control-sm')%>
+            <div id='modalDialog' class="modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">休暇理由</h5>
+                    <button type="button" id='closeButton' class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>申請理由を記入してください</p>
+                    <%# TODO: 必須入力にするかどうか検討 %>
+                    <%= text_field :apply, :reason %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id='applyButton' class="btn btn-primary">申請</button>
+                    <button type="button" id='cancelButton' class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </th>
         </tr>
       <% end %>

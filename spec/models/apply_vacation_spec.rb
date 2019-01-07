@@ -47,16 +47,17 @@ RSpec.describe ApplyVacation, type: :model do
   end
 
   describe 'apply_for_vacation' do
+    let(:reason) { '体調不良のため' }
     context 'processing success' do
       it 'normal process' do
-        expect(apply_vacation.apply_for_vacation('vacation', user, Date.today)).to eq true
+        expect(apply_vacation.apply_for_vacation('vacation', user, Date.today, reason)).to eq true
         expect(apply_vacation.status).to eq 'applying'
       end
     end
     context 'raise error' do
       it 'is rollback' do
         expect(ApplyVacation).to receive(:transaction).and_raise(ActiveRecord::RecordNotSaved)
-        expect { apply_vacation.apply_for_vacation('vacation', user, Date.today) }.to raise_error ActiveRecord::Rollback
+        expect { apply_vacation.apply_for_vacation('vacation', user, Date.today, reason) }.to raise_error ActiveRecord::Rollback
       end
     end
   end

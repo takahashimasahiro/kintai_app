@@ -28,7 +28,7 @@ class AttendancesController < ApplicationController
     attend.work_start = work_start_time
     attend.work_end = work_end_time
     # 勤怠入力
-    if attend.update_attend(@selected_user, params[:change_status])
+    if attend.update_attend(@selected_user, params[:change_status], params[:vacation_reason])
       redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }
     else
       redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_failed, scope: :messages) }

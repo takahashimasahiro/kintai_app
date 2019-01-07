@@ -1,0 +1,26 @@
+<table class='table table-bordered table-striped table-light table-hover table-sm'>
+  <thead>
+    <tr>
+      <th><%= I18n.t(:table_header, scope: :holiday)[0]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[2]%></th>
+      <th><%= I18n.t(:table_header, scope: :holiday)[5]%></th>
+      <th>申請理由</th>
+      <th>承認者コメント</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @my_vacations.each do |row| %>
+      <tr>
+        <%= form_with url: user_holiday_path(@current_user.id),method: 'patch', local: true do %>
+          <input type='hidden' name='date' value='<%= row.get_start_date%>'>
+          <th><%= row.get_start_date %></th>
+          <th><%= row.get_days %></th>
+          <th><%= application_status[row.status.to_sym] if row.status %></th>
+          <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
+                                  readonly: !row.status.to_sym.eql?(:applying) %></th>
+          <th><%= row.owner_comment %></th>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
