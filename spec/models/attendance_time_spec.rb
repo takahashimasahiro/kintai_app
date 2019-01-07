@@ -11,7 +11,7 @@ RSpec.describe AttendanceTime, type: :model do
   end
 
   describe 'update_attend' do
-    let(:reason){ '体調不良のため' } #申請理由
+    let(:reason) { '体調不良のため' } # 申請理由
     context 'is success' do
       it 'work → vaction' do
         expect(ApplyVacation).to receive_message_chain(:new, :apply_for_vacation)

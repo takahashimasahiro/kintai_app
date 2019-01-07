@@ -212,15 +212,13 @@ module AttendancesHelper
   def days_statuses(date)
     statuses = []
     if holiday?(date)
-      all_status.each_pair do |key, val|
-        if key == :holiday_work || key == :holiday
-          statuses +=[key,value]
-        end
+      all_status.each_pair do |key, _val|
+        statuses += [key, value] if key == :holiday_work || key == :holiday
       end
     else
-      all_status.each_pair do |key, val|
+      all_status.each_pair do |key, _val|
         if key == :work || key == :vacation || key == :am_vacation || key == :pm_vacation || key == :absence
-          statuses +=[key,value]
+          statuses += [key, value]
         end
       end
     end

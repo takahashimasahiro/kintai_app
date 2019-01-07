@@ -26,7 +26,7 @@ RSpec.describe AttendancesController, type: :controller do
         change_start_minute: '00',
         change_end_hour: '19',
         change_end_mitute: '00',
-        change_status: 'work'
+        change_status: 'work',
         vacation_reason: ''
       }
     end
@@ -46,7 +46,7 @@ RSpec.describe AttendancesController, type: :controller do
         .with(user_id: user.id, work_date: work_date)
         .and_return(attendance_time)
       expect(attendance_time).to receive(:update_attend)
-        .with(user, params[:change_status], params[:vacation_reason:])
+        .with(user, params[:change_status], params[:vacation_reason])
         .and_return(false)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
@@ -58,7 +58,7 @@ RSpec.describe AttendancesController, type: :controller do
         .with(user_id: user.id, work_date: work_date)
         .and_return(attendance_time)
       expect(attendance_time).to receive(:update_attend)
-        .with(user, params[:change_status], params[:vacation_reason:])
+        .with(user, params[:change_status], params[:vacation_reason])
         .and_raise(ActiveRecord::RecordNotSaved)
       patch :update, params: params, as: :json
       expect(response).to redirect_to attendance_path(user.id)
