@@ -2,6 +2,7 @@
 class SessionsController < ApplicationController
   before_action :forbid_current_user, only: %i[login new]
   before_action :authenticate_current_user, only: %i[destroy]
+  before_action :set_paper_trail_whodunnit, only: new
 
   def new
     @user = User.new

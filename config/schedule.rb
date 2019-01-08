@@ -14,8 +14,7 @@
 # end
 #
 every 1.days do
-  # TODO: error
-  runner "PaperTrail::Version.delete_all ['created_at < ?', 1.week.ago]"
+  runner "PaperTrail::Version.delete ['created_at < ?', 3.day.ago] "
 end
 
 # Learn more: http://github.com/javan/whenever

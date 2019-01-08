@@ -1,0 +1,46 @@
+<table class='table table-bordered table-striped table-light table-hover table-sm'>
+  <thead>
+    <tr>
+      <th>event</th>
+      <th>ログ作成者</th>
+      <th>ログid</th>
+      <th>状態</th>
+      <th>申請者ID</th>
+      <th>申請日</th>
+      <th>申請理由</th>
+      <th>承認コメント</th>
+      <th>ログ作成日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_vacations.each do |vacation| %>
+      <% vacation.versions.each do |version| %>
+        <tr>
+          <th><%= version.event %></th>
+          <th><%= @user_id_name.find {|u| u.id == version.whodunnit.to_i }.name if !version.whodunnit.nil? %></th>
+          <% vac = log_convert_hash(version) %>
+          <% if vac.nil? %>
+            <th></th><th></th><th></th><th></th><th></th><th></th>
+          <% else %>
+            <th><%= vac[:id] %></th>
+            <th><%= application_status[vac[:status].to_sym] %></th>
+            <th><%= @user_id_name.find {|u| u.id == vac[:applicant_id].to_i}.name %></th>
+            <th><%= vac[:get_start_date] %></th>
+            <th><%= vac[:applied_reason] %></th>
+            <th><%= vac[:owner_comment] %></th>
+          <% end %>
+          <th><%= version.created_at %></th>
+        </tr>
+      <%end%>
+        <th>now</th>
+        <th></th>
+        <th><%= vacation.id %></th>
+        <th><%= application_status[vacation.status.to_sym] %></th>
+        <th><%= @user_id_name.find {|u| u.id == vacation.applicant_id.to_i}.name %></th>
+        <th><%= vacation.get_start_date %></th>
+        <th><%= vacation.applied_reason %></th>
+        <th><%= vacation.owner_comment %></th>
+        <th><%= vacation.updated_at %></th>
+    <% end %>
+  </tbody>
+</table>
