@@ -3,9 +3,10 @@
     <thead>
       <tr class='text-center align-middle'>
         <th class='col-md-01 col-sm-01'><%= I18n.t(:user_management, scope: :table_header)[0]%></th>
-        <th class='col-md-04 col-sm-04'><%= I18n.t(:user_management, scope: :table_header)[1]%></th>
-        <th class='col-md-04 col-sm-04'><%= I18n.t(:user_management, scope: :table_header)[2]%></th>
-        <th class='col-md-03 col-sm-03'><%= I18n.t(:user_management, scope: :table_header)[3]%></th>
+        <th class='col-md-03 col-sm-03'><%= I18n.t(:user_management, scope: :table_header)[1]%></th>
+        <th class='col-md-03 col-sm-03'>email</th>
+        <th class='col-md-03 col-sm-03'><%= I18n.t(:user_management, scope: :table_header)[2]%></th>
+        <th class='col-md-02 col-sm-02'><%= I18n.t(:user_management, scope: :table_header)[3]%></th>
       </tr>
     </thead>
     <tbody>
@@ -15,15 +16,18 @@
             <td class='align-middle item-id col-md-01 col-sm-01'>
               <%= user.id %>
             </td>
-            <td class='align-middle item-name col-md-04 col-sm-04'>
+            <td class='align-middle item-name col-md-03 col-sm-03'>
             <%= link_to user.name, edit_user_management_path(user.id) %>
             </td>
-            <td class='align-middle item-role col-md-04 col-sm-04'>
+            <td class='align-middle item-name col-md-03 col-sm-03'>
+              <%= user.email %>
+            </td>
+            <td class='align-middle item-role col-md-03 col-sm-03'>
               <%= all_role[user.role.to_sym] %>
             </td>
           <%end%>
           <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
-          <td class='item-del col-md-03 col-sm-03'>
+          <td class='item-del col-md-02 col-sm-02'>
             <% if @current_user.id != user.id%>
               <%= button_tag I18n.t(:user_management, scope: :table_header)[3] ,name: 'user_del', class:'btn btn-danger' %>
             <% end %>
