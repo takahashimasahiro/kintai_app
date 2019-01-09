@@ -62,7 +62,7 @@
     </div>
   <% end %>
 <% end %>
-<%= form_with url: attendance_path(@current_user.id),
+<%= form_with url: attendance_to_csv_index_path(format: :csv),
               method: 'get', local: true, class: 'attend-output' do |f| %>
   <% if @current_user.owner? %>
     <div class='output'>
@@ -75,5 +75,7 @@
 <%# TODO: 一括登録ボタンとかあるといいかも？ %>
 <%= render :partial => 'attendances/sum_table'%>
 <%= render :partial => 'attendances/attendance_table' %>
+<%= render :partial => 'attendances/modal'%>
+
 
 

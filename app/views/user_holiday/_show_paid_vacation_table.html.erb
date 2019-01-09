@@ -13,12 +13,13 @@
       <tr>
         <%= form_with url: user_holiday_path(@current_user.id),method: 'patch', local: true do %>
           <input type='hidden' name='date' value='<%= row.get_start_date%>'>
-          <th><%= row.get_start_date %></th>
-          <th><%= row.get_days %></th>
-          <th><%= application_status[row.status.to_sym] if row.status %></th>
-          <th><%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
-                                  readonly: !row.status.to_sym.eql?(:applying) %></th>
-          <th><%= row.owner_comment %></th>
+          <td><%= row.get_start_date %></td>
+          <td><%= row.get_days %></td>
+          <td><%= application_status[row.status.to_sym] if row.status %></td>
+          <td>
+          <%= text_field_tag 'reason', row.applied_reason , onchange: "$(this).parent('form').submit();",
+                                  readonly: !row.status.to_sym.eql?(:applying) %></td>
+          <td><%= row.owner_comment %></td>
         <% end %>
       </tr>
     <% end %>
