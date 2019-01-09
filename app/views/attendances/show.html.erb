@@ -62,8 +62,20 @@
     </div>
   <% end %>
 <% end %>
+<%= form_with url: attendance_to_csv_index_path(format: :csv),
+              method: 'get', local: true, class: 'attend-output' do |f| %>
+  <% if @current_user.owner? %>
+    <div class='output'>
+      <%= button_tag("CSV一括出力", name:'output', class: 'btn btn-success btn-output') %>
+      <input type='hidden' name='select_year' value='<%= @first_month.year.to_i %>'>
+      <input type='hidden' name='select_month' value='<%= @first_month.month.to_i %>'>
+    </div>
+  <% end %>
+<% end %>
 <%# TODO: 一括登録ボタンとかあるといいかも？ %>
 <%= render :partial => 'attendances/sum_table'%>
 <%= render :partial => 'attendances/attendance_table' %>
+<%= render :partial => 'attendances/modal'%>
+
 
 
