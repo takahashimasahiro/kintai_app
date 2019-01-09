@@ -26,4 +26,11 @@ RSpec.describe AttendanceToCsvController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'GET #index' do
+    it 'returns http success' do
+      get :index, format: :csv, params: params
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
