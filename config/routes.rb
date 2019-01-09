@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
   get '/' => 'sessions#new'
-  resources :sessions, :users, :attendances, :holidays, :user_holiday, :user_managements, :attendance_to_csv
+  resources :sessions, :users, :attendances, :holidays,
+            :user_holiday, :user_managements, :attendance_to_csv, :operation_log
 end

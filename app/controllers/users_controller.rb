@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :forbid_current_user, only: %i[new create]
   before_action :authenticate_current_user, only: %i[edit update index]
   before_action :apply_count, only: %i[edit update index]
+  before_action :set_paper_trail_whodunnit
 
   def index
     # ユーザー名と本日の出勤状況を取得する

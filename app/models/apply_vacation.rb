@@ -1,6 +1,7 @@
 class ApplyVacation < ApplicationRecord
   validates :applicant_id, presence: true
   validates :get_start_date, presence: true
+  has_paper_trail
 
   enum status: {
     applying: 'applying', # 申請中

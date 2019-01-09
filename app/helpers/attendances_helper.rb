@@ -25,6 +25,7 @@ module AttendancesHelper
   def create_day_of_week_classname(date, select_status, pass_days)
     if holiday?(date)
       # TODO: statusを確認してholidayならこの処理に入れる
+      # 現状平日にholidayを表示させてないので、実相時は要検討
       # 管理者のみの制約が必要では？
       'holiday'
     elsif select_status[1].to_s.include?('vacation')
