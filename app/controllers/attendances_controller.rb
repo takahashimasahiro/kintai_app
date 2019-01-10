@@ -28,6 +28,7 @@ class AttendancesController < ApplicationController
     attend = AttendanceTime.find_or_initialize_by(user_id: @selected_user.id, work_date: registration_date)
     attend.work_start = work_start_time
     attend.work_end = work_end_time
+
     # 勤怠入力
     if attend.update_attend(@selected_user, params[:change_status], params[:vacation_reason])
       redirect_to attendance_path(@current_user.id), flash: { notice: t(:save_success, scope: :messages) }

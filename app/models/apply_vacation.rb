@@ -52,6 +52,7 @@ class ApplyVacation < ApplicationRecord
       vacation.get_days = status.start_with?('vacation') ? 1 : 0.5
       vacation.status = :applying
       vacation.applied_reason = user_reason
+      vacation.owner_comment = nil
       vacation.save!
     end
   rescue StandardError

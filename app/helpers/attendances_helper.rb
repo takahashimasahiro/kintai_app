@@ -1,16 +1,16 @@
 # TODO: docをかく
 module AttendancesHelper
   WORK_STATUS = {
-    work:         I18n.t(:work_status, scope: :attend)[0],
-    vacation:     I18n.t(:work_status, scope: :attend)[1],
-    am_vacation:  I18n.t(:work_status, scope: :attend)[2],
-    pm_vacation:  I18n.t(:work_status, scope: :attend)[3],
-    holiday_work: I18n.t(:work_status, scope: :attend)[4],
-    absence:      I18n.t(:work_status, scope: :attend)[5],
-    holiday:      I18n.t(:work_status, scope: :attend)[6]
+    work:         I18n.t(:work_status, scope: %i[helper attendances])[0],
+    vacation:     I18n.t(:work_status, scope: %i[helper attendances])[1],
+    am_vacation:  I18n.t(:work_status, scope: %i[helper attendances])[2],
+    pm_vacation:  I18n.t(:work_status, scope: %i[helper attendances])[3],
+    holiday_work: I18n.t(:work_status, scope: %i[helper attendances])[4],
+    absence:      I18n.t(:work_status, scope: %i[helper attendances])[5],
+    holiday:      I18n.t(:work_status, scope: %i[helper attendances])[6]
   }.freeze
 
-  # TODO: デフォルト値の設定を考える
+  # TODO: デフォルト値の設定
   DEFAULT_WORK_START = 0 # 出勤時間(hour)
   DEFAULT_WORK_END = 0 # 退勤時間(hour)
 

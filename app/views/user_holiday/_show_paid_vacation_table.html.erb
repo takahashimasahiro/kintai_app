@@ -1,17 +1,17 @@
 <table class='table table-bordered table-striped table-light table-hover table-sm'>
   <thead>
     <tr>
-      <th><%= I18n.t(:table_header, scope: :holiday)[0]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[2]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[5]%></th>
-      <th>申請理由</th>
-      <th>承認者コメント</th>
+      <th><%= t('.table_header')[0]%></th>
+      <th><%= t('.table_header')[1]%></th>
+      <th><%= t('.table_header')[2]%></th>
+      <th><%= t('.table_header')[3]%></th>
+      <th><%= t('.table_header')[4]%></th>
     </tr>
   </thead>
   <tbody>
     <% @my_vacations.each do |row| %>
       <tr>
-        <%= form_with url: user_holiday_path(@current_user.id),method: 'patch', local: true do %>
+        <%= form_with url: user_holiday_path(@current_user.id), method: 'patch', local: true do %>
           <input type='hidden' name='date' value='<%= row.get_start_date%>'>
           <td><%= row.get_start_date %></td>
           <td><%= row.get_days %></td>

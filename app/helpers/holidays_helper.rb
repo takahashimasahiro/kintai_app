@@ -1,10 +1,10 @@
 module HolidaysHelper
   APPLICATION_STATUS = {
-    applying:        I18n.t(:apply_status, scope: :apply)[0],
-    boss_applied:    I18n.t(:apply_status, scope: :apply)[1],
-    admin_applied:   I18n.t(:apply_status, scope: :apply)[2],
-    withdrawal:      I18n.t(:apply_status, scope: :apply)[3],
-    apply_rejection: I18n.t(:apply_status, scope: :apply)[4]
+    applying:        I18n.t(:application_status, scope: %i[helper holidays])[0],
+    boss_applied:    I18n.t(:application_status, scope: %i[helper holidays])[1],
+    admin_applied:   I18n.t(:application_status, scope: %i[helper holidays])[2],
+    withdrawal:      I18n.t(:application_status, scope: %i[helper holidays])[3],
+    apply_rejection: I18n.t(:application_status, scope: %i[helper holidays])[4]
   }.freeze
 
   def application_status

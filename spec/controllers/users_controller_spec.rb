@@ -3,6 +3,19 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:user) { FactoryBot.create :user }
 
+  describe 'GET #index' do
+    let(:params) do
+      {
+        id: user.id
+      }
+    end
+    it 'returns http success' do
+      session[:id] = user.id
+      get :index, params: params
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe 'GET #new' do
     it 'returns http success' do
       get :new
