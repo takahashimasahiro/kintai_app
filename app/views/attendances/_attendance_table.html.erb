@@ -17,18 +17,18 @@
     <%# 日付を指定して勤怠状況を検索する %>
     <% attendance_row = choice_attendanceTime(@attendance_table , row_date) %>
       <%# ステータスをみて、有休申請してる時は色を変える %>
-      <tr name='row_<%=row%>' 
+      <tr name='row_<%=row%>'
       class='text-center day_of_week_<%= create_day_of_week_classname(row_date,
                                           selected_status(attendance_row, row_date), @pass_days) %>'>
         <th name='date_<%=row%>'><%=row%></th>
         <th name='row_of_week_<%=row_date.wday%>'>
           <%= t(:abbr_day_names, scope: :date)[row_date.wday] %>
         </th>
-        <th name='start_work_<%=row%>'>
+        <th name='start_work_<%=row%>' class='start_work'>
           <%= time_select("work_#{row_date.day}", 'start',
-                          default: show_start_attendanceTime(attendance_row, row_date)) %>
+                          default: show_start_attendanceTime(attendance_row, row_date))%>
         </th>
-        <th name='end_work_<%=row%>'>
+        <th name='end_work_<%=row%>'  class='end_work'>
           <%= time_select("work_#{row_date.day}", 'end',
                           default: show_end_attendanceTime(attendance_row, row_date)) %>
         </th>
@@ -38,7 +38,7 @@
         <th name='break_time_<%=row%>'>
           <%= convert_min(calculate_break_time(attendance_row, row_date)) %>
         </th>
-        <th name='status_row_<%=row%>'>
+        <th name='status_row_<%=row%>' class='status'>
         <%# vacationならモーダル表示して理由を入力させる。 %>
           <%= select_tag("status_#{row}",
               options_for_select(statuses_by_holiday(row_date),

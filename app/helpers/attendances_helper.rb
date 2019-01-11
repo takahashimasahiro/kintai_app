@@ -1,6 +1,7 @@
 # TODO: docをかく
 module AttendancesHelper
   WORK_STATUS = {
+    not_work: '未出勤',
     work:         I18n.t(:work_status, scope: %i[helper attendances])[0],
     vacation:     I18n.t(:work_status, scope: %i[helper attendances])[1],
     am_vacation:  I18n.t(:work_status, scope: %i[helper attendances])[2],
@@ -109,7 +110,7 @@ module AttendancesHelper
     elsif weekend?(date)
       [all_status[:holiday], :holiday]
     else
-      [all_status[:work], :work]
+      [all_status[:not_work], :not_work]
     end
   end
 
@@ -235,6 +236,7 @@ module AttendancesHelper
       }.invert
     else
       {
+        not_work: '未出勤',
         work: all_status[:work],
         vacation: all_status[:vacation],
         am_vacation: all_status[:am_vacation],
