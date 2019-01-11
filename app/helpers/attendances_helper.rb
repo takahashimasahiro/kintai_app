@@ -228,11 +228,19 @@ module AttendancesHelper
   end
 
   # 平日休日で表示するstatusを変える(平日に休出を出すのはよくない)
-  def statuses_by_holiday(date)
+  def statuses_by_holiday(attend, date)
     if holiday?(date) || weekend?(date)
       {
         holiday: all_status[:holiday],
         holiday_work: all_status[:holiday_work]
+      }.invert
+    elsif attend
+      {
+        work: all_status[:work],
+        vacation: all_status[:vacation],
+        am_vacation: all_status[:am_vacation],
+        pm_vacation: all_status[:pm_vacation],
+        absence: all_status[:absence]
       }.invert
     else
       {
