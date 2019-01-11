@@ -20,6 +20,7 @@ class AttendancesController < ApplicationController
 
   def update
     raise StandardError if params[:change_status].blank?
+
     # 月初取得
     @first_month = AttendanceTime.first_month(params[:select_year], params[:select_month])
     # ユーザー取得

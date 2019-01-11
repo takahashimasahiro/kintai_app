@@ -35,7 +35,7 @@
 <div class='search-rightend'>
   <div class='inputtime'>
     <%= form_with url: attendance_path(@current_user.id),
-              method: 'patch', local: true, id: 'save-button', class: 'attend-save' do |f| %>
+              method: 'patch', local: true, id: 'save-button' do |f| %>
       <%= button_tag(t('.work_status')[0] , name: 'syukkin', class: 'btn btn-success') %>
       <%= button_tag(t('.work_end'), name: 'taikin', class: 'btn btn-success')%>
       <input type='hidden' name='select_user' value='<%= @selected_user.id %>' >
@@ -52,7 +52,7 @@
   </div>
 </div>
 <%= form_with url: attendance_to_csv_path(id: @current_user.id, format: :csv),
-              method: 'get', local: true, class: 'attend-output' do |f| %>
+              method: 'get', local: true do |f| %>
   <% if @current_user.owner? %>
     <div class='output'>
       <%= button_tag(t('.output'), name:'output', class: 'btn btn-success btn-output') %>
@@ -63,7 +63,7 @@
   <% end %>
 <% end %>
 <%= form_with url: attendance_to_csv_index_path(format: :csv),
-              method: 'get', local: true, class: 'attend-output' do |f| %>
+              method: 'get', local: true do |f| %>
   <% if @current_user.owner? %>
     <div class='output'>
       <%= button_tag(t('.bulk_output'), name:'output', class: 'btn btn-success btn-output') %>

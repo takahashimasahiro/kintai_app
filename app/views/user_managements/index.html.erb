@@ -1,5 +1,18 @@
 <h1><%= t '.title' %></h1>
-  <%= form_with url: new_user_management_path, method: 'get', local: true do |f| %>
-    <%= button_tag t('.button'), name: 'user_new', class: 'btn btn-info' %>
-  <%end%>
+  <div class='row'>
+    <div class='col-sm-2'>
+    <%= form_with url: new_user_management_path, method: 'get', local: true do |f| %>
+      <%= button_tag t('.button'), id: 'new_btn', name: 'user_new', class: 'btn btn-info' %>
+    </div>
+    <%end%>
+    <div class='col-sm-6'>
+    </div>
+    <div class='col-sm-4'>
+      <%= form_with url: new_user_management_path, method: 'get',class: 'bulk', local: true do |f| %>
+      <%# TODO:デバック用にマイナス値を入力可 %>
+        <%= f.number_field 'count', name: 'holiday_counter', class: 'holiday_input col-sm-7', min: -10, maxlength: 2, max: 20 %>
+        <%= button_tag '一括入力', id: 'bulk_btn', class: 'btn btn-info col-sm-4'%>
+      <%end%>
+    </div>
+  </div>
 <%= render :partial => "user_managements/user_management_table"%>

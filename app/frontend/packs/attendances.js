@@ -16,24 +16,28 @@ $(function () {
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
     changeRowData(today.getDate())
+    $('#save-button').submit()
   });
   // 退勤ボタン押下
   $('button[name=taikin]').on('click', () => {
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
     changeRowData(today.getDate())
+    $('#save-button').submit()
   });
   // 出勤時間変更
   $('.start_work').children('select').on('change', function () {
     selectRow = Number($(this).parent().attr('name').split('_')[2])
     changeWorkStatus(selectRow, $(`#status_${selectRow}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(selectRow)
+    $('#save-button').submit()
   });
   // 退勤時間変更
   $('.end_work').children('select').on('change', function () {
     selectRow = Number($(this).parent().attr('name').split('_')[2])
     changeWorkStatus(selectRow, $(`#status_${selectRow}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(selectRow)
+    $('#save-button').submit()
   });
 
   // ステータス変更
@@ -74,5 +78,4 @@ function changeRowData(row) {
   $('input[name=change_end_hour]')[0].value = $(`#work_${row}_end_4i`)[0].value
   $('input[name=change_end_minute]')[0].value = $(`#work_${row}_end_5i`)[0].value
   $('input[name=change_status]')[0].value = $(`#status_${row}`)[0].value
-  $('#save-button').submit()
 }

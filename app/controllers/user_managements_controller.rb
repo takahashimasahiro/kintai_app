@@ -48,6 +48,10 @@ class UserManagementsController < ApplicationController
     end
   end
 
+  def update_all
+    User.update_all(paid_holiday_count += params[:holiday_counter])
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
