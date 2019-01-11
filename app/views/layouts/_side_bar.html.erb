@@ -1,0 +1,40 @@
+<div class="col-sm-3 sidebar open bg-dark">
+  <div class="row sidebar-header header-cover text-light" >
+    <ul class="col-md-7 user-profile">
+      <li class="profile-profile"><%= t '.profile' %></li>
+      <li class="profile-username"><%= @current_user.name %></li>
+      <li class="profile-email"><%= @current_user.email %></li>
+      <li class="profile-holidaycount">
+        <%="#{t('.paid_count')}: #{@current_user.paid_holiday_count}" %>
+      </li>
+    </ul>
+  </div>
+  <div class="list-group">
+    <%= link_to t('.menu')[0], attendance_path(@current_user.id),
+        class: 'list-group-item list-group-item-action list-group-item-light' %>
+    <%= link_to t('.menu')[1], users_path,
+        class: 'list-group-item list-group-item-action list-group-item-light'%>
+    <% if @current_user.owner? %>
+      <%= link_to edit_holiday_path(@current_user.id),
+          class: 'list-group-item list-group-item-action list-group-item-light' do %>
+        <%= t('.menu')[2]%>
+        <% if @apply_count != 0 %>
+          <span class="badge badge-primary badge-pill"><%= @apply_count %></span>
+        <% end %>
+      <%end%>
+    <%end%>
+    <%= link_to user_holiday_path(@current_user.id),
+        class: 'list-group-item list-group-item-action list-group-item-light' do %>
+      <%= t('.menu')[3] %>
+      <span class="badge badge-primary badge-pill"></span>
+    <% end %>
+    <%= link_to t('.menu')[4], operation_log_index_path , method: 'get',
+        class: 'list-group-item list-group-item-action list-group-item-light' if @current_user.owner? %>
+    <%= link_to t('.menu')[5], edit_user_path(@current_user.id),
+        class: 'list-group-item list-group-item-action list-group-item-light' %>
+    <%= link_to t('.menu')[6],user_managements_path , method: 'get',
+        class: 'list-group-item list-group-item-action list-group-item-light' if @current_user.owner? %>
+    <%= link_to t('.menu')[7], session_path(@current_user.id), method: 'delete',
+        class: 'list-group-item list-group-item-action list-group-item-light'%>
+  </div>
+</div>

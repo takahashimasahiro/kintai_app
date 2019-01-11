@@ -1,0 +1,13 @@
+<h1><%= t '.header' %></h1>
+<ul class="nav nav-tabs">
+  <div id="nav1" class="nav-item nav-link active" data-toggle="tab"><%= t '.tab_vacation' %></div>
+  <div id="nav2" class="nav-item nav-link" data-toggle="tab" ><%= t '.tab_user'%></div>
+</ul>
+<div class="tab-content">
+  <div id="tab1" class="tab-pane active" >
+    <%= render :partial => 'operation_log/logs_table_vacation' %>
+  </div>
+  <div id="tab2" class="tab-pane" >
+    <%= render :partial => 'operation_log/logs_table_user' %>
+  </div>
+</div>

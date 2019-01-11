@@ -1,9 +1,9 @@
 <div class='main item'>
   <%= f.label :page, 'email', class: 'text-light' %>
-  <%= f.email_field :email %>
+  <%= email_field :user, :email %>
 </div>
 <div class='main item'>
   <%= f.label :page, 'password', class: 'text-light' %>
-  <%= f.password_field :password %>
+  <%= password_field :user, :password %>
 </div>
 <%= render :partial => "templates/errmessage"%>

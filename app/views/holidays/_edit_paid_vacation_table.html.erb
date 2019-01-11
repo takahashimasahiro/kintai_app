@@ -1,27 +1,32 @@
 <table class='table table-bordered table-striped table-light table-hover table-sm'>
   <thead>
     <tr>
-      <th><%= I18n.t(:table_header, scope: :holiday)[0]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[1]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[2]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[3]%></th>
-      <th><%= I18n.t(:table_header, scope: :holiday)[4]%></th>
+      <th><%= t('.table_header')[0]%></th>
+      <th><%= t('.table_header')[1]%></th>
+      <th><%= t('.table_header')[2]%></th>
+      <th><%= t('.table_header')[3]%></th>
+      <th><%= t('.table_header')[4]%></th>
+      <th><%= t('.table_header')[5]%></th>
+      <th><%= t('.table_header')[6]%></th>
     </tr>
   </thead>
   <tbody>
-  <% for row in @applying_vacation do %>
+  <% @applying_vacation.each_with_index do |row, index| %>
+    <tr class='<%=index%>' >
     <%= form_with url: holiday_path(@current_user.id), method: 'patch', local: true do %>
-    <tr>
       <input type='hidden' name='get_date' value="<%=row.get_start_date%>">
-      <input type='hidden' name='user_id' value="<%=row.applicant_id%>">
-      <input type='hidden' name='button' value=''>
+      <input type='hidden' name='user_id'  value="<%=row.applicant_id%>">
+      <input type='hidden' name='button' class="button_<%= index %>" value=''>
+      <input type='hidden' name='comment' class="comment_<%= index %>" value=''>
       <th><%= row.get_start_date%></th>
       <th><%= row.name %></th>
       <th><%= row.get_days %></th>
-      <th><%= button_tag I18n.t(:approve, scope: :holiday), name:'approve', class:'btn btn-success' %></th>
-      <th><%= button_tag I18n.t(:dismiss, scope: :holiday), name:'dismiss', class:'btn btn-danger' %></th>
+      <th><%= row.applied_reason %></th>
+      <th><%= button_tag t('.approve'), name:'approve', class:'btn btn-success' %></th>
+      <th><%= button_tag t('.dismiss'), name:'dismiss', class:'btn btn-danger' %></th>
+    <% end %>
+      <th><%= text_field_tag 'owner-comment', row.owner_comment %></th>
     </tr>
-    <%end%>
   <% end %>
   </tbody>
 </table>

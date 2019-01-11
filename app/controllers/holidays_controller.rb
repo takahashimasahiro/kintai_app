@@ -1,10 +1,7 @@
 class HolidaysController < ApplicationController
   before_action :authenticate_current_user
   before_action :apply_count
-
-  def show
-    @my_vacations = @current_user.apply_vacations.all.order(:get_start_date)
-  end
+  before_action :set_paper_trail_whodunnit
 
   def edit
     # 有休申請者一覧を表示
@@ -17,6 +14,9 @@ class HolidaysController < ApplicationController
   def update
     vacation_data = ApplyVacation.find_by(applicant_id: params[:user_id], get_start_date: params[:get_date])
     vacation_data.status = params[:button]
+    raise StandardError unless vacation_data.status
+
+    vacation_data.owner_comment = params[:comment]
     if params[:button] == 'admin_applied'
       # 許可
       vacation_data.reduce_holiday_count

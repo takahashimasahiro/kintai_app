@@ -2,17 +2,20 @@
   <table class='table table-condensed table-bordered table-sm'>
     <thead>
       <tr>
-        <th><%= I18n.t(:user_list, scope: :table_header)[0]%></th>
-        <th><%= I18n.t(:user_list, scope: :table_header)[1]%></th>
-        <th><%= I18n.t(:user_list, scope: :table_header)[2]%></th>
+        <th><%= t('.table_header')[0]%></th>
+        <th><%= t('.table_header')[1]%></th>
+        <th><%= t('.table_header')[2]%></th>
+        <th><%= t('.table_header')[3]%></th>
       </tr>
     </thead>
     <tbody>
       <% @state_of_all_user.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user.status ? user_select_status(user.status.to_sym) :  I18n.t(:undecided, scope: :attend) %></td>
+          <td><%= user.status ? user_select_status(user.status.to_sym) :  t('.undecided') %></td>
           <td><%= user.updated_at %></td>
+          <% reason =  @vacation_reason.select{|x| x[0] if x[0] == user.id }[0] %>
+          <td><%= reason[1] if reason %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,0 +1,45 @@
+<table class='table table-bordered table-striped table-light table-hover table-sm'>
+  <thead>
+    <tr>
+      <th><%= t('.table_header')[0]%></th>
+      <th><%= t('.table_header')[1]%></th>
+      <th><%= t('.table_header')[2]%></th>
+      <th><%= t('.table_header')[3]%></th>
+      <th><%= t('.table_header')[4]%></th>
+      <th><%= t('.table_header')[5]%></th>
+      <th><%= t('.table_header')[6]%></th>
+      <th><%= t('.table_header')[7]%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_user.each do |user| %>
+        <% user.versions.each do |version| %>
+          <tr>
+            <th><%= version.event %></th>
+            <th><%= @user_id_name.find {|u| u.id == version.whodunnit.to_i }.name if !version.whodunnit.nil? %></th>
+            <% update_data = log_convert_hash(version) %>
+            <% if update_data.nil? %>
+              <th></th> <th></th> <th></th> <th></th> <th></th>
+            <% else %>
+              <th><%= update_data[:id] %></th>
+              <th><%= update_data[:name] %></th>
+              <th><%= update_data[:email] %></th>
+              <th><%= all_role[update_data[:role].to_sym]%></th>
+              <th><%= update_data[:BigDecimal18].to_f %></th>
+            <% end %>
+            <th><%= version.created_at %></th>
+          </tr>
+        <%end%>
+          <tr>
+            <th>now</th>
+            <th></th>
+            <th><%= user.id %></th>
+            <th><%= user.name %></th>
+            <th><%= user.email %></th>
+            <th><%= all_role[user.role.to_sym] %></th>
+            <th><%= user.paid_holiday_count %></th>
+            <th><%= user.updated_at %></th>
+          </tr>
+      <%end%>
+  </tbody>
+</table>

@@ -1,27 +1,27 @@
 <div class='item'>
-  <%= form.label :page, I18n.t(:email, scope: %i[activerecord attributes user]) %>
+  <%= form.label :page, t('.email') %>
   <%= text_field :page, :email, value: user.email %>
 </div>
 <div class='item'>
-  <%= form.label :page, I18n.t(:name, scope: %i[activerecord attributes user]) %>
+  <%= form.label :page, t('.name') %>
   <%= text_field :page, :name,value: user.name %>
 </div>
 <div class='item'>
-  <%= form.label :page, I18n.t(:role, scope: %i[activerecord attributes user]) %>
+  <%= form.label :page, t('.role') %>
   <%= select_tag('role',
                 options_for_select(all_role.invert,
                                   :selected => user.role),
                 class: 'form-control-sm')%>
 </div>
 <div class='item'>
-  <%= form.label :page, I18n.t(:paid_holiday_count, scope: %i[activerecord attributes user]) %>
+  <%= form.label :page, t('.paid_holiday_count') %>
   <%= select_tag('holiday_count',
                 options_for_select(0.step(20,0.5),
                                   :selected => user.paid_holiday_count),
                 class: 'form-control-sm')%>
 </div>
 <div class='item'>
-  <%= form.label :page, I18n.t(:password, scope: %i[activerecord attributes user]) %>
+  <%= form.label :page, t('.password') %>
   <%= password_field :page, :password %>
 </div>
 <%= render :partial => "templates/errmessage"%>

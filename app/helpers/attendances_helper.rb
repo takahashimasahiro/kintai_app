@@ -1,16 +1,16 @@
 # TODO: docをかく
 module AttendancesHelper
   WORK_STATUS = {
-    work:         I18n.t(:work_status, scope: :attend)[0],
-    vacation:     I18n.t(:work_status, scope: :attend)[1],
-    am_vacation:  I18n.t(:work_status, scope: :attend)[2],
-    pm_vacation:  I18n.t(:work_status, scope: :attend)[3],
-    holiday_work: I18n.t(:work_status, scope: :attend)[4],
-    absence:      I18n.t(:work_status, scope: :attend)[5],
-    holiday:      I18n.t(:work_status, scope: :attend)[6]
+    work:         I18n.t(:work_status, scope: %i[helper attendances])[0],
+    vacation:     I18n.t(:work_status, scope: %i[helper attendances])[1],
+    am_vacation:  I18n.t(:work_status, scope: %i[helper attendances])[2],
+    pm_vacation:  I18n.t(:work_status, scope: %i[helper attendances])[3],
+    holiday_work: I18n.t(:work_status, scope: %i[helper attendances])[4],
+    absence:      I18n.t(:work_status, scope: %i[helper attendances])[5],
+    holiday:      I18n.t(:work_status, scope: %i[helper attendances])[6]
   }.freeze
 
-  # TODO: デフォルト値の設定を考える
+  # TODO: デフォルト値の設定
   DEFAULT_WORK_START = 0 # 出勤時間(hour)
   DEFAULT_WORK_END = 0 # 退勤時間(hour)
 
@@ -24,8 +24,12 @@ module AttendancesHelper
   # @return [String]
   def create_day_of_week_classname(date, select_status, pass_days)
     if holiday?(date)
+      # TODO: statusを確認してholidayならこの処理に入れる
+      # 現状平日にholidayを表示させてないので、実相時は要検討
+      # 管理者のみの制約が必要では？
       'holiday'
     elsif select_status[1].to_s.include?('vacation')
+      # TODO: holiday?(date) == true でもstatusがholiday_workならこの処理に入れたい
       pass_days.select { |x| x[0] == date }[0] ? 'approved' : 'not_approved'
     else
       date.wday.to_s
@@ -202,6 +206,41 @@ module AttendancesHelper
       I18n.t(:other, scope: %i[time hours], count: hour)
     else
       I18n.t(:other, scope: %i[time hours], count: hour) + I18n.t(:other, scope: %i[datetime distance_in_words x_minutes], count: min)
+    end
+  end
+
+  # 日付から平日休日を判別し、表示させる状態を返却する
+  def days_statuses(date)
+    statuses = []
+    if holiday?(date)
+      all_status.each_pair do |key, _val|
+        statuses += [key, value] if key == :holiday_work || key == :holiday
+      end
+    else
+      all_status.each_pair do |key, _val|
+        if key == :work || key == :vacation || key == :am_vacation || key == :pm_vacation || key == :absence
+          statuses += [key, value]
+        end
+      end
+    end
+    statuses
+  end
+
+  # 平日休日で表示するstatusを変える(平日に休出を出すのはよくない)
+  def statuses_by_holiday(date)
+    if holiday?(date) || weekend?(date)
+      {
+        holiday: all_status[:holiday],
+        holiday_work: all_status[:holiday_work]
+      }.invert
+    else
+      {
+        work: all_status[:work],
+        vacation: all_status[:vacation],
+        am_vacation: all_status[:am_vacation],
+        pm_vacation: all_status[:pm_vacation],
+        absence: all_status[:absence]
+      }.invert
     end
   end
 end

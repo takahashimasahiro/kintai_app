@@ -1,6 +1,6 @@
 require 'csv'
 CSV.generate do |csv|
-  csv << t(:csv_header, scope: :table_header)
+  csv << t('.header')
   sum_break_time = 0
   sum_work_time = 0
   absence_count = 0
@@ -33,7 +33,7 @@ CSV.generate do |csv|
     sum_work_time += calculate_working_time(select_attend, row_date)
     absence_count += 1 if select_attend.status.to_sym == :absence
   end
-  csv << t(:csv_sum_header, scope: :table_header)
+  csv << t('.sum')
   csv << [
     '',
     @selected_user.name, # ユーザー名

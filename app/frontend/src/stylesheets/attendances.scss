@@ -1,5 +1,9 @@
 @import "./application";
 
+#apply_reason {
+  width: 100%;
+}
+
 .search-user{
   line-height: 45px;
 }
@@ -18,7 +22,7 @@
   background-color: #b5f7b8;
 }
 .day_of_week_not_approved {
-  background-color: #dfe680;
+  background-color: #f8ff95;
 }
 
 
