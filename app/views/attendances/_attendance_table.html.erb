@@ -41,7 +41,7 @@
         <th name='status_row_<%=row%>' class='status'>
         <%# vacationならモーダル表示して理由を入力させる。 %>
           <%= select_tag("status_#{row}",
-              options_for_select(statuses_by_holiday(row_date),
+              options_for_select(statuses_by_holiday(attendance_row,row_date),
               selected: selected_status(attendance_row, row_date)),
               disabled: is_include?(@pass_days, row_date),
               class: 'form-control-sm')%>

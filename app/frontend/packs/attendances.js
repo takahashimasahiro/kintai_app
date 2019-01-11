@@ -26,15 +26,13 @@ $(function () {
   // 出勤時間変更
   $('.start_work').children('select').on('change', function () {
     selectRow = Number($(this).parent().attr('name').split('_')[2])
-    // statusが未出勤なら出勤にする処理
-    $(`#status_${selectRow}`)[0].selectedIndex = 1
+    changeWorkStatus(selectRow, $(`#status_${selectRow}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(selectRow)
   });
   // 退勤時間変更
   $('.end_work').children('select').on('change', function () {
     selectRow = Number($(this).parent().attr('name').split('_')[2])
-    // statusが未出勤なら出勤にする処理
-    $(`#status_${selectRow}`)[0].selectedIndex = 1
+    changeWorkStatus(selectRow, $(`#status_${selectRow}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(selectRow)
   });
 
@@ -64,6 +62,10 @@ $(function () {
     $('#modalDialog').fadeOut(0);
   })
 });
+
+function changeWorkStatus(row, youbi){
+  $(`#status_${row}`)[0].value = (youbi == 'holiday' || youbi == '0' || youbi == '6' ) ? "holiday_work" : "work"
+}
 
 function changeRowData(row) {
   $('input[name=change_day]')[0].value = row
