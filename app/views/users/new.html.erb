@@ -1,14 +1,14 @@
 <div class="container">
   <div class="main bg-dark text-light">
     <div class="login-form">
-      <h1><%= I18n.t(:sign_up, scope: :session) %></h1>
+      <h1><%= t '.sign_up' %></h1>
       <%= form_with model: @user, url: users_path ,method: :post , local: true do |form| %>
         <div class='main item'>
           <%= form.label :page, 'name', class: 'text-light' %>
           <%= form.text_field :name, maxlength: 20 %>
         </div>
         <%= render :partial => "templates/input", :locals => {f: form}%>
-        <%= form.submit I18n.t(:sign_up, scope: :session), class: "btn btn-default" %>
+        <%= form.submit t('.sign_up'), class: "btn btn-default" %>
       <% end %>
     </div>
   </div>

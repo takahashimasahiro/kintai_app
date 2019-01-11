@@ -2,11 +2,11 @@
   <table class='table table-bordered  table-striped table-light table-hover table-sm'>
     <thead>
       <tr class='text-center align-middle'>
-        <th class='col-md-01 col-sm-01'><%= I18n.t(:user_management, scope: :table_header)[0]%></th>
-        <th class='col-md-03 col-sm-03'><%= I18n.t(:user_management, scope: :table_header)[1]%></th>
-        <th class='col-md-03 col-sm-03'>email</th>
-        <th class='col-md-03 col-sm-03'><%= I18n.t(:user_management, scope: :table_header)[2]%></th>
-        <th class='col-md-02 col-sm-02'><%= I18n.t(:user_management, scope: :table_header)[3]%></th>
+        <th class='col-md-01 col-sm-01'><%= t('.table_header')[0]%></th>
+        <th class='col-md-03 col-sm-03'><%= t('.table_header')[1]%></th>
+        <th class='col-md-03 col-sm-03'><%= t('.table_header')[2]%></th>
+        <th class='col-md-03 col-sm-03'><%= t('.table_header')[3]%></th>
+        <th class='col-md-02 col-sm-02'><%= t('.table_header')[4]%></th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +29,7 @@
           <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
           <td class='item-del col-md-02 col-sm-02'>
             <% if @current_user.id != user.id%>
-              <%= button_tag I18n.t(:user_management, scope: :table_header)[3] ,name: 'user_del', class:'btn btn-danger' %>
+              <%= button_tag(t('.delete'),name: 'user_del', class:'btn btn-danger')%>
             <% end %>
           </td>
           <%end%>

@@ -1,13 +1,13 @@
 <table id="attendance-table" class='table table-condensed table-bordered table-sm' >
   <thead class='thead-light'>
     <tr class='text-center'>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[0]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[1]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[2]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[3]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[4]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[5]%></th>
-      <th><%= label :page, I18n.t(:attendance, scope: :table_header)[6]%></th>
+      <th><%= label :page, t('.table_header')[0]%></th>
+      <th><%= label :page, t('.table_header')[1]%></th>
+      <th><%= label :page, t('.table_header')[2]%></th>
+      <th><%= label :page, t('.table_header')[3]%></th>
+      <th><%= label :page, t('.table_header')[4]%></th>
+      <th><%= label :page, t('.table_header')[5]%></th>
+      <th><%= label :page, t('.table_header')[6]%></th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,9 @@
     <%# 日付を指定して勤怠状況を検索する %>
     <% attendance_row = choice_attendanceTime(@attendance_table , row_date) %>
       <%# ステータスをみて、有休申請してる時は色を変える %>
-      <tr name='row_<%=row%>' class='text-center day_of_week_<%= create_day_of_week_classname(row_date, selected_status(attendance_row, row_date), @pass_days) %>'>
+      <tr name='row_<%=row%>' 
+      class='text-center day_of_week_<%= create_day_of_week_classname(row_date,
+                                          selected_status(attendance_row, row_date), @pass_days) %>'>
         <th name='date_<%=row%>'><%=row%></th>
         <th name='row_of_week_<%=row_date.wday%>'>
           <%= t(:abbr_day_names, scope: :date)[row_date.wday] %>

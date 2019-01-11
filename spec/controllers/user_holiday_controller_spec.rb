@@ -17,8 +17,16 @@ RSpec.describe UserHolidayController, type: :controller do
     end
   end
   describe 'PATCH #update' do
-    it '' do
-      # TODO:
+    let(:params) do
+      {
+        id: 1,
+        date: Date.today,
+        reason: 'TEST'
+      }
+    end
+    it 'returns http success' do
+      patch :update, params: params
+      expect(response).to redirect_to user_holiday_path(user.id)
     end
   end
 end
