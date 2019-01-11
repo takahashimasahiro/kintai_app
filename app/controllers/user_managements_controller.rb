@@ -49,7 +49,7 @@ class UserManagementsController < ApplicationController
   end
 
   def update_all
-    User.update_all(paid_holiday_count += params[:holiday_counter])
+    User.update_all(paid_holiday_count: paid_holiday_count + params[:holiday_counter])
   end
 
   def destroy
