@@ -98,10 +98,8 @@ GEM
     ffi (1.9.25-java)
     ffi (1.9.25-x64-mingw32)
     ffi (1.9.25-x86-mingw32)
-    gli (2.18.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    hashie (3.6.0)
     holiday_japan (1.4.1)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
@@ -258,13 +256,6 @@ GEM
       faraday_middleware (~> 0.10.0)
       faye-websocket (~> 0.10.6)
       multi_json (~> 1.0, >= 1.0.3)
-    slack-ruby-client (0.13.1)
-      activesupport
-      faraday (>= 0.9)
-      faraday_middleware
-      gli
-      hashie
-      websocket-driver
     spoon (0.0.6)
       ffi
     spring (2.0.2)
@@ -342,7 +333,6 @@ DEPENDENCIES
   ruby-debug-ide
   sass-rails (~> 5.0)
   slack-api
-  slack-ruby-client
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
