@@ -4,4 +4,8 @@ Rails.application.routes.draw do
 
   resources :sessions, :users, :attendances, :holidays,
             :user_holiday, :user_managements, :attendance_to_csv, :operation_log
+
+  namespace :api do
+    resources :attends
+  end
 end

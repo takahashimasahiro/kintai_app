@@ -7,9 +7,10 @@
         <%= form.submit( t('.login') , class: "btn btn-default")%>
       <% end %>
     </div>
-      <%= form_with url: new_user_path,method: :get, local: true do |form| %>
-        <p><%= t('.sign_up_here') %></p>
-        <%= form.submit( t('.sign_up') , class: "btn btn-default") %>
-      <% end %>
+    <%# TODO: ユーザー登録はslack連携か管理者のみ作成できる方が安全 %>
+      <%# <%= form_with url: new_user_path,method: :get, local: true do |form| %>
+        <%# <p><%= t('.sign_up_here') %></p>
+        <%# <%= form.submit( t('.sign_up') , class: "btn btn-default") %>
+      <%# <% end %>
   </div>
 </div>
