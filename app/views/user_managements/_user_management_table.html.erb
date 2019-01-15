@@ -2,32 +2,36 @@
   <table class='table table-bordered  table-striped table-light table-hover table-sm'>
     <thead>
       <tr class='text-center align-middle'>
-        <th class='col-md-01 col-sm-01'><%= t('.table_header')[0]%></th>
-        <th class='col-md-03 col-sm-03'><%= t('.table_header')[1]%></th>
-        <th class='col-md-03 col-sm-03'><%= t('.table_header')[2]%></th>
-        <th class='col-md-03 col-sm-03'><%= t('.table_header')[3]%></th>
-        <th class='col-md-02 col-sm-02'><%= t('.table_header')[4]%></th>
+        <th><%= t('.table_header')[0]%></th>
+        <th><%= t('.table_header')[1]%></th>
+        <th><%= t('.table_header')[2]%></th>
+        <th><%= t('.table_header')[3]%></th>
+        <th>残有休数</th>
+        <th><%= t('.table_header')[4]%></th>
       </tr>
     </thead>
     <tbody>
       <% @all_users.each do |user| %>
         <tr class='text-center'>
           <%= form_with url: edit_user_management_path(user.id), method: 'get',local: true do |f| %>
-            <td class='align-middle item-id col-md-01 col-sm-01'>
+            <td class='align-middle item-id'>
               <%= user.id %>
             </td>
-            <td class='align-middle item-name col-md-03 col-sm-03'>
+            <td class='align-middle item-name'>
             <%= link_to user.name, edit_user_management_path(user.id) %>
             </td>
-            <td class='align-middle item-name col-md-03 col-sm-03'>
+            <td class='align-middle item-name'>
               <%= user.email %>
             </td>
-            <td class='align-middle item-role col-md-03 col-sm-03'>
+            <td class='align-middle item-role'>
               <%= all_role[user.role.to_sym] %>
+            </td>
+            <td class='align-middle item-role'>
+              <%= user.paid_holiday_count%>
             </td>
           <%end%>
           <%= form_with url: user_management_path(user.id), method: 'DELETE', local: true do |f| %>
-          <td class='item-del col-md-02 col-sm-02'>
+          <td class='item-del'>
             <% if @current_user.id != user.id%>
               <%= button_tag(t('.delete'),name: 'user_del', class:'btn btn-danger')%>
             <% end %>
