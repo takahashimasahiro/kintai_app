@@ -5,12 +5,12 @@ require 'rails'
 require 'eventmachine'
 require 'faye/websocket'
 
-response = HTTP.post(
-  'https://slack.com/api/rtm.start',
-  params: {
-    token: Rails.application.credentials.slack[:token_key]
-  }
-)
+# response = HTTP.post(
+#   'https://slack.com/api/rtm.start',
+#   params: {
+#     token: Rails.application.credentials.slack[:token_key]
+#   }
+# )
 
 # EM.run do
 #   ws = Faye::WebSocket::Client.new(JSON.parse(response.body)['url'])
