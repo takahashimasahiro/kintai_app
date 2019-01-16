@@ -22,9 +22,11 @@ require 'faye/websocket'
 #     if event_data['text'] == 'hi'
 #       ws.send({
 #         type: 'message',
-#         text: "#{event_data['text']} , <@#{event_data['user']}>",
+#         text: "<@#{event_data['user']}> おはようございます。(#{DateTime.now.strftime('%Y/%m/%d %H:%M')})",
 #         channel: event_data['channel']
 #       }.to_json)
+#     elsif event_data['text'] == 'bye'
+#     elsif event_data['text'] == '休み'
 #     end
 #   end
 

@@ -14,7 +14,7 @@
 # end
 #
 every 1.days do
-  runner "PaperTrail::Version.delete ['created_at < ?', 3.day.ago] "
+  runner "PaperTrail::Version.where(['created_at < ?', 3.day.ago]).destroy_all"
 end
 
 # Learn more: http://github.com/javan/whenever
