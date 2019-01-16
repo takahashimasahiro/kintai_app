@@ -32,15 +32,17 @@
           <th><%= version.created_at %></th>
         </tr>
       <%end%>
-        <th><%= t '.now' %></th>
-        <th></th>
-        <th><%= vacation.id %></th>
-        <th><%= application_status[vacation.status.to_sym] %></th>
-        <th><%= @user_id_name.find {|u| u.id == vacation.applicant_id.to_i}.name %></th>
-        <th><%= vacation.get_start_date %></th>
-        <th><%= vacation.applied_reason %></th>
-        <th><%= vacation.owner_comment %></th>
-        <th><%= vacation.updated_at %></th>
+        <tr>
+          <th><%= t '.now' %></th>
+          <th></th>
+          <th><%= vacation.id %></th>
+          <th><%= application_status[vacation.status.to_sym] %></th>
+          <th><%= @user_id_name.find {|u| u.id == vacation.applicant_id.to_i}.name %></th>
+          <th><%= vacation.get_start_date %></th>
+          <th><%= vacation.applied_reason %></th>
+          <th><%= vacation.owner_comment %></th>
+          <th><%= vacation.updated_at %></th>
+        </tr>
     <% end %>
   </tbody>
 </table>
