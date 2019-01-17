@@ -48,13 +48,12 @@ gem 'paper_trail'
 
 gem 'whenever', require: false
 
+# 非同期処理
+gem 'sucker_punch'
+
 # slack-bot
-gem 'selenium-webdriver'
 gem 'slack'
 gem 'slack-api'
-
-gem 'http'
-gem 'json'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
