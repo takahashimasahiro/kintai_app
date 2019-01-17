@@ -10,7 +10,7 @@ RSpec.describe AttendancesHelper, type: :module do
 
   describe 'all_status' do
     it 'normal process' do
-      expect(helper.all_status.length).to eq 7
+      expect(helper.all_status.length).to eq 8
       expect(helper.all_status[:work]).to eq '出勤'
     end
   end
@@ -137,7 +137,7 @@ RSpec.describe AttendancesHelper, type: :module do
 
     it 'no data and weekday' do
       expect(helper).to receive(:weekend?).with(work_date).and_return(false)
-      expect(helper.selected_status(nil, work_date)).to eq ['出勤', :work]
+      expect(helper.selected_status(nil, work_date)).to eq ['未出勤', :not_work]
     end
   end
 
