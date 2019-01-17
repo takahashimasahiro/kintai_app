@@ -48,13 +48,19 @@ gem 'paper_trail'
 
 gem 'whenever', require: false
 
+# 非同期処理
+gem 'sucker_punch'
+
+# slack-bot
+gem 'slack'
+gem 'slack-api'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
-  gem 'rspec-rails'
-  # gem 'factory_girl_rails', '~> 4.9'
   gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'rubocop', require: false
 end

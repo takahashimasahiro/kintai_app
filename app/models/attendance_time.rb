@@ -29,6 +29,7 @@ class AttendanceTime < ApplicationRecord
         # 有休申請取消処理
         ApplyVacation.new.apply_cancel(selected_user, work_date)
       end
+
       if input_status.to_sym == :holiday_work
         # 休日出勤の処理(代休関係の処理)
         # TODO: 代休申請が必要かどうか確認

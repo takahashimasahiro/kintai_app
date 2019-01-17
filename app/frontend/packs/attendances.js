@@ -15,6 +15,7 @@ $(function () {
   $('button[name=syukkin]').on('click', () => {
     $(`#work_${today.getDate()}_start_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_start_5i`)[0].value = getMinutes()
+    changeWorkStatus(today.getDate(), $(`#status_${today.getDate()}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(today.getDate())
     $('#save-button').submit()
   });
@@ -22,6 +23,7 @@ $(function () {
   $('button[name=taikin]').on('click', () => {
     $(`#work_${today.getDate()}_end_4i`)[0].value = thisHour()
     $(`#work_${today.getDate()}_end_5i`)[0].value = getMinutes()
+    changeWorkStatus(today.getDate(), $(`#status_${today.getDate()}`).parent().parent().attr('class').split(' ')[1].split('_')[3])
     changeRowData(today.getDate())
     $('#save-button').submit()
   });

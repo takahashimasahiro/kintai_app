@@ -58,8 +58,7 @@ class AttendancesController < ApplicationController
       params[:select_month].to_i,
       params[:change_day].to_i,
       params[:change_start_hour].to_i,
-      params[:change_start_minute].to_i,
-      0
+      params[:change_start_minute].to_i
     )
   end
 
@@ -69,8 +68,7 @@ class AttendancesController < ApplicationController
       params[:select_month].to_i,
       params[:change_day].to_i,
       params[:change_end_hour].to_i,
-      params[:change_end_minute].to_i,
-      0
+      params[:change_end_minute].to_i
     )
   end
 end
