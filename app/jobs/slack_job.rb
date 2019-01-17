@@ -17,7 +17,7 @@ class SlackJob
     end
 
     client.on :message do |data|
-      return unless data
+      return nil unless data
 
       p data
       # ループ回避
